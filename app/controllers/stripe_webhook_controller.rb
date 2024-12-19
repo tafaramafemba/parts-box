@@ -38,6 +38,14 @@ class StripeWebhookController < ApplicationController
       current_user.carts.destroy_all
       flash[:notice] = "Order confirmed. Your item is on its way!"
       OrderMailer.order_confirmation(order).deliver_now
+
+      order.order_items.each do |order_item|
+        product = order_item.product
+        seller = product.user # Assuming 'user' is the seller of the product
+  
+        SellerMailer.order_placed(order, seller, order_item).deliver_now
+      end
+
       Rails.logger.info("Order ##{order.id} confirmed after successful payment.")
     else
       Rails.logger.warn("Order with session ID #{session.id} not found.")
