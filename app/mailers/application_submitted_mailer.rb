@@ -4,6 +4,6 @@ class ApplicationSubmittedMailer < ApplicationMailer
     @user = user
     @application = application
 
-    mail(to: @user.email, subject: "Your Application for #{@application.name} has been Submitted!")
+    mail(to: @user.email, subject: "Your Seller Application has been Submitted!")
   end
 end

@@ -76,11 +76,14 @@
         <% end %>
         </div>
 
-        <div class="account-settings">
-            <h2>Payment Methods</h2>
-            <div class="payment-methods">
-                <%= image_tag 'stripe_icon.png', alt: 'stripe logo', class: 'stripe-logo', style: 'width: 100px;' %>
-                <%= link_to 'Connect Stripe Account', new_users_stripe_connect_path, class: 'btn-stripe' %>
+        <% if current_user.seller_status == 'approved' %>
+            <div class="account-settings">
+                <h2>Payment Methods</h2>
+                <div class="payment-methods">
+                    <%= image_tag 'stripe_icon.png', alt: 'stripe logo', class: 'stripe-logo', style: 'width: 100px;' %>
+                    <%= link_to 'Connect Stripe Account', new_users_stripe_connect_path, class: 'btn-stripe' %>
+                </div>
             </div>
+        <% end %>
 
 </div>
