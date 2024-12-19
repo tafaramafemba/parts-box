@@ -1,0 +1,159 @@
+    <%= stylesheet_link_tag "search", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "links", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "ebay", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "cta-section", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "cart-section", "data-turbo-track": "reload" %>
+
+    <%= javascript_include_tag 'ebay_results' %>
+    <%= javascript_include_tag 'cart' %>
+
+
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Straight From Your Cart, Straight To Your Car</h2>
+        <p class="cta-p">A marketplace for car parts, a powerful fault code search tool, and a one-stop aggregator for everything automotive.</p>
+        <%= button_to "Get Started", root_path, class: "cta-button" %>
+    </div>
+</section>
+
+<%= form_with url: search_car_parts_path, class: "search-form", method: :get, data: { turbo_frame: "search-results" } do |form| %>
+  <% unless @car_part %>
+  <h1>Search Car Parts</h1>
+
+    <div>
+      <%= form.label :query, "Part Name" %>
+      <%= form.select :query, options_for_select(CarPart.all.pluck(:name, :name), selected: params[:query]), { prompt: "Select a Part" }, id: "query-input" %>
+    </div>
+
+    <div>
+      <%= form.label :part_number, "Part Number" %>
+      <%= form.text_field :part_number, placeholder: "e.g. 12345" %>
+    </div>
+
+    <div>
+        <%= form.label :make, "Car Make" %>
+        <%= form.select :make, options_for_select(CarMake.pluck(:name, :name), selected: params[:make]), { prompt: "Select Make" }, id: "car-make" %>
+    </div>
+
+    <div>
+      <%= form.label :model, "Car Model" %>
+      <%= form.select :model, [], { prompt: "Select a Make First" }, id: "car-model" %>
+    </div>
+
+    <div>
+      <%= form.label :year, "Car Year" %>
+      <%= form.text_field :year, placeholder: "e.g. 2020" %>
+    </div>
+
+    <div>
+      <%= form.label :postal_code, "Postal Code" %>
+      <%= form.text_field :postal_code, placeholder: "e.g. V4T 3N8" %>
+    </div>
+
+    <div>
+      <%= form.label :radius, "Radius (km)" %>
+      <%= form.number_field :radius, value: 50, min: 1, step: 1 %>
+    </div>
+
+    <div>
+      <%= form.label :vin, "VIN Number" %>
+      <%= form.text_field :vin, placeholder: "e.g. 1NXBR32E46Z290123" %>
+    </div>
+
+    <div>
+      <%= form.submit "Search" %>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "search-results" do %>
+    <% if @car_part %>
+<div id="car-part-overview">
+  <h2>
+    Part Overview 
+    <span class="info-icon" title="Detailed information about the part">
+      &#9432;
+    </span>
+  </h2>
+  <p><strong>Name:</strong> <%= @car_part.name %></p>
+  <p><strong>Description:</strong> <%= @car_part.description %></p>
+  <p><strong>Tools Required:</strong> <%= @car_part.tools %></p>
+  <p><strong>Estimated Labor Cost:</strong> $<%= @car_part.labor_cost %></p>
+</div>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<% if @napa_url.present? %>
+  <p><a href="<%= @napa_url %>" target="_blank" class="external-link">Click here to see results on NAPA</a></p>
+<% end %>
+
+<% if @autozone_url.present? %>
+  <p><a href="<%= @autozone_url %>" target="_blank" class="external-link">Click here to see results on AutoZone</a></p>
+<% end %>
+
+<% if @facebook_url.present? %>
+  <p><a href="<%= @facebook_url %>" target="_blank" class="external-link">Click here to see results on Facebook Marketplace</a></p>
+<% end %>
+
+<% if @kijiji_url.present? %>
+  <p><a href="<%= @kijiji_url %>" target="_blank" class="external-link">Click here to see results on Kijiji</a></p>
+<% end %>
+
+
+
+<% if @ebay_results.present? %>
+  <div class="ebay-results-wrapper">
+    <button id="toggle-ebay-results" class="toggle-ebay-btn">
+      Click to expand eBay results
+    </button>
+    <div id="ebay-results-container" class="ebay-results-container" style="display: none;">
+      <% @ebay_results.each do |result| %>
+        <div class="ebay-result-card">
+          <a href="<%= result[:url] %>" target="_blank" class="ebay-result-link">
+            <img src="<%= result[:image_url] %>" alt="<%= result[:title] %>" class="ebay-result-image">
+            <div class="ebay-result-details">
+              <p class="ebay-result-title"><%= result[:title] %></p>
+              <p class="ebay-result-price">$<%= result[:price] %></p>
+            </div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<section class="how-it-works">
+  <h2>How Cart to Car Works</h2>
+  <div class="steps">
+    <div class="step" id="step1">
+      <h3>1. Search for Car Parts</h3>
+      <p>Simply enter the part you're looking for in our search bar. Our platform aggregates results from trusted auto shops and marketplaces, including Napa, eBay, Facebook Marketplace, Kijiji, and many others.</p>
+    </div>
+    <div class="step" id="step2">
+      <h3>2. Compare Results</h3>
+      <p>We present you with a list of options, allowing you to easily compare prices, part conditions, and sellers. No more hopping between multiple websites—everything you need is in one place.</p>
+    </div>
+    <div class="step" id="step3">
+      <h3>3. Make Your Purchase</h3>
+      <p>Once you’ve found the right part, click through to the retailer’s page to complete your purchase. You’ll be redirected to the original website for checkout and delivery options.</p>
+    </div>
+    <div class="step" id="step4">
+      <h3>4. Save Time and Money</h3>
+      <p>With Cart to Car, you don’t need to spend hours browsing different platforms. We do the heavy lifting for you, so you can focus on finding the best deal and getting your car back in top shape.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sectiontwo">
+    <div class="cta-content">
+        <h2>Welcome to The Wrench Bench</h2>
+        <p class="cta-p">Your ultimate pit stop for DIY car projects, expert tips, and automotive inspiration. Whether you’re a weekend tinkerer or a seasoned gearhead, we’ve got something for everyone.</p>
+        <a href="/blog" class="cta-button">Explore the Blog</a>
+        <p class="disclaimer"><small><i>Powered by Cart to Car, your trusted car part aggregator.</i></small></p>
+    </div>
+</section>
+
+
+

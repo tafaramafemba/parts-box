@@ -1,0 +1,50 @@
+<%= javascript_include_tag 'trade_request_slider.js'%>
+<%= stylesheet_link_tag 'trade_show'%>
+<%= javascript_include_tag 'chat', "data-turbo-track": "reload" %>
+
+
+<div class="trade-request-details">
+  <h1 class="trade-request-title">Trade Request from <%= @trade_request.sender.username %></h1>
+  
+  <div class="trade-request-gallery">
+    <% if @trade_request.images.attached? %>
+      <div class="gallery-slider">
+        <% @trade_request.images.each_with_index do |image, index| %>
+          <div class="slide <%= index.zero? ? 'active' : '' %>">
+            <%= image_tag image, class: 'gallery-image' %>
+          </div>
+        <% end %>
+      </div>
+      <div class="gallery-controls">
+        <button class="prev-btn">❮</button>
+        <button class="next-btn">❯</button>
+      </div>
+    <% else %>
+      <p class="no-images-text">No images uploaded for this trade request.</p>
+    <% end %>
+  </div>
+
+  <div class="trade-request-details-text">
+    <p><strong>Part Name:</strong> <%= @trade_request.name %></p>
+    <p><strong>Part Condition:</strong> <%= @trade_request.condition %></p>
+    <p><strong>Part Make:</strong> <%= @trade_request.make %></p>
+    <p><strong>Part Model:</strong> <%= @trade_request.model %></p>
+    <p><strong>Part Year:</strong> <%= @trade_request.year %></p>
+    <p><strong>Manufacturer Part Number:</strong> <%= @trade_request.manufacturer_part_number %></p>
+    <p><strong>Message:</strong> <%= @trade_request.message %></p>
+    <p><strong>Cash Top-Up:</strong> $<%= @trade_request.cash_top_up %></p>
+    <p><strong>Sent At:</strong> <%= @trade_request.created_at.strftime("%d %b %Y, %H:%M") %></p>
+  </div>
+  <div class="trade-request-actions">
+  <%= button_to 'Accept Trade', root_path, method: :patch, class: 'accept-trade-button' %>
+  <%= button_to 'Reject Trade', root_path, method: :patch, class: 'reject-trade-button' %>
+</div>
+
+<div class="open-chat-container">
+  <h2>Any questions for <%= @trade_request.sender.username %> ? </h2>
+  <button id="open-chat" data-action="click->chat#open" class="open-chat-button">Start Chat</button>
+</div>
+
+</div>
+
+

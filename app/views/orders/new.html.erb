@@ -1,0 +1,89 @@
+<%= stylesheet_link_tag "checkout", "data-turbo-track": "reload" %>
+
+
+<h1>Checkout</h1>
+
+<div class="summary-section">
+  <h3>Order Summary</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.quantity %></td>
+          <td><%= number_to_currency(item.product.price) %></td>
+          <td><%= number_to_currency(item.total_price) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h4>Subtotal: <%= number_to_currency(@subtotal) %></h4>
+  <h4>Platform Fee (3%): <%= number_to_currency(@platform_fee) %></h4>
+  <h4>Shipping Fee: <%= number_to_currency(@shipping_fee) %></h4>
+  <h3>Total: <%= number_to_currency(@total_price) %></h3>
+</div>
+
+<div class="payment-section">
+  <h3>Choose Payment Method</h3>
+  <%= form_with url: orders_path, method: :post, data: { turbo: false } do |f| %>
+    <div class="payment-options">
+      <div>
+        <%= f.radio_button :payment_method, 'stripe', id: 'payment_method_stripe' %>
+        <%= f.label :payment_method_stripe, "Stripe" %>
+      </div>
+      <div>
+        <%= f.radio_button :payment_method, 'paypal', id: 'payment_method_paypal' %>
+        <%= f.label :payment_method_paypal, "PayPal" %>
+      </div>
+    </div>
+
+    <h3>Shipping Details</h3>
+    <div class="shipping-container">
+      <%= fields_for :shipping_address do |s| %>
+        <div class="form-group">
+          <%= s.label :address_line1, "Address Line 1" %>
+          <%= s.text_field :address_line1, class: "form-control", placeholder: "1234 Main St" %>
+        </div>
+
+        <div class="form-group">
+          <%= s.label :address_line2, "Address Line 2" %>
+          <%= s.text_field :address_line2, class: "form-control", placeholder: "Apartment, suite, etc." %>
+        </div>
+
+        <div class="form-group">
+          <%= s.label :city, "City" %>
+          <%= s.text_field :city, class: "form-control", placeholder: "City" %>
+        </div>
+
+        <div class="form-group">
+          <%= s.label :state, "State/Province" %>
+          <%= s.text_field :state, class: "form-control", placeholder: "State/Province" %>
+        </div>
+
+        <div class="form-group">
+          <%= s.label :postal_code, "Postal Code" %>
+          <%= s.text_field :postal_code, class: "form-control", placeholder: "Postal Code" %>
+        </div>
+
+        <div class="form-group">
+          <%= s.label :country, "Country" %>
+          <%= s.text_field :country, class: "form-control", placeholder: "Country" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= f.submit "Place Order", class: "btn" %>
+    </div>
+  <% end %>
+</div>
+

@@ -1,0 +1,27 @@
+<%= stylesheet_link_tag "application_index", "data-turbo-track": "reload" %>
+
+
+<div class="summary-section">
+  <h2>Seller Information</h2>
+
+  <table>
+    <thead>
+      <tr>
+          <th>Date Joined</th>
+          <th>Seller</th>
+          <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @seller_informations.each do |seller| %>
+        <tr>
+          <td><%= seller.created_at.strftime("%B %d, %Y") %></td>
+          <td><%= seller.first_name %> <%= seller.last_name %></td>
+          <td>
+            <%= link_to "View", admin_seller_information_path(seller), class: 'btn' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

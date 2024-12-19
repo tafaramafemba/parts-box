@@ -1,0 +1,101 @@
+/* Blog Page Styling */
+.blog-header {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #000;
+    margin-bottom: 2rem;
+  }
+  
+  .blog-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .blog-post {
+    background-color: #000;
+    border: 1px solid #fafafa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .blog-post-image img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .cover-image {
+    object-fit: cover;
+    max-height: 200px;
+  }
+  
+  .blog-post-content {
+    padding: 1rem;
+  }
+  
+  .blog-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0.5rem 0;
+  }
+  
+  .blog-link {
+    text-decoration: none;
+    color: #fafafa;
+  }
+  
+  .blog-link:hover {
+    color: #e63946;
+  }
+  
+  .blog-meta {
+    font-size: 0.9rem;
+    color: #fafafa;
+    margin: 0.3rem 0;
+  }
+  
+
+  .blog-interactions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .like-section, .comment-section {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #fafafa;
+  }
+  
+  .like-section .fa-heart, .comment-section .fa-comments {
+    color: #f8760b;
+    font-size: 16px;
+  }
+  
+  .like-count, .comment-count {
+    font-weight: bold;
+  }
+
+  .like-button, .unlike-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .like-comment-button, .unlike-comment-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  

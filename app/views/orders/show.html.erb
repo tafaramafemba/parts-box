@@ -1,0 +1,29 @@
+<%= stylesheet_link_tag "order_show", "data-turbo-track": "reload" %>
+
+
+
+<div class="order-container">
+  <h1 class="order-h1">Order Details</h1>
+
+  <h3 class="order-h3">Order ID: <%= @order.id %></h3>
+  <h3 class="order-h3">Status: <%= @order.status %></h3>
+
+  <h3>Items</h3>
+  <ul class="order-list">
+    <% @order.order_items.each do |item| %>
+      <li class="order-list-item">
+        <%= item.product.name %> - <%= item.quantity %> x <%= number_to_currency(item.product.price) %>
+    <% end %>
+    <li class="order-list-item">Shipping - <%= number_to_currency(@order.shipping_fee) %> </li>
+    <li class="order-list-item">Platform Fee - <%= number_to_currency(@order.platform_fee) %> </li>
+  </ul>
+  <h3 class="Order-Total">Total: <%= number_to_currency(@order.total_price) %></h3>
+</div>
+
+<div class="order-container">
+  <h3 class="order-h3">Shipping Address</h3>
+  <p><%= @shipping_address.address_line1 %></p>
+  <p><%= @shipping_address.address_line2 %></p>
+  <p><%= @shipping_address.city %>, <%= @order.shipping_address.state %> <%= @order.shipping_address.postal_code %></p>
+  <p><%= @shipping_address.country %></p>
+</div>

@@ -1,0 +1,81 @@
+/* General styles for the section */
+.how-it-works {
+  background-color: #fafafa;
+  padding: 60px 20px;
+  text-align: center;
+  color: #000;
+}
+
+.how-it-works h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #f8760b;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Steps Container */
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.step {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 25%;
+  min-width: 250px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.step:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Icons */
+.step .icon {
+  font-size: 40px;
+  color: #0056b3;
+  margin-bottom: 15px;
+}
+
+.step h3 {
+  font-size: 24px;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Fade-in animation */
+.step.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .steps {
+    gap: 15px;
+  }
+  .step {
+    width: 40%;
+  }
+}
+
+@media (max-width: 768px) {
+  .step {
+    width: 100%;
+  }
+}

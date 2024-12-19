@@ -1,0 +1,26 @@
+<h1>Manage Blog Posts</h1>
+<%= link_to 'New Blog Post', new_admin_blog_post_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Published Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @blog_posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.author %></td>
+        <td><%= post.published_date %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_blog_post_path(post), class: 'btn btn-warning' %>
+          <%= button_to 'Delete', admin_blog_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

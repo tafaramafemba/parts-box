@@ -1,0 +1,45 @@
+<!-- app/views/search/index.html.erb -->
+<h1>Search for Car Parts</h1>
+
+<%= form_with url: search_path, method: :get, local: true do |form| %>
+  <!-- Part Number Field -->
+  <div>
+    <%= form.label :part_number, "Part Number" %>
+    <%= form.text_field :part_number, placeholder: "Enter part number..." %>
+  </div>
+
+  <!-- Make Dropdown -->
+  <div>
+    <%= form.label :make, "Make" %>
+    <%= form.select :make, options_for_select(['', 'Toyota', 'Honda', 'Ford', 'BMW', 'Chevrolet'], params[:make]) %>
+  </div>
+
+  <!-- Model Dropdown -->
+  <div>
+    <%= form.label :model, "Model" %>
+    <%= form.text_field :model, placeholder: "Enter model..." %>
+  </div>
+
+  <!-- Year Dropdown -->
+  <div>
+    <%= form.label :year, "Year" %>
+    <%= form.select :year, options_for_select([2024, 2023, 2022, 2021, 2020, 2019], params[:year]) %>
+  </div>
+
+  <%= form.submit "Search" %>
+<% end %>
+
+<% if @results.any? %>
+  <h2>Search Results from eBay</h2>
+  <ul>
+    <% @results.each do |result| %>
+      <li>
+        <a href="<%= result[:url] %>" target="_blank">
+          <%= result[:title] %> - $<%= result[:price] %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+<% elsif @results.empty? %>
+  <p>No results found. Please try a different search.</p>
+<% end %>

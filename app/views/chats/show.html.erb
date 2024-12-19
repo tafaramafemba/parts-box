@@ -1,0 +1,17 @@
+<%= stylesheet_link_tag 'chat' %>
+
+<%= javascript_include_tag 'chat' %>
+
+
+<div class="chat-container" id="chat-<%= @chat.id %>">
+  <h1>Chat with <%= @chat.seller.username %></h1>
+  
+    <div id="messages" data-chat-id="<%= @chat.id %>">
+    <%= render @messages %>
+    </div>
+
+
+<%= form_with model: [@chat, Message.new], id: "message-form" do |f| %>
+  <%= f.text_area :body, placeholder: "Type your message...", required: true %>
+  <%= f.submit "Send", class: "btn-send" %>
+<% end %>

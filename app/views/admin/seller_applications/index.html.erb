@@ -1,0 +1,28 @@
+<%= stylesheet_link_tag "application_index", "data-turbo-track": "reload" %>
+
+<div class="summary-section">
+  <h2>Seller Applications</h2>
+
+  <table>
+    <thead>
+      <tr>
+          <th>Date Submitted</th>
+          <th>Applicant</th>
+          <th>Status</th>
+          <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @seller_applications.each do |application| %>
+        <tr>
+          <td><%= application.created_at.strftime("%B %d, %Y") %></td>
+          <td><%= application.first_name %> <%= application.last_name %></td>
+          <td><%= application.status %></td>
+          <td>
+            <%= link_to "Review", admin_seller_application_path(application), class: 'btn' %>
+            </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

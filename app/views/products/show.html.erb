@@ -1,0 +1,172 @@
+<%= stylesheet_link_tag 'inbox', media: 'all' %>
+<%= stylesheet_link_tag 'chat', media: 'all' %>
+<%= stylesheet_link_tag 'slider', media: 'all' %>
+
+
+<%= javascript_include_tag 'chat', "data-turbo-track": "reload" %>
+
+
+
+<div class="product-show-container">
+  <div class="product-details">
+    <% if @product.image.attached? %>
+      <%= image_tag @product.image, class: "product-image" %>
+    <% end %>
+    <h1 class="product-title"><%= @product.name %></h1>
+    <% if @product.price.present? %>
+      <p class="product-price">Price: <strong>$<%= @product.price %></strong></p>
+    <% else %>
+      <p class="product-barter-terms">Barter Terms: <%= @product.barter_terms %></p>
+    <% end %>
+    <p class="product-condition">Condition: <strong><%= @product.condition %></strong></p>
+    <p class="product-make">Make: <strong><%= @product.make %></strong></p>
+    <p class="product-model">Model: <strong><%= @product.model %></strong></p>
+    <p class="product-year">Year: <strong><%= @product.year %></strong></p>
+    <p class="product-mpn">Manufacturer Part Number <strong><%= @product.manufacturer_part_number %></strong></p>
+
+    <p class="product-location">Location: <strong><%= @product.location %></strong></p>
+    <p class="product-description">About Part <strong><%= @product.description %></strong></p>
+
+    <% if @product.additional_images.any? %>
+      <div class="product-gallery">
+        <div class="slider">
+          <% @product.additional_images.each do |image| %>
+            <div>
+              <%= link_to image_tag(image, alt: 'Additional Image', class: 'img-fluid'), image, data: { fancybox: true }, class: 'fancybox' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+
+    <div id="chat-modal-container"></div>
+
+    <% if @product.barter_terms.present? %>
+        <div>
+          <button id="open-chat" data-action="click->chat#open" class="open-chat-button">Chat with Seller</button>
+          <h2>Propose a Trade</h2>
+        </div>
+    <% end %>
+
+    <div class="buttons-container">
+      <% if @product.price.present? %>
+      <div>
+        <button id="open-chat" data-action="click->chat#open" class="open-chat-button">Chat with Seller</button>
+          <%= form_with url: carts_path, method: :post, local: true do |f| %>
+            <%= f.hidden_field :product_id, value: @product.id %>
+            <%= f.number_field :quantity, value: 1, min: 1, max: @product.stock_quantity, class: "form-control", disabled: @product.stock_quantity <= 0 %>
+            <% if @product.stock_quantity > 0 %>
+            <span class="stock-info">Available stock: <%= @product.stock_quantity %></span>
+            <% else %>
+            <span class="stock-info">Out of stock</span>
+            <% end %>
+            <%= f.submit "Add to Cart", class: "buy-now-button", disabled: @product.stock_quantity <= 0 %>
+          <% end %>
+      </div>
+      <% else %>
+      <%= form_with(model: TradeRequest.new, url: trade_requests_path, local: true, class: 'trade-form') do |f| %>
+        <div class="form-group">
+          <%= f.label :name, "Item Name" %>
+          <%= f.text_field :name, placeholder: "Enter item name", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :make, "Make" %>
+          <%= f.text_field :make, placeholder: "Enter make", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :model, "Model" %>
+          <%= f.text_field :model, placeholder: "Enter model", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :year, "Year" %>
+          <%= f.number_field :year, placeholder: "Enter year", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :manufacturer_part_number, "Manufacturer Part Number" %>
+          <%= f.text_field :manufacturer_part_number, placeholder: "Enter part number", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :condition, "Condition" %>
+          <%= f.text_field :condition, placeholder: "e.g., New, Used", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :location, "Location" %>
+          <%= f.text_field :location, placeholder: "Enter location", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :message, "Your Trade Proposal" %>
+          <%= f.text_area :message, placeholder: "Describe your trade offer...", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :cash_top_up, "Proposed Cash Top-Up (if any)" %>
+          <%= f.number_field :cash_top_up, placeholder: "$0.00", step: "0.01", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :images, "Upload Pictures of Your Item" %>
+          <%= f.file_field :images, multiple: true, class: 'form-control' %>
+        </div>
+        <%= f.hidden_field :product_id, value: @product.id %>
+        <%= f.hidden_field :recipient_id, value: @product.user.id %>
+        <%= f.submit "Send Trade Request", class: "submit-button" %>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Seller Information -->
+<div class="seller-info-container">
+  <h3>Seller Information</h3>
+  <p><strong>Username:</strong> <%= @product.user.username %></p>
+  <p><strong>Joined:</strong> <%= @product.user.created_at.strftime("%B %Y") %></p>
+  <p><strong>Rating:</strong> <%= render 'shared/star_rating', rating: @product.user.average_rating %> (<%= @product.user.average_rating %>)</p>
+
+  <!-- Display reviews -->
+  <div class="seller-reviews">
+    <h4>Reviews</h4>
+    <ul>
+      <% @product.user.reviews.each do |review| %>
+        <li>
+          <%= render 'shared/star_rating', rating: review.rating %>
+          <p><%= review.comment %></p>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- Add a review -->
+  <div class="add-review">
+    <h4>Leave a Review</h4>
+    <%= form_with(model: [@product.user, Review.new], local: true) do |f| %>
+      <div>
+        <%= f.label :rating, "Rating (1 to 5 stars)" %>
+        <%= f.number_field :rating, min: 1, max: 5, step: 1 %>
+      </div>
+      <div>
+        <%= f.label :comment, "Comment" %>
+        <%= f.text_area :comment, rows: 3 %>
+      </div>
+      <%= f.submit "Submit Review", class: "submit-button" %>
+    <% end %>
+  </div>
+</div>
+
+</div>
+
+
+
+
+<div id="chat-modal" class="chat-modal hidden">
+  <div class="chat-header">
+    <h2>Chat with <%= @chat.seller.username %></h2>
+    <button id="close-chat" class="close-chat-button">&times;</button>
+  </div>
+  
+  <div id="messages" data-chat-id="<%= @chat.id %>" class="chat-messages">
+    <%= render @messages %>
+  </div>
+  
+<%= form_with model: [@chat, Message.new], remote: true, html: { id: "message-form" } do |f| %>
+  <%= f.text_area :body, placeholder: "Type your message..." %>
+  <%= f.submit "Send", class: "btn btn-primary" %>
+<% end %>
+</div>

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  message: MyText
+  cash_top_up: 9.99
+  product: one
+  sender: one
+  recipient: one
+  images: 
+
+two:
+  message: MyText
+  cash_top_up: 9.99
+  product: two
+  sender: two
+  recipient: two
+  images: 

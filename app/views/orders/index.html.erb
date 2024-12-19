@@ -1,0 +1,30 @@
+<%= stylesheet_link_tag "orders_index", "data-turbo-track": "reload" %>
+
+
+<h1>Your Orders</h1>
+
+<% if @orders.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= number_to_currency(order.total_price) %></td>
+          <td><%= order.status %></td>
+          <td><%= link_to "View", order_path(order.id), class: "btn btn-primary", data: {turbo:false} %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="message">You have no orders yet.</p>
+  <%= link_to "Start Shopping", products_path, class: "btn btn-secondary" %>
+<% end %>

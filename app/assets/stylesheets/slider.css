@@ -1,0 +1,28 @@
+.product-gallery {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .slider {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .slider > div {
+    flex: none;
+    width: 100%;
+    scroll-snap-align: start;
+    padding: 10px;
+  }
+  
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .fancybox {
+    cursor: pointer;
+  }
+  

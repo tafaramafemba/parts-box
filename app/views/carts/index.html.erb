@@ -1,0 +1,43 @@
+<%= stylesheet_link_tag 'cart_index', media: 'all', 'data-turbo-track': 'reload' %>
+
+<h1>Your Cart</h1>
+
+<% if @cart_items.any? %>
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td>
+            <%= form_with(model: item, url: cart_path(item), method: :patch, local: true, class: "quantity-form", remote: true) do |f| %>
+              <%= f.number_field :quantity, value: item.quantity, min: 1, class: "quantity-input" %>
+              <%= f.submit "Update", class: "btn btn-secondary btn-sm" %>
+            <% end %>
+          </td>
+          <td><%= number_to_currency(item.product.price) %></td>
+          <td><%= number_to_currency(item.total_price) %></td>
+          <td>
+            <%= button_to "Remove", cart_path(item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="cart-summary">
+    <h3>Total: <%= number_to_currency(@total_price) %></h3>
+    <%= link_to "Checkout", new_order_path, class: "btn btn-primary" %>
+  </div>
+<% else %>
+  <p class="empty-cart-message">Your cart is empty.</p>
+  <%= link_to "Continue Shopping", products_path, class: "btn btn-secondary" %>
+<% end %>

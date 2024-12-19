@@ -1,0 +1,21 @@
+<h2>Connect Your PayPal Account</h2>
+
+<div>
+  <h3>Create a New PayPal Account</h3>
+  <p>If you don't already have a PayPal account, you can create one and connect it here:</p>
+  <%= form_with url: create_account_users_paypal_connects_path, method: :post, data: { turbo: false } do %>
+    <%= submit_tag "Connect PayPal Account", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<div style="margin-top: 30px;">
+  <h3>Connect an Existing PayPal Account</h3>
+  <p>If you already have a PayPal Merchant ID, enter it below to connect your account:</p>
+  <%= form_with url: connect_existing_account_users_paypal_connects_path, method: :post, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :paypal_merchant_id, "PayPal Merchant ID" %>
+      <%= f.text_field :paypal_merchant_id, class: "form-control", required: true %>
+    </div>
+    <%= f.submit "Connect Account", class: "btn btn-success" %>
+  <% end %>
+</div>

@@ -1,0 +1,54 @@
+<%= stylesheet_link_tag "blog", "data-turbo-track": "reload" %>
+<%= javascript_include_tag 'like' %>
+
+
+<h1 class="blog-header">Our Blog</h1>
+<div class="blog-container">
+  <% @blog_posts.each do |post| %>
+    <div class="blog-post">
+      <% if post.cover_image.attached? %>
+        <div class="blog-post-image">
+          <%= image_tag post.cover_image, alt: post.title, class: "cover-image" %>
+        </div>
+      <% end %>
+      <div class="blog-post-content">
+        <h2 class="blog-title"><%= link_to post.title, blog_post_path(post), class: "blog-link" %></h2>
+        <p class="blog-meta"><strong>By:</strong> <%= post.author %></p>
+        <p class="blog-meta"><strong>Date:</strong> <%= post.published_date.strftime("%B %d, %Y") %></p>
+        <div class="blog-interactions">
+
+            <!-- Likes -->
+            <span class="like-section">
+
+            <% if user_signed_in? %>
+
+
+              <% if current_user.likes.exists?(blog_post: post) %>
+                <button class="unlike-button" data-blog-post-id="<%= post.id %>"><i class="fa fa-heart"></i></button>
+                <span id="likes-count-<%= post.id %>"><%= post.likes_count %></span></p>
+
+              <% else %>
+                <button class="like-button" data-blog-post-id="<%= post.id %>"><i class="fa fa-heart-o"></i></button>
+                <span id="likes-count-<%= post.id %>"><%= post.likes_count %></span></p>
+              <% end %>
+              </span>
+
+            <% else %>
+              <%= link_to new_user_session_path do %>
+                <i class="fa fa-heart"></i>
+              <% end %>
+                <span id="likes-count-<%= post.id %>"><%= post.likes_count %></span></p>
+
+            <% end %>
+
+
+          <!-- Comments -->
+          <span class="comment-section">
+            <i class="fa fa-comments"></i>
+            <span class="comment-count"><%= post.comments.count %></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

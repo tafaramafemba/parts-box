@@ -1,0 +1,34 @@
+<% if @napa_url.present? %>
+  <h2>NAPA Results</h2>
+  <p><a href="<%= @napa_url %>" target="_blank">Click here to see results on NAPA</a></p>
+<% end %>
+
+<% if @autozone_url.present? %>
+  <h2>AutoZone Results</h2>
+  <p><a href="<%= @autozone_url %>" target="_blank">Click here to see results on AutoZone</a></p>
+<% end %>
+
+<% if @facebook_url.present? %>
+  <h2>Facebook Marketplace Results</h2>
+  <p><a href="<%= @facebook_url %>" target="_blank">Click here to see results on Facebook Marketplace</a></p>
+<% end %>
+
+<% if @kijiji_url.present? %>
+  <h2>Kijiji Results</h2>
+  <p><a href="<%= @kijiji_url %>" target="_blank">Click here to see results on Kijiji</a></p>
+<% end %>
+
+<h2>eBay Results</h2>
+
+<% if @ebay_results.present? %>
+  <ul>
+    <% @ebay_results.each do |result| %>
+      <li>
+        <a href="<%= result[:url] %>" target="_blank">
+          <img src="<%= result[:image_url] %>" alt="<%= result[:title] %>" style="width: 100px; height: 100px;">
+          <p><%= result[:title] %> - $<%= result[:price] %></p>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

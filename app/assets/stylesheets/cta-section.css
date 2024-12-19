@@ -1,0 +1,203 @@
+.cta-section {
+    background-image: url('./background.jpg'); /* Replace with the actual path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fafafa;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    border-radius: 15px;
+}
+
+.cta-sectiontwo {
+    background-image: url('./background2.jpg'); /* Replace with the actual path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fafafa;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    border-radius: 15px;
+}
+
+.cta-sectiontwo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    z-index: 1;
+}
+
+/* Rest of the CSS remains the same */
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    z-index: 1;
+}
+
+.cta-content {
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: auto;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.cta-p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+.cta-section .disclaimer {
+    text-align: center;  /* Optional: Centers the disclaimer */
+    margin-top: 10px;
+}
+
+/* Primary Button Styling */
+.btn-primary {
+    background-color: #f3ecea;
+    color: #7b3130;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none; /* Remove underline for button link */
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #a67e7e; /* Lighter shade on hover */
+    color: #fafafa;
+}
+
+.spacer {
+    height: 100px; /* Adjust the height as needed */
+}
+
+/* CTA Section Styles */
+.cta-wrench-bench {
+    background: #f8760b;
+    color: #000;
+    text-align: center;
+    padding: 50px 20px;
+    border-radius: 8px;
+    margin: 40px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .cta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cta-wrench-bench h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 20px;
+  }
+  
+  .cta-wrench-bench p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  
+  .cta-disclaimertwos {
+    font-size: 14px;
+    color: #555;
+    margin-top: 20px;
+  }
+  
+  .cta-button {
+    font-size: 18px;
+    font-weight: 600;
+    background: #0056b3;
+    color: #fafafa;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cta-button:hover {
+    background: #003f8a;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+  }
+  
+  .cta-wrench-bench.reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #scrollTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f8760b;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 12px 16px;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  #scrollTopBtn:hover {
+    background-color: #0056b3;
+  }
+  
+  #scrollTopBtn.show {
+    display: block;
+  }
+  
+  
+  
+  @media (max-width: 768px) {
+    .cta-wrench-bench h2 {
+      font-size: 28px;
+    }
+  
+    .cta-wrench-bench p {
+      font-size: 16px;
+    }
+  }
+  

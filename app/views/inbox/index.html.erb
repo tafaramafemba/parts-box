@@ -1,0 +1,31 @@
+<%= stylesheet_link_tag 'inbox', media: 'all' %>
+
+
+<div class="inbox">
+    <h1 class="inbox-title">
+        Your Inbox <span class="unread-counter"><%= @unread_count %></span>
+    </h1>
+  <% @trade_requests.each do |request| %>
+    <a href="<%= inbox_path(request.id) %>" class="trade-request-link">
+      <div class="trade-request <%= request.read ? 'read' : 'unread' %>">
+        <div class="trade-request-header">
+          <div class="trade-request-sender-info">
+            <i class="fas fa-user-circle sender-icon"></i>
+            <span class="trade-request-sender"><%= request.sender.username %></span>
+          </div>
+          <span class="trade-request-product">
+            <strong>Trade Offer for:</strong> <%= request.product.name %>
+          </span>
+          <div class="trade-request-time-info">
+            <i class="fas fa-clock time-icon"></i>
+            <span class="trade-request-time"><%= request.created_at.strftime("%H:%M") %></span>
+          </div>
+        </div>
+      </div>
+    </a>
+  <% end %>
+</div>
+
+
+
+

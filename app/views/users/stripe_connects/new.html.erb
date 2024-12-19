@@ -1,0 +1,30 @@
+<%= stylesheet_link_tag "stripe_connect", "data-turbo-track": "reload" %>
+
+<h2 class="eich-two">Connect Your Stripe Account</h2>
+
+<% if current_user.stripe_account_id.nil? %>
+   <div class="container">
+    <h3>Create a New Stripe Account</h3>
+    <p>If you don't already have a Stripe account, you can create one here:</p>
+  <%= form_with url: create_account_users_stripe_connects_path, method: :post, data: { turbo: false } do %>
+    <%= submit_tag "Create Stripe Account", class: "btn-stripe submit" %>
+  <% end %>
+  </div>
+
+  <div style="margin-top: 30px;", class="container">
+    <h3>Connect an Existing Stripe Account</h3>
+    <p>If you already have a Stripe account, enter your Stripe Account ID below to connect it:</p>
+    <%= form_with url: connect_existing_account_users_stripe_connects_path, method: :post, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :stripe_account_id, "Stripe Account ID" %>
+        <%= f.text_field :stripe_account_id, class: "form-control", required: true %>
+      </div>
+      <%= f.submit "Connect Account", class: "btn stripe-btn-succes" %>
+    <% end %>
+  </div>
+<% else %>
+<div class="container">
+  <p>Your Stripe account is already connected. You can disconnect it at any time.</p>
+  <%= button_to "Disconnect Stripe Account", disconnect_account_users_stripe_connects_path, method: :post, class: "stripe-btn-danger" %>
+</div>
+<% end %>

@@ -1,0 +1,9 @@
+<% full_stars = rating.to_i %>
+<% half_star = (rating - full_stars) >= 0.5 %>
+<% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %>
+
+<div class="star-rating">
+  <% full_stars.times { concat content_tag(:span, "★", class: "star full") } %>
+  <% concat content_tag(:span, "★", class: "star half") if half_star %>
+  <% empty_stars.times { concat content_tag(:span, "★", class: "star empty") } %>
+</div>

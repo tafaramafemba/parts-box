@@ -1,0 +1,161 @@
+<%= stylesheet_link_tag "new_seller", "data-turbo-track": "reload" %>
+
+<div class="seller-container">
+  <h2>Apply to Become a Seller</h2>
+
+  <%= form_for @seller_application, data: { turbo: false }, method: :post, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :first_name, "First Name" %>
+      <%= f.text_field :first_name, required: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :last_name, "Last Name" %>
+      <%= f.text_field :last_name, required: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, "Email" %>
+      <%= f.email_field :email, required: true, class: 'form-control', id: 'email_field' %>
+      <button type="button" id="email_verify_button" class="btn btn-secondary">Verify Email</button>
+      <div id="email_verification_code_container" style="display: none;">
+        <label for="email_verification_code">Enter Verification Code</label>
+        <input type="text" id="email_verification_code" class="form-control">
+        <button type="button" id="email_verify_submit" class="btn btn-primary">Submit Code</button>
+        <span id="email_verification_status" class="verification-status"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :phone_number, "Phone Number" %>
+      <%= f.text_field :phone_number, required: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :address, "Address" %>
+      <%= f.text_field :address, required: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :id_document, "Upload Identification Document" %>
+      <%= f.file_field :id_document, required: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :business_name, "Business Name (If Applicable)" %>
+      <%= f.text_field :business_name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :business_registration_number, "Business Registration Number (If Applicable)" %>
+      <%= f.text_field :business_registration_number, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :business_registration_document, "Business Registration (If Applicable)" %>
+      <%= f.file_field :business_registration_document, class: 'form-control' %>
+    </div>
+
+    <!-- Seller Policy Checkbox -->
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="seller_policy_checkbox">
+        I accept the <a href="<%= seller_policies_path %>">Seller Policy</a>
+      </label>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <%= f.submit "Submit Application", class: 'btn btn-primary', id: 'submit_button', disabled: true %>
+    </div>
+  <% end %>
+</div>
+
+<!-- JavaScript for Enabling Submit Button and Email Verification -->
+<script>
+document.addEventListener("turbo:load", function () {
+  const emailField = document.getElementById("email_field");
+  const emailVerifyButton = document.getElementById("email_verify_button");
+  const emailVerificationCodeContainer = document.getElementById("email_verification_code_container");
+  const emailVerificationCodeInput = document.getElementById("email_verification_code");
+  const emailVerifySubmit = document.getElementById("email_verify_submit");
+  const emailVerificationStatus = document.getElementById("email_verification_status");
+
+  const sellerPolicyCheckbox = document.getElementById("seller_policy_checkbox");
+  const submitButton = document.getElementById("submit_button");
+
+  let isEmailVerified = false;
+
+  // Send verification code to email
+  emailVerifyButton.addEventListener("click", function () {
+    const email = emailField.value;
+    if (!email) {
+      alert("Please enter your email first.");
+      return;
+    }
+
+    // Make API call to send verification code
+    fetch("/send_verification_code", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ email: email })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "OTP sent") {
+          emailVerificationCodeContainer.style.display = "block";
+          alert(`A verification code has been sent to ${email}`);
+        } else {
+          alert("Failed to send verification code. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error sending verification code:", error);
+        alert("An error occurred. Please try again.");
+      });
+  });
+
+  // Verify the entered OTP
+  emailVerifySubmit.addEventListener("click", function () {
+    const code = emailVerificationCodeInput.value;
+
+    // Make API call to verify OTP
+    fetch("/verify_email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ code: code })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          emailVerificationStatus.textContent = "Email Verified!";
+          emailVerificationStatus.style.color = "green";
+          isEmailVerified = true;
+          updateSubmitButtonState();
+        } else {
+          emailVerificationStatus.textContent = "Invalid Code!";
+          emailVerificationStatus.style.color = "red";
+        }
+      })
+      .catch((error) => {
+        console.error("Error verifying email:", error);
+        alert("An error occurred during verification. Please try again.");
+      });
+  });
+
+  // Enable Submit Button
+  sellerPolicyCheckbox.addEventListener("change", updateSubmitButtonState);
+
+  function updateSubmitButtonState() {
+    submitButton.disabled = !(isEmailVerified && sellerPolicyCheckbox.checked);
+  }
+});
+
+</script>
+

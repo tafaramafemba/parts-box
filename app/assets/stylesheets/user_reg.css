@@ -1,0 +1,145 @@
+/* Page container for centering */
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 1rem;
+  }
+  
+  /* Form title styling */
+  .form-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #f8760b;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Form container */
+  .signup-form {
+    width: 100%;
+    max-width: 400px;
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form groups */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .form-input:focus {
+    border-color: #f8760b;
+    outline: none;
+    box-shadow: 0 0 5px rgba(248, 118, 11, 0.5);
+  }
+  
+  /* Password length info styling */
+  .password-length-info {
+    font-size: 0.875rem;
+    color: #555;
+    margin-top: 0.5rem;
+  }
+  
+  /* Submit button */
+  .submit-button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #f8760b;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .signup-container {
+      padding: 2rem;
+    }
+  
+    .form-title {
+      font-size: 1.75rem;
+    }
+  
+    .signup-form {
+      max-width: 90%;
+      padding: 1.5rem;
+    }
+  
+    .form-label {
+      font-size: 0.95rem;
+    }
+  
+    .form-input {
+      padding: 0.75rem;
+      font-size: 0.95rem;
+    }
+  
+    .submit-button {
+      font-size: 1rem;
+      padding: 0.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .signup-container {
+      padding: 1.5rem;
+    }
+  
+    .form-title {
+      font-size: 1.5rem;
+    }
+  
+    .signup-form {
+      max-width: 100%;
+      padding: 1rem;
+    }
+  
+    .form-label {
+      font-size: 0.9rem;
+    }
+  
+    .form-input {
+      padding: 0.7rem;
+      font-size: 0.9rem;
+    }
+  
+    .submit-button {
+      font-size: 0.95rem;
+      padding: 0.7rem;
+    }
+  }
+  

@@ -1,0 +1,99 @@
+
+h2, p {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    margin: 0 auto 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  table th, table td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .summary-section {
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summary-section h3 {
+    text-align: left;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .btn {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 18px;
+    }
+  
+    table th, table td {
+      font-size: 12px;
+      padding: 8px;
+    }
+  
+    .summary-section {
+      padding: 15px;
+    }
+  
+    .btn {
+      max-width: 90%;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 16px;
+    }
+  
+    table th, table td {
+      font-size: 10px;
+      padding: 6px;
+    }
+  
+    .summary-section {
+      padding: 10px;
+    }
+  
+    .btn {
+      font-size: 12px;
+      max-width: 80%;
+    }
+  }
+  

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Car Parts Platform" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_importmap_tags %>
+
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "styles", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "footer", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "flash", "data-turbo-track": "reload" %>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <%= javascript_include_tag 'car_search' %>
+    <%= javascript_include_tag 'menu' %>
+    <%= javascript_include_tag 'application', "data-turbo-track": "reload" %>
+
+  </head>
+
+  <body>
+<header id="home">
+  <div class="header-container">
+    <div class="logo-container">
+      <%= image_tag 'c2c.svg', alt: 'c2c logo', class: 'logo' %>
+    </div>
+    <label for="menu_collapse_icon" class="menu_collapse_icon_label" id="menu-icon-label">
+      <div class="menu_bar">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="line line3"></div>
+      </div>
+    </label>
+
+  </div>
+  <nav class="nav_menu" id="nav-menu">
+    <ul>
+      <li class="menu-item"><%= link_to 'Home', root_path %></li>
+      <li class="menu-item"><%= link_to 'Marketplace', products_path %></li>
+
+      <li class="dropdown">
+        <span class="menu-span">Resources</span>
+        <div class="dropdown-content">
+            <span class="menu-item-span"><%= link_to 'DTC Search', search_fault_codes_path %></span>
+            <span class="menu-item-span"><%= link_to 'The Wrench Bench', blog_posts_path %></span>
+        </div>
+      </li>
+      <li class="menu-item profile-dropdown">
+        <i class="fa-solid fa-user profile-icon"></i>
+        <div class="dropdown-menu">
+          <% if user_signed_in? %>
+          <div class="dropdown-container">
+            <%= link_to 'Account Settings', edit_account_settings_path, class: 'dropdown-item' %>
+            <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item btn' %>
+          </div>
+          <% else %>
+            <%= link_to 'Sign In', new_user_session_path, class: 'dropdown-item' %>
+          <% end %>
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+      <div class="cart-container">
+      <%= link_to carts_path, class: 'cart-link' do %>
+        <i class="fas fa-shopping-cart cart-icon"></i>
+        <span class="cart-count"><%= current_user.carts.count %></span>
+      <% end %>
+    </div>
+</header>
+<% if user_signed_in? && current_user.shipping_address.nil? %>
+  <p class="alert shipping-message"><%= link_to 'Update Your Shipping Details', edit_account_settings_path %></p>
+<% end %>
+
+
+
+<% if notice.present? %>
+  <p class="notice flash-notification"><%= notice %></p>
+<% end %>
+
+<% if alert.present? %>
+  <p class="alert flash-notification"><%= alert %></p>
+<% end %>
+
+
+  <main>
+      <%= yield %>
+  </main>
+  </body>
+  <footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <%= image_tag 'c2c.svg', alt: 'c2c logo', class: 'logo' %>
+      <p>Search less, find more. Your ultimate car part aggregator.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/how-it-works">How It Works</a></li>
+        <li><a href="/blog">The Wrench Bench</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-social">
+      <h4>Follow Us</h4>
+      <ul>
+        <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a></li>
+        <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-newsletter">
+    <h4>Stay Updated</h4>
+    <p>Sign up for our newsletter to get the latest updates on car parts and offers!</p>
+    <form action="/newsletter_signup" method="post" class="newsletter-form">
+      <input type="email" name="email" placeholder="Enter your email address" required>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+  
+  <!-- Footer Policies -->
+  <div class="footer-policies">
+    <ul>
+      <li><a href="/privacy_policy">Privacy Policy</a></li>
+      <li><a href="/user_agreement">User Agreement</a></li>
+      <li><a href="/return_policy">Return Policy</a></li>
+      <li><a href="/data_protection_policy">Data Protection Policy</a></li>
+    </ul>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; 2024 Cart to Car. All rights reserved.</p>
+    <p class="disclaimer"><em>We are not affiliated with Napa, Facebook Marketplace, or Kijiji. All trademarks are owned by their respective shareholders.</em></p>
+  </div>
+</footer>
+  <button id="scrollTopBtn" title="Go to top">↑</button>
+
+<!-- Add Slick Carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<!-- Add FancyBox -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+<script>
+  // Initialize slick slider
+  $(document).ready(function(){
+    $('.slider').slick({
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+
+    // Initialize fancybox for enlarged images
+    $('[data-fancybox]').fancybox({
+      buttons: ['zoom', 'fullScreen', 'close'],
+      animationEffect: 'zoom-in-out'
+    });
+  });
+</script>
+
+
+</html>

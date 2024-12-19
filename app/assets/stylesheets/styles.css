@@ -1,0 +1,507 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+}
+
+/* Header container */
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;  /* Background for the header */
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    z-index: 11; /* Ensure the header is on top of other elements */
+    /* margin-top: 20px; */
+    margin-bottom: 40px;
+    /* box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.3); */
+
+  }
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;  /* Background for the header */
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    z-index: 11; /* Ensure the header is on top of other elements */
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .header-container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+  }
+  
+  /* Logo styling */
+  .logo-container img {
+    max-width: 100%;  /* Allow the logo to scale within its container */
+    height: auto;     /* Maintain aspect ratio */
+    width: 25vw;      /* Make the logo take up 25% of the viewport width */
+    max-width: 200px; /* Add a max-width to avoid it getting too large on big screens */
+    min-width: 150px; /* Set a minimum width to prevent it from becoming too small */
+    z-index: 10;      /* Ensure the logo is on top of other elements */
+}
+
+/* Hamburger Menu Styling */
+.menu_collapse_icon_label {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-align: right;
+    cursor: pointer;
+    /* position: fixed; */
+    top: 20px;
+    right: 20px;  /* Positioned on the right side */
+    padding: 10px;
+    z-index: 9;
+}
+
+.menu_bar {
+    width: 40px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.line {
+    background-color: #fafafa;
+    height: 4px;
+    width: 100%;
+    transition: all 0.4s ease-in-out; /* Slow transition */
+    border-radius: 5px;
+}
+
+.line1 {
+    width: 100%;
+}
+
+.line2 {
+    width: 75%;
+}
+
+.line3 {
+    width: 100%;
+}
+
+/* Navigation Menu Styling */
+.nav_menu {
+    display: none; /* Initially hidden */
+    background-color: #fafafa;
+    color: #000;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    padding: 40px 20px; /* Add more padding for spacing */
+    text-align: center;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden; /* Ensure it's not interactable while hidden */
+    transition: all 0.4s ease-in-out;
+    z-index: 8;
+}
+
+/* Additional padding and spacing for the mobile navigation */
+.nav_menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav_menu li {
+    margin: 15px 0; /* Increased margin between items */
+    transition: all 0.4s ease-in-out; /* Slow transition */
+    color: #000;
+}
+
+.nav_menu a {
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+    font-size: 23px;
+    padding: 10px 20px; /* Add padding to the links for better spacing */
+    border-radius: 4px;  /* Optional: Rounded corners for the links */
+    transition: all 0.4s ease-in-out; /* Slow transition for all properties */
+    transition-delay: 0.2s; /* Add a slight delay for the hover effect */
+}
+
+.menu-span-item {
+    color:#fafafa
+}
+
+/* Hover effects with smooth transition and delay */
+.menu-item:hover {
+    color: #fafafa;
+    background-color: #0056b3;  /* Hover background color (chalk yellow) */
+    transition: all 0.4s ease-in-out;
+}
+
+.menu_collapse_icon_label.open .line {
+    background-color: #000;
+}
+
+.menu-sign-out {
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    color: #000; /* Use the text color of its parent */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 23px;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    cursor: pointer; /* Show pointer on hover */
+
+}
+
+/* Hamburger icon transformation */
+.menu_collapse_icon_label.open .line1 {
+    transform: rotate(45deg) translateY(7px); /* Rotate first line */
+}
+
+.menu_collapse_icon_label.open .line2 {
+    width: 100%;
+    transform: rotate(-45deg) translateY(-10px);
+    position: relative;
+}
+
+.menu_collapse_icon_label.open .line3 {
+    opacity: 0; /* Hide second line */
+}
+
+/* Full-Screen Menu for Mobile */
+.nav_menu.open {
+    display: flex; /* Use flexbox to center content */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #000;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    opacity: 1; /* Make it visible */
+    visibility: visible; /* Ensure it's interactable */
+    transition: all 0.4s ease-in-out; /* Slow transition */
+}
+
+.nav_menu.open ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav_menu.open li {
+    margin: 20px 0;
+    transition: all 0.4s ease-in-out; /* Slow transition */
+}
+
+.nav_menu.open a {
+    font-size: 24px;
+    text-align: center;
+    transition: all 0.4s ease-in-out; /* Slow transition */
+    padding: 12px 20px; /* Padding for better spacing */
+    border-radius: 4px;  /* Optional: Rounded corners for links */
+}
+
+/* Hamburger icon to open the full-screen menu */
+.menu_collapse_icon_label.open {
+    z-index: 11;
+    background-color: transparent;
+}
+
+  /* Cart Icon */
+  .cart-icon {
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  
+  /* Cart Count Badge */
+  .cart-count {
+    position: absolute;
+    top: 25px;
+    right: 10px;
+    background-color: #0056b3; /* Theme accent color */
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .cart-container {
+    padding-right: 20px;
+    margin-bottom: 10px;
+  }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    margin-top: 30px;
+    display: none;
+    background-color: #0056b3;
+    color: #fafafa;
+    width: 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    z-index: 1;
+    padding: 12px;
+  }
+
+  .dropdown-content a {
+    color: #fafafa;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fafafa;
+    gap: 20px;
+  }
+
+  .menu-span {
+    font-size: 25px;
+    font-weight: light;
+  }
+
+  /* Profile icon styles */
+.profile-icon {
+    color: #000;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Dropdown container */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Hidden dropdown menu */
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* Below the icon */
+    right: 0;
+    background-color: #000; /* Match your theme */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 200px;
+    padding: 10px 0;
+  }
+  
+  /* Dropdown item styles */
+  .dropdown-item {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    text-align: left;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #0056b3;
+    color: #fafafa; /* Match your theme accent */
+  }
+  
+  /* Show dropdown on hover */
+  .profile-dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-item btn {
+    background-color: #000;
+  }
+
+  .dropdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .dropdown-container a {
+    color: #fafafa;
+  }
+
+  .cta-buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+@media (min-width: 1024px) {
+/* Cart Container */
+.cart-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto; /* Push to the right */
+    margin-bottom: 0;
+  }
+  
+  /* Cart Link */
+  .cart-link {
+    text-decoration: none;
+    position: relative;
+  }
+  
+  /* Cart Icon */
+  .cart-icon {
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  
+  /* Cart Count Badge */
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #0056b3; /* Theme accent color */
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+    header {
+        padding-right: 40px;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+    .logo-container {
+        flex: 1; /* Let logo container take up available space */
+    }
+    /* Make the nav menu visible on larger screens */
+    .nav_menu {
+        display: flex;
+        position: static;
+        padding: 20px 40px; /* Padding for larger screens */
+        background-color: transparent;
+        justify-content: flex-end;
+        align-items: center; /* Vertically center items */
+        box-sizing: border-box;
+    }
+
+    .nav_menu ul {
+        display: flex;
+        margin: 0;
+        align-items: center;
+    }
+
+    .nav_menu li {
+        margin: 0 20px;
+    }
+
+    /* The hamburger icon is hidden on larger screens */
+    .menu_collapse_icon_label {
+        display: none;
+    }
+
+    /* Ensure the nav menu is always visible in larger screens */
+    .nav_menu {
+        display: flex;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* Increase padding on links for better spacing on larger screens */
+    .nav_menu a {
+        padding: 15px 20px; /* Added more padding to the links */
+        font-size: 18px;
+        color: #fafafa;
+        transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+        border-radius: 4px;  /* Optional: Rounded corners for the links */
+        transition-delay: 0.2s; /* Add slight delay to hover action */
+    }
+
+    .menu-item:hover {
+        color: #fafafa;
+        background-color: #0056b3;  /* Hover background color (chalk yellow) */
+        transition: all 0.4s ease-in-out;
+    }
+
+    .menu-item-btn {
+        color: #fafafa; /* Use the text color of its parent */
+    }
+
+    .menu-sign-out {
+
+        color: #fafafa; /* Use the text color of its parent */
+        font-size: 18px;
+    
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #000;
+        color: #fafafa;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 1;
+      }
+      
+      .dropdown:hover .dropdown-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
+      .menu-span {
+        color: #fafafa;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        transition: all 0.4s ease-in-out;
+        transition-delay: 0.2s;
+      }
+
+      .profile-icon {
+        color: #fafafa;
+      }
+
+      .cta-buttons-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+      }
+}

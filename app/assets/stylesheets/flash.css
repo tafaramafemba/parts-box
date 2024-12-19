@@ -1,0 +1,32 @@
+.flash-notification {
+    margin: auto;
+    padding: 10px 15px;
+    margin: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .notice {
+    background-color: #e8f5e9; /* Soft green background */
+    color: #2e7d32; /* Deep green text */
+    border: 1px solid #c8e6c9; /* Light green border */
+  }
+  
+  .alert {
+    background-color: #ffebee; /* Soft red background */
+    color: #c62828; /* Deep red text */
+    border: 1px solid #ef9a9a; /* Light red border */
+  }
+  
+  .shipping-message a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .shipping-message {
+    display: flex;
+    justify-content: center;
+  }

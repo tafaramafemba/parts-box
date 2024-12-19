@@ -1,0 +1,84 @@
+<%= stylesheet_link_tag "application_show", "data-turbo-track": "reload" %>
+
+<div class="application-container">
+    <h2>Seller Information Details</h2>
+
+    <p>
+        <strong>First Name:</strong>
+        <%= @seller_information.first_name %>
+    </p>
+
+    <p>
+        <strong>Last Name:</strong>
+        <%= @seller_information.last_name %>
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        <%= @seller_information.email %>
+    </p>
+
+    <p>
+        <strong>Phone Number:</strong>
+        <%= @seller_information.phone_number %>
+    </p>
+
+    <p>
+        <strong>Address:</strong>
+        <%= @seller_information.address %>
+    </p>
+
+    <p>
+        <strong>ID Document:</strong>
+        <% if @seller_information.id_document.attached? %>
+            <%= link_to image_tag(@seller_information.id_document, style: "width: 100px; height: auto;"), 
+                        url_for(@seller_information.id_document), 
+                        target: "_blank" %>
+        <% else %>
+            No document uploaded.
+        <% end %>
+    </p>
+
+    <p>
+        <strong>Business Name:</strong>
+        <%= @seller_information.business_name %>
+    </p>
+
+    <p>
+        <strong>Business Address:</strong>
+        <%= @seller_information.business_registration_number %>
+    </p>
+
+    <p>
+        <strong>Business Registration Document:</strong>
+        <% if @seller_information.business_registration_document.attached? %>
+            <% if @seller_information.business_registration_document.content_type.start_with?('image/') %>
+                <!-- If the document is an image -->
+                <%= link_to image_tag(@seller_information.business_registration_document, style: "width: 150px; height: auto;"), 
+                            url_for(@seller_information.business_registration_document), 
+                            target: "_blank" %>
+            <% elsif @seller_information.business_registration_document.content_type == 'application/pdf' %>
+                <!-- If the document is a PDF -->
+                <%= link_to "View PDF", url_for(@seller_information.business_registration_document), target: "_blank" %>
+            <% else %>
+                <!-- For other file types -->
+                <%= link_to "View Document", url_for(@seller_information.business_registration_document), target: "_blank" %>
+            <% end %>
+        <% else %>
+            No document uploaded.
+        <% end %>
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        <%= @seller_information.status %>
+    </p>          
+
+<div class="actions">
+    <% if @seller_information.status == 'active' %>
+        <%= button_to "Suspend Seller", admin_seller_information_path(@seller_information), method: :patch, data: { confirm: "Are you sure you want to suspend this seller?" }, class: 'reject-button' %>
+    <% elsif @seller_information.status == 'suspended' %>
+        <%= button_to "Activate Seller", admin_seller_information_path(@seller_information), method: :patch, data: { confirm: "Are you sure you want to activate this seller?" }, class: 'accept-button' %>
+    <% end %>
+</div>
+</div>

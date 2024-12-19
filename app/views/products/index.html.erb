@@ -1,0 +1,80 @@
+<%= stylesheet_link_tag 'products', media: 'all' %>
+<div class="marketplace-container">
+
+    <!-- Sidebar (Facebook Marketplace style) -->
+    <div class="sidebar">
+        <h2>Search Marketplace</h2>
+    <form method="get" action="<%= products_path %>">
+        <!-- Search by Name -->
+        <input type="text" name="query" placeholder="Search products..." value="<%= params[:query] %>">
+
+        <!-- Filter by Type -->
+        <select name="filter_type">
+        <option value="all" <%= 'selected' if params[:filter_type] == 'all' || params[:filter_type].blank? %>>All</option>
+        <option value="sale" <%= 'selected' if params[:filter_type] == 'sale' %>>For Sale</option>
+        <option value="barter" <%= 'selected' if params[:filter_type] == 'barter' %>>Barter</option>
+        </select>
+
+        <!-- Filter by Price Range -->
+        <input type="number" name="min_price" placeholder="Min Price" value="<%= params[:min_price] %>" step="0.01">
+        <input type="number" name="max_price" placeholder="Max Price" value="<%= params[:max_price] %>" step="0.01">
+
+        <select name="location">
+          <option value="Canada">Canada</option>
+          <option value="US">United States</option>
+        </select>
+
+        <!-- Submit Button -->
+        <button type="submit" class="search-button">Search</button>
+    </form>
+
+<div class="sidebar">
+  <% if current_user.seller_status == 'approved' %>
+    <%= link_to new_product_path, class: 'sidebar-link' do %>
+      <i class="fas fa-plus-circle sidebar-icon"></i> Create a New Listing
+    <% end %>
+  <% end %>
+
+  <%= link_to inbox_index_path, class: 'sidebar-link' do %>
+    <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_count %></span>
+  <% end %>
+
+  <%= link_to root_path, class: 'sidebar-link' do %>
+    <i class="fas fa-bell sidebar-icon"></i> Notifications
+  <% end %>
+
+  <% if current_user.seller_status == 'approved' %>
+    <%= link_to my_listings_products_path, class: 'sidebar-link' do %>
+      <i class="fa-solid fa-tag sidebar-icon"></i> My Listings
+    <% end %>
+  <% end %>
+
+  <%= link_to orders_path, class: 'sidebar-link' do %>
+    <i class="fas fa-shopping-cart sidebar-icon"></i> My Orders<span class="unread-counter"> <%= @orders_count %></span>
+  <% end %>
+
+
+</div>
+
+
+  </div>
+
+  <!-- Products Listing -->
+  <div class="products">
+    <% @products.each do |product| %>
+      <div class="product-card" onclick="window.location='<%= product_path(product) %>'">
+        <% if product.image.attached? %>
+          <%= image_tag product.image, class: 'product-card-image' %>
+        <% end %>
+        <% if product.price %>
+          <p class="product-card-price">CA$<%= product.price %></p>
+        <% else %>
+          <p class="product-card-price">Up for Trade</p>
+        <% end %>
+        <h2 class="product-card-title"><%= product.name %></h2>
+
+      </div>
+    <% end %>
+  </div>
+
+</div>

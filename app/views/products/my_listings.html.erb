@@ -1,0 +1,41 @@
+<%= stylesheet_link_tag 'my_listings', media: 'all' %>
+
+<h1 class="text-center my-4">My Listings</h1>
+
+<div class="search-container">
+  <%= form_with url: my_listings_products_path, method: :get, local: true, class: "search-form" do |form| %>
+    <%= form.text_field :query, placeholder: "Search your listings...", value: params[:query], class: "search-input" %>
+    <button type="submit" class="search-icon-btn">
+      <i class="fas fa-search"></i>
+    </button>
+  <% end %>
+</div>
+
+
+<% if @products.any? %>
+  <div class="listings-grid">
+    <% @products.each do |product| %>
+      <div class="listing-card">
+        <% if product.image.attached? %>
+          <%= image_tag product.image, class: "card-img", alt: product.name %>
+        <% else %>
+          <%= image_tag "placeholder.jpg", class: "card-img", alt: "Placeholder" %>
+        <% end %>
+        <div class="card-content">
+          <h5 class="card-title"><%= product.name %></h5>
+          <p class="card-text"><%= truncate(product.description, length: 50) %></p>
+          <p class="card-price"><%= product.price.present? ? number_to_currency(product.price) : "Barter" %></p>
+          <div class="card-actions">
+            <%= link_to "Edit", edit_product_path(product), class: "btn btn-theme" %>
+            <%= button_to "Delete", product_path(product), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center">
+    <p>You have no listings yet.</p>
+    <%= link_to "Create a new listing", new_product_path, class: "btn btn-success" %>
+  </div>
+<% end %>
