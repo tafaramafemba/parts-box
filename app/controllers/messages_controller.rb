@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
     @message = @chat.messages.new(message_params.merge(sender: current_user))
 
     if @message.save
-      # Message will be broadcast automatically by `after_create_commit` callback
+      render partial: 'messages/message', locals: { message: @message }
     else
       render turbo_stream: turbo_stream.replace("message-form", partial: "shared/errors", locals: { errors: @message.errors })
     end

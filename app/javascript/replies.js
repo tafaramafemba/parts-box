@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbo:load', function () {
   const commentsSection = document.querySelector('.comments-section'); // Target the comments section container
 
   if (commentsSection) {

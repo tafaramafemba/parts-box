@@ -32,7 +32,7 @@
     <p><strong>Part Year:</strong> <%= @trade_request.year %></p>
     <p><strong>Manufacturer Part Number:</strong> <%= @trade_request.manufacturer_part_number %></p>
     <p><strong>Message:</strong> <%= @trade_request.message %></p>
-    <p><strong>Cash Top-Up:</strong> $<%= @trade_request.cash_top_up %></p>
+    <p><strong>Cash Top-Up:</strong> <%= number_to_currency(@trade_request.cash_top_up) %></p>
     <p><strong>Sent At:</strong> <%= @trade_request.created_at.strftime("%d %b %Y, %H:%M") %></p>
   </div>
   <div class="trade-request-actions">

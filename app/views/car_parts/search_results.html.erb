@@ -26,7 +26,7 @@
       <li>
         <a href="<%= result[:url] %>" target="_blank">
           <img src="<%= result[:image_url] %>" alt="<%= result[:title] %>" style="width: 100px; height: 100px;">
-          <p><%= result[:title] %> - $<%= result[:price] %></p>
+            <p><%= result[:title] %> - <%= number_to_currency(result[:price]) %></p>
         </a>
       </li>
     <% end %>

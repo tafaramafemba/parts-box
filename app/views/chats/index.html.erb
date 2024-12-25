@@ -1,0 +1,31 @@
+<%= stylesheet_link_tag 'chat-inbox', media: 'all' %>
+
+<div class="inbox">
+  <h1 class="inbox-title">
+    Your Chats <span class="unread-counter"><%= @unread_count %></span>
+  </h1>
+  <% if @chats.empty? %>
+        <p class="no-chats">You have no chats yet.</p>
+  <% else %> 
+        <% @chats.each do |chat| %>
+            <a href="<%= chat_path(chat.id) %>" class="chat-link">
+            <div class="chat <%= chat.read ? 'read' : 'unread' %>">
+                <div class="chat-header">
+                <div class="chat-sender-info">
+                    <i class="fas fa-user-circle sender-icon"></i>
+                    <span class="chat-sender"><%= chat.other_participant(current_user).username %></span>
+                </div>
+                <span class="chat-product">
+                    <strong>Product:</strong> <%= chat.product.name %>
+                </span>
+                <div class="chat-time-info">
+                    <i class="fas fa-clock time-icon"></i>
+                    <span class="chat-time"><%= chat.created_at.strftime("%H:%M") %></span>
+                </div>
+                </div>
+            </div>
+            </a>
+        <% end %>
+<% end %>
+</div>
+

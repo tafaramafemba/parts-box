@@ -38,6 +38,7 @@ class OrdersController < ApplicationController
   def show
     @order = current_user.orders.find(params[:id])
     @shipping_address = ShippingAddress.find(@order.shipping_address_id)
+    @product = @order.order_items.first.product
   end
 
   def execute_paypal_payment
@@ -121,84 +122,74 @@ class OrdersController < ApplicationController
   
   def create_stripe_session(cart_items, total_price, platform_fee, shipping_fee)
     begin
-      # Calculate line items for Stripe session
+      # Calculate line items without transfer_data
       line_items = cart_items.map do |item|
         product_price_cents = (item.product.price * 100).to_i
-
+        shipping_cents = (item.product.flat_rate_shipping_fee * 100).to_i
+        total_cents = product_price_cents + shipping_cents
+  
         {
           price_data: {
-            currency: 'usd',
+            currency: 'cad',
             product_data: {
-              name: item.product.name,
+              name: item.product.name + ' (Shipping Incl)'
             },
-            unit_amount: product_price_cents,
+            unit_amount: total_cents,
           },
-          quantity: item.quantity,
+          quantity: item.quantity
         }
       end
 
-      # Add platform fee as a separate line item
-      platform_fee_cents = (platform_fee * 100).to_i
       line_items << {
         price_data: {
-          currency: 'usd',
+          currency: 'cad',
           product_data: {
-            name: 'Platform Fee',
+            name: 'Platform Fee'
           },
-          unit_amount: platform_fee_cents
+          unit_amount: (platform_fee * 100).to_i,
         },
-        quantity: 1,
+        quantity: 1
       }
-
-      line_items << {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'Shipping Fee',
-          },
-          unit_amount: (shipping_fee * 100).to_i
-        },
-        quantity: 1,
-      }
-
-      # Create the Stripe session with payment split
+  
+      # Save the order
+      order = Order.create!(
+        user_id: current_user.id,
+        total_price: total_price,
+        platform_fee: platform_fee,
+        shipping_fee: shipping_fee,
+        status: 'pending', # Payment pending
+        stripe_session_id: nil,
+        shipping_address_id: current_user.shipping_address.id
+      )
+  
+      cart_items.each do |item|
+        OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
+      end
+  
+      # Create Stripe Checkout Session
       session = Stripe::Checkout::Session.create({
         payment_method_types: ['card'],
         line_items: line_items,
         mode: 'payment',
-        success_url: root_url + "?session_id={CHECKOUT_SESSION_ID}", # Use actual session ID
+        success_url: root_url + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url: root_url,
         payment_intent_data: {
-          application_fee_amount: platform_fee_cents,
-          transfer_data: {
-            destination: current_user.stripe_account_id, # Assuming the user has a connected Stripe account
-          },
-        },
+          transfer_group: "ORDER_#{order.id}"
+        }
       })
-
-      redirect_to session.url, allow_other_host: true 
-      
-      # Save orders and update stock
-        order = Order.create!(
-          user_id: current_user.id,
-          total_price: total_price,
-          platform_fee: platform_fee,
-          shipping_fee: shipping_fee,
-          status: 'pending', # Payment pending
-          stripe_session_id: session.id, # Store session ID
-          shipping_address_id: current_user.shipping_address.id
-        )
-
-        cart_items.each do |item|
-          product = item.product
-          OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
-          product.update!(stock_quantity: product.stock_quantity - item.quantity)
-        end
-
+  
+      # Update order with Stripe session ID
+      order.update!(stripe_session_id: session.id)
+  
+      # Redirect to Stripe checkout
+      redirect_to session.url, allow_other_host: true
+  
     rescue Stripe::InvalidRequestError => e
       redirect_to carts_path, alert: "Stripe checkout failed: #{e.message}"
     end
   end
+  
+  
   
   def create_paypal_order(cart_items, total_price, platform_fee, shipping_fee)
     begin
@@ -214,7 +205,7 @@ class OrdersController < ApplicationController
       transactions: [{
         amount: {
         total: total_price.round(2).to_s,
-        currency: 'USD',
+        currency: 'cad',
         details: {
           subtotal: (total_price - platform_fee - shipping_fee).round(2).to_s,
           shipping: shipping_fee.round(2).to_s,
@@ -227,7 +218,7 @@ class OrdersController < ApplicationController
           name: item.product.name,
           sku: "SKU-#{item.product.id}",
           price: item.product.price.to_s,
-          currency: 'USD',
+          currency: 'CAD',
           quantity: item.quantity
           }
         end

@@ -1,17 +1,20 @@
 <%= stylesheet_link_tag 'chat' %>
 
-<%= javascript_include_tag 'chat' %>
+<%= javascript_include_tag 'chat', 'data-turbo-track': 'reload', 'data-turbo-cache': 'false' %>
+<%= javascript_include_tag 'chat-submit', "data-turbo-track": "reload", 'data-turbo-cache': 'false' %>
+
 
 
 <div class="chat-container" id="chat-<%= @chat.id %>">
-  <h1>Chat with <%= @chat.seller.username %></h1>
+  <h1>Chat with <%= @chat.buyer == current_user ? @chat.seller.username : @chat.buyer.username %></h1>
   
-    <div id="messages" data-chat-id="<%= @chat.id %>">
+  <div id="messages" data-chat-id="<%= @chat.id %>">
     <%= render @messages %>
-    </div>
+  </div>
 
-
-<%= form_with model: [@chat, Message.new], id: "message-form" do |f| %>
+<%= form_with model: [@chat, Message.new], remote: true, id: "message-form" do |f| %>
   <%= f.text_area :body, placeholder: "Type your message...", required: true %>
   <%= f.submit "Send", class: "btn-send" %>
 <% end %>
+
+</div>

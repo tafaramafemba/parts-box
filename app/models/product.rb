@@ -16,5 +16,22 @@ class Product < ApplicationRecord
   # validates :location, presence: true
   # validates :description, presence: true, length: { minimum: 10 }
   # validates :condition, inclusion: { in: %w(new used), message: "%{value} is not a valid condition" }, presence: true
+  # validate :acceptable_image
+  private
+
+  def acceptable_image
+    return unless image.attached?
+    
+    # Limit file size
+    if image.byte_size > 5.megabytes
+      errors.add(:image, "must be less than 5MB")
+    end
+    
+    # Limit dimensions
+    acceptable_types = ["image/jpeg", "image/png"]
+    unless acceptable_types.include?(image.content_type)
+      errors.add(:image, "must be JPEG or PNG")
+    end
+  end
 
 end

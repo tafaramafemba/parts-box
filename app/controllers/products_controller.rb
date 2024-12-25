@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
@@ -6,6 +7,8 @@ class ProductsController < ApplicationController
     @products = @products.joins(:user).where.not(users: { seller_status: 'suspended' })
     @trade_requests = TradeRequest.where(recipient_id: current_user.id)
     @unread_count = @trade_requests.where(read: false).count
+    @chats = Chat.where("buyer_id = ? OR seller_id = ?", current_user.id, current_user.id)
+    @unread_chats = @chats.where(read: false).count
     @orders = Order.where(user_id: current_user.id, status: 'pending')
     @orders_count = @orders.count
 

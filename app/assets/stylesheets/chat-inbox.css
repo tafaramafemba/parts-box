@@ -1,0 +1,127 @@
+/* General Inbox Styling */
+.inbox {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .inbox-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Link Styling */
+  .chat-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-bottom: 15px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .chat-link:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .chat.unread {
+    background-color: #d1fff1;
+    font-weight: bold;
+    border-left: 4px solid #20C997; /* Your theme's highlight color */
+    border-radius: 8px;
+    padding: 15px 20px;
+  }
+  
+  .chat.read {
+    background-color: #ffffff;
+    font-weight: normal;
+    border-left: 4px solid transparent;
+    border-radius: 8px;
+    padding: 15px 20px;
+  }
+  
+  /* Chat Header */
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Sender Info */
+  .chat-sender-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .sender-icon {
+    font-size: 24px;
+    color: #6c757d;
+  }
+  
+  .chat-sender {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Product Info */
+  .chat-product {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    flex: 1;
+  }
+  
+  /* Time Info */
+  .chat-time-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .time-icon {
+    font-size: 18px;
+    color: #888;
+  }
+  
+  .chat-time {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  /* Hover Effects */
+  .chat:hover {
+    cursor: pointer;
+  }
+  
+  .inbox-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .unread-counter {
+    margin-left: 10px;
+    background-color: #20C997; /* Theme's highlight color */
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  

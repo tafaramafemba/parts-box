@@ -27,3 +27,13 @@
   <p><%= @shipping_address.city %>, <%= @order.shipping_address.state %> <%= @order.shipping_address.postal_code %></p>
   <p><%= @shipping_address.country %></p>
 </div>
+
+<div class="order-container">
+  <h3 class="order-h3">Returns</h3>
+  <p>Which item would you like to return?</p>
+      <% @order.order_items.each do |item| %>
+      <li class="order-list-item">
+        <%= item.product.name %> <%= link_to 'Return', return_order_item_path(item) %>
+    <% end %>
+    </li>
+</div>

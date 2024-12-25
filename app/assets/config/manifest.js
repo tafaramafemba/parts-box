@@ -6,7 +6,6 @@
 //= link like.js
 //= link replies.js
 //= link reply_form_toggle.js
-//= link cart.js
 //= link feature.js
 //= link trade_request_slider.js
 //= link chat.js
@@ -17,6 +16,7 @@
 //= link channels/chat_channel.js
 //= link menu.js
 //= link shipping_field.js
+//= link chat-submit.js
 
 
 

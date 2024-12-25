@@ -35,7 +35,7 @@
     <% @results.each do |result| %>
       <li>
         <a href="<%= result[:url] %>" target="_blank">
-          <%= result[:title] %> - $<%= result[:price] %>
+            <%= result[:title] %> - <%= number_to_currency(result[:price]) %>
         </a>
       </li>
     <% end %>

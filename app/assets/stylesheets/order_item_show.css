@@ -1,0 +1,26 @@
+.order-container {
+    background-color: #fff; /* White background for a clean look */
+    border-radius: 5px; /* Rounded corners for the tile-like effect */
+    padding: 30px; /* Internal padding for better spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-bottom: 20px; 
+  }
+  
+  .or-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .or-h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .seller-details, .support-details {
+    margin-bottom: 20px;
+  }
+  
+  .or-p {
+    margin-bottom: 5px;
+  }

@@ -77,7 +77,7 @@
   <p><strong>Name:</strong> <%= @car_part.name %></p>
   <p><strong>Description:</strong> <%= @car_part.description %></p>
   <p><strong>Tools Required:</strong> <%= @car_part.tools %></p>
-  <p><strong>Estimated Labor Cost:</strong> $<%= @car_part.labor_cost %></p>
+  <p><strong>Estimated Labor Cost:</strong> <%= number_to_currency(@car_part.labor_cost) %></p>
 </div>
 
     <% end %>
@@ -115,8 +115,7 @@
             <img src="<%= result[:image_url] %>" alt="<%= result[:title] %>" class="ebay-result-image">
             <div class="ebay-result-details">
               <p class="ebay-result-title"><%= result[:title] %></p>
-              <p class="ebay-result-price">$<%= result[:price] %></p>
-            </div>
+              <p class="ebay-result-price"><%= number_to_currency(result[:price]) %></p>    </div>
           </a>
         </div>
       <% end %>

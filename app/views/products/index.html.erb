@@ -35,8 +35,12 @@
     <% end %>
   <% end %>
 
+  <%= link_to chats_path, class: 'sidebar-link' do %>
+    <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_chats %></span>
+  <% end %>
+
   <%= link_to inbox_index_path, class: 'sidebar-link' do %>
-    <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_count %></span>
+    <i class="fa-solid fa-right-left sidebar-icon"></i></i> Trade Requests<span class="unread-counter"> <%= @unread_count %></span>
   <% end %>
 
   <%= link_to root_path, class: 'sidebar-link' do %>
@@ -64,10 +68,10 @@
     <% @products.each do |product| %>
       <div class="product-card" onclick="window.location='<%= product_path(product) %>'">
         <% if product.image.attached? %>
-          <%= image_tag product.image, class: 'product-card-image' %>
+            <%= image_tag product.image, class: 'product-card-image', size: "200x200" %>
         <% end %>
         <% if product.price %>
-          <p class="product-card-price">CA$<%= product.price %></p>
+            <p class="product-card-price"><%= number_to_currency(product.price) %></p>
         <% else %>
           <p class="product-card-price">Up for Trade</p>
         <% end %>

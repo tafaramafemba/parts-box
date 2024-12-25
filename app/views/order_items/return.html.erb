@@ -1,0 +1,37 @@
+<%= stylesheet_link_tag "order_item_show", "data-turbo-track": "reload" %>
+
+<div class="order-container">
+  <h1 class="or-title">Return Order Item</h1>
+  <h3 class="or-h3">For Returns for this item, please see seller details below</h3>
+
+  <div class="seller-details"> 
+    <p class="or-p">
+      <strong>Name:</strong>
+      <%= @seller.first_name %>
+    </p>
+
+    <p class="or-p">
+      <strong>Email:</strong>
+      <%= @seller.email %>
+    </p>
+
+    <p class="or-p">
+      <strong>Phone:</strong>
+      <%= @seller.phone_number %>
+    </p>
+  </div>
+
+  <p class="or-p">If you are unable to contact the seller or reach an amicable solution, please get in touch with us using the details below:</p>
+
+  <div class="support-details"> 
+    <p class="or-p">
+      <strong>Support Email:</strong>
+      support@carttocar.app
+    </p>
+
+    <p class="or-p">
+      <strong>Support Phone:</strong>
+      1-000-000-0000
+    </p>
+  </div>
+</div>

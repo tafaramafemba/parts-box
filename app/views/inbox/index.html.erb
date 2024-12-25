@@ -3,7 +3,7 @@
 
 <div class="inbox">
     <h1 class="inbox-title">
-        Your Inbox <span class="unread-counter"><%= @unread_count %></span>
+        Trade Requests <span class="unread-counter"><%= @unread_count %></span>
     </h1>
   <% @trade_requests.each do |request| %>
     <a href="<%= inbox_path(request.id) %>" class="trade-request-link">

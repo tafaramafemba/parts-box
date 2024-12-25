@@ -4,6 +4,7 @@
 
 
 <%= javascript_include_tag 'chat', "data-turbo-track": "reload" %>
+<%= javascript_include_tag 'chat-submit', "data-turbo-track": "reload" %>
 
 
 
@@ -14,7 +15,7 @@
     <% end %>
     <h1 class="product-title"><%= @product.name %></h1>
     <% if @product.price.present? %>
-      <p class="product-price">Price: <strong>$<%= @product.price %></strong></p>
+      <p class="product-price">Price: <strong><%= number_to_currency(@product.price) %></strong></p>
     <% else %>
       <p class="product-barter-terms">Barter Terms: <%= @product.barter_terms %></p>
     <% end %>

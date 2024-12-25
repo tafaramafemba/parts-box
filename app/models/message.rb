@@ -3,6 +3,13 @@ class Message < ApplicationRecord
   belongs_to :sender, class_name: 'User'
 
   after_create_commit do
-    broadcast_append_to "chat_#{chat_id}", target: "messages", partial: "messages/message", locals: { message: self }
+    ActionCable.server.broadcast("chat_#{chat_id}", render_message(self))
   end
+  
+  private
+  
+  def render_message(message)
+    ApplicationController.renderer.render(partial: 'messages/message', locals: { message: message })
+  end
+  
 end

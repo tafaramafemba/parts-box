@@ -35,6 +35,12 @@ Rails.application.routes.draw do
   post 'send_verification_code', to: 'seller_applications#send_verification_code'
   post 'verify_email', to: 'verifications#verify_email'
 
+  resources :order_items do
+    member do
+      get 'return', to: 'order_items#return'
+    end
+  end
+
 
   namespace :admin do
     resources :seller_applications, only: [:index, :show, :update]
@@ -47,7 +53,7 @@ Rails.application.routes.draw do
   resources :transactions, only: %i[create index]
   resources :trade_requests, only: %i[create destroy]
   resources :inbox, only: %i[index show destroy]
-  resources :chats, only: [:create, :show] do
+  resources :chats, only: [:index, :create, :show] do
     resources :messages, only: [:create]
   end
   

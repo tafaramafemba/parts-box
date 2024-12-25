@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbo:load', function () {
     const replyButtons = document.querySelectorAll('.reply-button');
   
     replyButtons.forEach(function (button) {

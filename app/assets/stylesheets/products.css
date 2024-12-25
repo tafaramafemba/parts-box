@@ -9,7 +9,6 @@
   
   .marketplace-container {
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
   }
   
@@ -91,15 +90,15 @@
     /* display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
     justify-content: center;
   }
   
   .product-card {
-    flex: 1 1 calc(33.33% - 40px);
-    padding: 20px;
+    flex: 1 1 calc(20.33% - 20px);
+    padding: 5px;
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -119,7 +118,7 @@
   
   .product-card-image {
     width: 100%;
-    height: auto;
+    max-height: 125px;
     border-radius: 5px;
     margin-bottom: 10px;
   }
@@ -166,6 +165,10 @@
   
     .product-card-image {
       width: 100%;
+    }
+
+    .product-card {
+      padding: 20px;
     }
   
     .sidebar h2 {

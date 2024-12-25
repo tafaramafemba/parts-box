@@ -1,6 +1,11 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    # Fetch all chats where the current user is either the buyer or seller
+    @chats = Chat.where("buyer_id = ? OR seller_id = ?", current_user.id, current_user.id)
+  end
+
   def create
     @chat = Chat.find_or_create_by(
       buyer_id: current_user.id,

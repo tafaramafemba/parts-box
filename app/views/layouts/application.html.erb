@@ -7,6 +7,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_importmap_tags %>
+    <%= action_cable_meta_tag %>
 
 
     <%= yield :head %>
@@ -74,7 +75,11 @@
       <div class="cart-container">
       <%= link_to carts_path, class: 'cart-link' do %>
         <i class="fas fa-shopping-cart cart-icon"></i>
-        <span class="cart-count"><%= current_user.carts.count %></span>
+        <% if user_signed_in? %>
+          <span class="cart-count"><%= current_user.carts.count %></span>
+          <% else %>
+          <span class="cart-count">0</span>
+          <% end %>
       <% end %>
     </div>
 </header>

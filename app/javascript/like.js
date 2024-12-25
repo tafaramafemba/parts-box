@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbo:load', function () {
     const blogPostsContainer = document.querySelector('.blog-container'); // Target the correct container
   
     if (blogPostsContainer) {
