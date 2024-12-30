@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag 'my_listings', media: 'all' %>
 
-<h1 class="text-center my-4">My Listings</h1>
+<h1 class="listings-header">My Listings</h1>
 
 <div class="search-container">
   <%= form_with url: my_listings_products_path, method: :get, local: true, class: "search-form" do |form| %>
@@ -23,7 +23,6 @@
         <% end %>
         <div class="card-content">
           <h5 class="card-title"><%= product.name %></h5>
-          <p class="card-text"><%= truncate(product.description, length: 50) %></p>
           <p class="card-price"><%= product.price.present? ? number_to_currency(product.price) : "Barter" %></p>
           <div class="card-actions">
             <%= link_to "Edit", edit_product_path(product), class: "btn btn-theme", data: { turbo: false } %>
