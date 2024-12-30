@@ -9,14 +9,14 @@ class Product < ApplicationRecord
   has_many :order_items
 
 
-  # validates :make, presence: true
-  # validates :model, presence: true
-  # validates :year, format: { with: /\A\d{4}\z/, message: "must be a valid year" }, allow_blank: true
-  # validates :price, numericality: { greater_than_or_equal_to: 0 }
-  # validates :location, presence: true
-  # validates :description, presence: true, length: { minimum: 10 }
+  validates :make, presence: true
+  validates :model, presence: true
+  validates :year, format: { with: /\A\d{4}\z/, message: "must be a valid year" }, allow_blank: true
+  validates :price, numericality: { greater_than_or_equal_to: 0 }
+  validates :location, presence: true
+  validates :description, presence: true, length: { minimum: 10 }
   # validates :condition, inclusion: { in: %w(new used), message: "%{value} is not a valid condition" }, presence: true
-  # validate :acceptable_image
+  validate :acceptable_image
   private
 
   def acceptable_image
