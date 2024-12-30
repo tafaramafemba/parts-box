@@ -66,9 +66,11 @@
   <!-- Products Listing -->
   <div class="products">
     <% @products.each do |product| %>
-      <div class="product-card" onclick="window.location='<%= product_path(product) %>'">
+      <div class="product-card" onclick="window.location='<%= product_path(product) %>'" size="200x200">
         <% if product.image.attached? %>
             <%= image_tag product.image, class: 'product-card-image', size: "200x200" %>
+        <% else %>
+          <%= image_tag "placeholder.jpg", class: "product-card-image", alt: "Placeholder" %>
         <% end %>
         <% if product.price %>
             <p class="product-card-price"><%= number_to_currency(product.price) %></p>

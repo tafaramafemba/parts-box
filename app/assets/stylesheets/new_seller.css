@@ -36,4 +36,15 @@
   .btn-primary:hover {
     background-color: #003f82;
   }
-  
+
+  .iti, .iti--allow-dropdown, .iti--separate-dial-code {
+    margin-top: 15px;
+    width: 103%;
+  }
+
+  @media screen and (max-width: 768px) {
+    .iti, .iti--allow-dropdown, .iti--separate-dial-code {
+      width: 107%;
+    }
+    
+  }
