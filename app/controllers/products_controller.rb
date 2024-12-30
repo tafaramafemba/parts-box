@@ -1,9 +1,9 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product, only: %i[show edit update destroy]
+  before_action :set_product, only: %i[show edit update destroy delist relist]
 
   def index
-    @products = Product.all
+    @products = Product.where(listing_status: true)
     @products = @products.joins(:user).where.not(users: { seller_status: 'suspended' })
     @trade_requests = TradeRequest.where(recipient_id: current_user.id)
     @unread_count = @trade_requests.where(read: false).count
@@ -11,7 +11,6 @@ class ProductsController < ApplicationController
     @unread_chats = @chats.where(read: false).count
     @orders = Order.where(user_id: current_user.id, status: 'pending')
     @orders_count = @orders.count
-
 
   
     # Filter by name
@@ -90,6 +89,16 @@ class ProductsController < ApplicationController
     if params[:query].present?
       @products = @products.where("name LIKE ? OR description LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
     end
+  end
+
+  def delist
+    @product.update(listing_status: false)
+    redirect_to my_listings_products_path, notice: 'Product was successfully delisted.'
+  end
+
+  def relist
+    @product.update(listing_status: true)
+    redirect_to my_listings_products_path, notice: 'Product was successfully relisted.'
   end
 
   private

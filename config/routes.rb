@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     collection do
       get :my_listings
     end
+    member do
+      patch :delist
+      patch :relist
+    end
   end
 
   get '/user_agreement', to: 'policies#user_agreement'

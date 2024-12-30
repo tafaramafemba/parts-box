@@ -27,7 +27,11 @@
           <p class="card-price"><%= product.price.present? ? number_to_currency(product.price) : "Barter" %></p>
           <div class="card-actions">
             <%= link_to "Edit", edit_product_path(product), class: "btn btn-theme", data: { turbo: false } %>
-            <%= button_to "Delete", product_path(product), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+            <% if product.listing_status %>
+                  <%= button_to "Delist", delist_product_path(product), method: :patch, data: { confirm: "Are you sure you want to delist this product?" }, class: "btn btn-danger", params: { product: { listing_status: false } } %>
+            <% else %>
+              <%= button_to "Re-List", relist_product_path(product), method: :patch, class: "btn btn-success", data: { confirm: "Are you sure you want to delist this product?" }, class: "btn btn-warning", params: { product: { listing_status: true } } %>
+            <% end %>          
           </div>
         </div>
       </div>
