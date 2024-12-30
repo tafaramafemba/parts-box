@@ -17,6 +17,7 @@
 //= link menu.js
 //= link shipping_field.js
 //= link chat-submit.js
+//= link tel-input.js
 
 
 

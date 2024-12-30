@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag "new_seller", "data-turbo-track": "reload" %>
+<%= javascript_include_tag "tel-input", "data-turbo-track": "reload" %>
 
 <div class="seller-container">
   <h2>Apply to Become a Seller</h2>
@@ -27,8 +28,8 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :phone_number, "Phone Number" %>
-      <%= f.text_field :phone_number, required: true, class: 'form-control' %>
+      <%= f.label :phone_number, "Phone Number" %><br>
+      <%= f.phone_field :phone_number, required: true, class: 'form-control phonenum', id: 'phone' %>
     </div>
 
     <div class="form-group">

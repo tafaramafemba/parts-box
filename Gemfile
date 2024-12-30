@@ -28,6 +28,7 @@ gem 'stripe'
 gem 'paypal-sdk-rest'
 gem 'certifi'
 gem 'image_processing', "~> 1.2"
+gem 'intl-tel-input-rails'
 
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
