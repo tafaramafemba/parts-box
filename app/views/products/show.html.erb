@@ -1,6 +1,7 @@
 <%= stylesheet_link_tag 'inbox', media: 'all' %>
 <%= stylesheet_link_tag 'chat', media: 'all' %>
 <%= stylesheet_link_tag 'slider', media: 'all' %>
+<%= stylesheet_link_tag 'ratings', media: 'all' %>
 
 
 <%= javascript_include_tag 'chat', "data-turbo-track": "reload" %>
@@ -119,33 +120,38 @@
   <h3>Seller Information</h3>
   <p><strong>Username:</strong> <%= @product.user.username %></p>
   <p><strong>Joined:</strong> <%= @product.user.created_at.strftime("%B %Y") %></p>
-  <p><strong>Rating:</strong> <%= render 'shared/star_rating', rating: @product.user.average_rating %> (<%= @product.user.average_rating %>)</p>
-
+  <div class="ratings-container">
+    <p><strong>Average Rating:</strong><%= render 'shared/star_rating', rating: @product.user.average_rating %></p>
+    <p>(<%= @product.user.reviews.count %>)</p>
+    
+  </div>
   <!-- Display reviews -->
   <div class="seller-reviews">
     <h4>Reviews</h4>
-    <ul>
-      <% @product.user.reviews.each do |review| %>
-        <li>
-          <%= render 'shared/star_rating', rating: review.rating %>
-          <p><strong><%= review.user.username %></strong></p>
-          <p><%= review.comment %></p>
-        </li>
-      <% end %>
-    </ul>
+    <div style="max-height: 300px; overflow-y: auto;">
+      <ul class="reviews-list">
+        <% @product.user.reviews.each do |review| %>
+          <li>
+            <p><strong><%= review.user.username %></strong></p>
+            <%= render 'shared/star_rating', rating: review.rating %>
+            <p><%= review.comment %></p>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 
   <!-- Add a review -->
   <div class="add-review">
-    <h4>Leave a Review</h4>
+    <h2>Leave a Review</h2>
     <%= form_with(model: [@product.user, Review.new], local: true) do |f| %>
-      <div>
-        <%= f.label :rating, "Rating (1 to 5 stars)" %>
-        <%= f.number_field :rating, min: 1, max: 5, step: 1 %>
+      <div class="form-group">
+        <%= f.label :rating, "Rating (1 to 5 stars)", class: 'form-label' %>
+        <%= f.number_field :rating, min: 1, max: 5, step: 1, class: 'form-select', required: true %>
       </div>
-      <div>
-        <%= f.label :comment, "Comment" %>
-        <%= f.text_area :comment, rows: 3 %>
+      <div class="form-group">
+        <%= f.label :comment, "Comment", class: 'form-label' %>
+        <%= f.text_area :comment, rows: 3, class: 'form-input' %>
       </div>
       <%= f.submit "Submit Review", class: "submit-button" %>
     <% end %>

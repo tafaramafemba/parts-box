@@ -5,3 +5,14 @@
 <div class="star-rating">
   <% full_stars.times { concat content_tag(:span, "★", class: "star full") } %>
 </div>
+
+<style>
+  .star-rating {
+    list-style-type: none; /* Remove bullet points */
+  }
+  .star.full {
+    color: #DAA520; /* Deep gold color */
+    list-style-type: none; /* Remove bullet points */
+    font-size: 2em; /* Increase the size of the stars */
+  }
+</style>

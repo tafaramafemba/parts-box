@@ -1,28 +1,60 @@
-.star-rating {
-    display: flex;
-    gap: 4px;
-  }
-  
-  .star {
-    font-size: 20px;
-    color: #ccc;
-  }
-  
-  .star.full {
-    color: #ffc107; /* Gold for filled stars */
-  }
-  
-  .star.half {
-    color: #ffc107;
-    position: relative;
-  }
-  
-  .star.half::after {
-    content: "★";
-    color: #ccc;
-    position: absolute;
-    left: 10px; /* Adjust for proper alignment */
-    width: 50%;
-    overflow: hidden;
-  }
-  
+.reviews-list {
+  list-style: none;
+}
+
+.ratings-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratings-container p {
+  align-items: center;
+}
+
+.add-review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 20px auto; /* Center the div horizontally */
+  padding: 20px;
+  font-size: 15px;
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 20px;
+  width: 100%; /* Ensure form group spans full width */
+}
+
+/* Form Label */
+.form-label {
+  margin-top: 10px;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #343a40;
+}
+
+/* Text fields and Select dropdown */
+.form-input, .form-select {
+  width: 100%; /* Make input fields and select dropdown full width */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f8f9fa;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: #f97115;
+  box-shadow: 0 0 8px rgba(32, 201, 151, 0.3);
+}
