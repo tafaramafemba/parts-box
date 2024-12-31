@@ -15,11 +15,7 @@
       <%= image_tag @product.image, class: "product-image" %>
     <% end %>
     <h1 class="product-title"><%= @product.name %></h1>
-    <% if @product.price.present? %>
-      <p class="product-price">Price: <strong><%= number_to_currency(@product.price) %></strong></p>
-    <% else %>
-      <p class="product-barter-terms">Barter Terms: <%= @product.barter_terms %></p>
-    <% end %>
+    <p class="product-price">Price: <strong><%= number_to_currency(@product.price) %></strong></p>
     <p class="product-condition">Condition: <strong><%= @product.condition %></strong></p>
     <p class="product-make">Make: <strong><%= @product.make %></strong></p>
     <p class="product-model">Model: <strong><%= @product.model %></strong></p>
@@ -53,7 +49,6 @@
     <div class="buttons-container">
       <% if @product.price.present? %>
       <div>
-        <button id="open-chat" data-action="click->chat#open" class="open-chat-button">Chat with Seller</button>
           <%= form_with url: carts_path, method: :post, local: true do |f| %>
             <%= f.hidden_field :product_id, value: @product.id %>
             <%= f.number_field :quantity, value: 1, min: 1, max: @product.stock_quantity, class: "form-control", disabled: @product.stock_quantity <= 0 %>

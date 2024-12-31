@@ -8,20 +8,22 @@
         <!-- Search by Name -->
         <input type="text" name="query" placeholder="Search products..." value="<%= params[:query] %>">
 
-        <!-- Filter by Type -->
-        <select name="filter_type">
-        <option value="all" <%= 'selected' if params[:filter_type] == 'all' || params[:filter_type].blank? %>>All</option>
-        <option value="sale" <%= 'selected' if params[:filter_type] == 'sale' %>>For Sale</option>
-        <option value="barter" <%= 'selected' if params[:filter_type] == 'barter' %>>Barter</option>
-        </select>
-
         <!-- Filter by Price Range -->
         <input type="number" name="min_price" placeholder="Min Price" value="<%= params[:min_price] %>" step="0.01">
         <input type="number" name="max_price" placeholder="Max Price" value="<%= params[:max_price] %>" step="0.01">
 
         <select name="location">
-          <option value="Canada">Canada</option>
-          <option value="US">United States</option>
+          <option value="Harare">Harare</option>
+          <option value="Mutare">Mutare</option>
+          <option value="Bulawayo">Bulawayo</option>
+          <option value="Gweru">Gweru</option>
+          <option value="Masvingo">Masvingo</option>
+          <option value="Kwekwe">Kwekwe</option>
+          <option value="Chitungwiza">Chitungwiza</option>
+          <option value="Marondera">Marondera</option>
+          <option value="Norton">Norton</option>
+          <option value="Chegutu">Chegutu</option>
+          <option value="Bindura">Bindura</option>
         </select>
 
         <!-- Submit Button -->
@@ -35,17 +37,13 @@
     <% end %>
   <% end %>
 
-  <%= link_to chats_path, class: 'sidebar-link' do %>
-    <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_chats %></span>
-  <% end %>
+  <%#= link_to chats_path, class: 'sidebar-link' do %>
+    <%# <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_chats %>
+  <%# end %>
 
-  <%= link_to inbox_index_path, class: 'sidebar-link' do %>
-    <i class="fa-solid fa-right-left sidebar-icon"></i></i> Trade Requests<span class="unread-counter"> <%= @unread_count %></span>
-  <% end %>
-
-  <%= link_to root_path, class: 'sidebar-link' do %>
-    <i class="fas fa-bell sidebar-icon"></i> Notifications
-  <% end %>
+  <%#= link_to inbox_index_path, class: 'sidebar-link' do %>
+    <%# <i class="fa-solid fa-right-left sidebar-icon"></i></i> Trade Requests<span class="unread-counter"> <%= @unread_count %>
+  <%# end %>
 
   <% if current_user.seller_status == 'approved' %>
     <%= link_to my_listings_products_path, class: 'sidebar-link' do %>

@@ -21,10 +21,8 @@ class OrdersController < ApplicationController
     case payment_method
     when 'stripe'
       create_stripe_session(cart_items, total_price, platform_fee, shipping_fee)
-      Rails.logger.info("Stripe payment initiated.")
-    when 'paypal'
-      create_paypal_order(cart_items, total_price, platform_fee, shipping_fee)
-      Rails.logger.info("PayPal payment initiated.")
+    when 'cod'
+      create_cod_session(cart_items, total_price, platform_fee, shipping_fee)
     else
       redirect_to carts_path, alert: "Invalid payment method selected."
     end
@@ -98,19 +96,29 @@ class OrdersController < ApplicationController
   end
 
   def calculate_shipping_fee(cart_items)
-    cart_items.sum do |item|
-      case item.product.shipping_fee_type
-      when 'flat_rate'
-        item.product.flat_rate_shipping_fee
-      when 'calculated'
-        # Add logic for calculated shipping (e.g., based on weight, dimensions, and destination)
-        calculate_dynamic_shipping(item.product)
-      when 'free'
-        0
-      else
-        0
-      end
-    end
+    category_shipping_fees = {
+      'Engine Components' => 10.0,
+      'Transmission & Drivetrain' => 12.0,
+      'Suspension & Steering' => 8.0,
+      'Braking System' => 7.0,
+      'Electrical & Lighting' => 5.0,
+      'Exhaust System' => 9.0,
+      'Cooling System' => 11.0,
+      'Fuel System' => 6.0,
+      'Interior Parts' => 4.0,
+      'Exterior Parts' => 6.0,
+      'Body Parts' => 15.0,
+      'Wheels & Tires' => 14.0,
+      'Heating, Ventilation & Air Conditioning (HVAC)' => 13.0,
+      'Accessories' => 3.0,
+      'Performance Parts' => 20.0
+    }
+
+    highest_shipping_fee = cart_items.map do |item|
+      category_shipping_fees[item.product.category] || 0
+    end.max
+
+    highest_shipping_fee
   end
   
   def calculate_dynamic_shipping(product)
@@ -241,6 +249,29 @@ class OrdersController < ApplicationController
   
   def shipping_address_params
     params.require(:shipping_address).permit(:address_line1, :address_line2, :city, :state, :postal_code, :country)
+  end
+
+  def create_cod_session(cart_items, total_price, platform_fee, shipping_fee)
+    # Save the order
+    order = Order.create!(
+      user_id: current_user.id,
+      total_price: total_price,
+      platform_fee: platform_fee,
+      shipping_fee: shipping_fee,
+      status: 'pending', # Payment pending
+      shipping_address_id: current_user.shipping_address.id
+    )
+
+    cart_items.each do |item|
+      OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
+    end
+
+    current_user.carts.destroy_all
+
+    flash[:notice] = "Order confirmed. Your item is on its way!"
+
+    redirect_to orders_path
+
   end
   
 end

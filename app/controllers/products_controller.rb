@@ -5,26 +5,12 @@ class ProductsController < ApplicationController
   def index
     @products = Product.where(listing_status: true)
     @products = @products.joins(:user).where.not(users: { seller_status: 'suspended' })
-    @trade_requests = TradeRequest.where(recipient_id: current_user.id)
-    @unread_count = @trade_requests.where(read: false).count
-    @chats = Chat.where("buyer_id = ? OR seller_id = ?", current_user.id, current_user.id)
-    @unread_chats = @chats.where(read: false).count
     @orders = Order.where(user_id: current_user.id, status: 'pending')
     @orders_count = @orders.count
 
-  
     # Filter by name
     if params[:query].present?
       @products = @products.where("name LIKE ?", "%#{params[:query]}%")
-    end
-  
-    # Filter by type (for sale or barter)
-    if params[:filter_type].present? && params[:filter_type] != 'all'
-      if params[:filter_type] == 'sale'
-        @products = @products.where.not(price: nil) # Products with a price are "for sale"
-      elsif params[:filter_type] == 'barter'
-        @products = @products.where.not(barter_terms: nil) # Products with barter terms
-      end
     end
   
     # Filter by price (budget)
@@ -38,7 +24,7 @@ class ProductsController < ApplicationController
       @products = @products.where(location: params[:location])
     end
   end
-  
+
   def show
     @chat = Chat.find_by(product_id: @product.id, buyer_id: current_user.id) # Check if a chat exists
     
@@ -108,6 +94,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :barter_terms, :image, :location, :make, :model, :year, :stock_quantity, :manufacturer_part_number, :condition, :shipping_fee_type, :flat_rate_shipping_fee, :weight, :dimensions, :shipping_address, additional_images: [])
+    params.require(:product).permit(:name, :description, :price, :barter_terms, :image, :location, :category, :make, :model, :year, :stock_quantity, :manufacturer_part_number, :condition, :shipping_fee_type, :flat_rate_shipping_fee, :weight, :dimensions, :shipping_address, additional_images: [])
   end
 end

@@ -12,11 +12,32 @@
   }
   
   .form-group {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 15px;
   }
   
   .form-actions {
     margin-top: 20px;
+  }
+
+  .form-container select {
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px; /* Room for custom arrow */
+    cursor: pointer;
+  }
+  
+  /* Hover effect for select box */
+  .form-select:hover {
+    border-color: #f97115;
+  }
+  
+  /* Focus effect for select box */
+  .form-select:focus {
+    border-color: #f97115;
+    box-shadow: 0 0 8px rgba(32, 201, 151, 0.3);
   }
   
   .btn-primary {
@@ -58,6 +79,10 @@
     .btn-stripe {
       text-align: center;
         width: 80%;
+    }
+
+    .form-container select {
+      width: 70%;
     }
     
   }

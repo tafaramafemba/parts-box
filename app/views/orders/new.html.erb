@@ -41,11 +41,13 @@
         <%= f.label :payment_method_stripe do %>
           <%= image_tag("stripe-payment-icon.png", alt: "Stripe", class: "payment-method-image", size: "200x75") %>
         <% end %>
+        <div>
+            <%= f.radio_button :payment_method, 'cod', id: 'payment_method_cod' %>
+            <%= f.label :payment_method_cod do %>
+              Cash On Delivery
+            <% end %>
+        </div>
       </div>
-      <%# <div>
-        <%= f.radio_button :payment_method, 'paypal', id: 'payment_method_paypal' %>
-        <%# <%= f.label :payment_method_paypal, "PayPal" %>
-      <%# </div> %>
     </div>
 
     <h3>Shipping Details</h3>

@@ -4,6 +4,11 @@
 <div class="form-container">
   <%= form_with model: @product, data: { turbo: false }, local: true do |form| %>
     <div class="form-group">
+      <%= form.label :category, 'Category' %>
+      <%= form.select :category, ['Engine Components', 'Transmission & Drivetrain', 'Suspension & Steering', 'Braking System', 'Electrical & Lighting', 'Exhaust System', 'Cooling System', 'Fuel System', 'Interior Parts', 'Exterior Parts', 'Body Parts', 'Wheels & Tires', 'Heating, Ventilation & Air Conditioning (HVAC)', 'Accessories', 'Performance Parts'], class: 'form-select' %>
+    </div>
+
+    <div class="form-group">
       <%= form.label :name, 'Part Name' %>
       <%= form.text_field :name, class: 'form-control' %>
     </div>
@@ -39,27 +44,19 @@
     </div>
 
     <div class="form-group">
-      <%= form.label :price, 'Price (optional)' %>
+      <%= form.label :price, 'Price' %>
       <%= form.number_field :price, class: 'form-control' %>
     </div>
 
     <div class="form-group">
       <%= form.label :location, 'Location' %>
-      <%= form.select :location, ['Canada', 'US'], class: 'form-control' %>
+      <%= form.select :location, ['Harare', 'Bulawayo', 'Chitungwiza', 'Mutare', 'Gweru', 'Masvingo', 'Kwekwe', 'Marondera', 'Chegutu', 'Norton', 'Bindura'], class: 'form-control' %>
     </div>
-
-    <div class="form-group">
-      <%= form.label :barter_terms, 'Barter Terms (optional)' %>
-      <%= form.text_area :barter_terms, placeholder: 'What are you willing to trade for?', class: 'form-control' %>
-    </div>
-
 
     <div class="form-group">
       <%= form.label :stock_quantity, 'Stock Quantity' %>
       <%= form.number_field :stock_quantity, class: 'form-control' %>
     </div>
-
-
 
 
     <div class="form-group">
@@ -72,33 +69,9 @@
       <%= form.file_field :additional_images, multiple: true, class: 'form-control' %>
     </div>
 
-    <h2>Shipping</h2>
-
-    <div class="form-group">
-    <%= form.label :shipping_fee_type, 'Shipping Fee Type' %>
-    <%= form.select :shipping_fee_type, ['flat_rate', 'calculated', 'free'], class: 'form-control' %>
-  </div>
-
-  <div id="flat-rate-fields" class="form-group" style="display: none;">
-    <%= form.label :flat_rate_shipping_fee, 'Flat Rate Shipping Fee' %>
-    <%= form.number_field :flat_rate_shipping_fee, class: 'form-control', step: 0.01 %>
-  </div>
-
-  <div id="calculated-fields" style="display: none;">
-    <div class="form-group">
-      <%= form.label :weight, 'Weight (kg)' %>
-      <%= form.number_field :weight, class: 'form-control', step: 0.01 %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :dimensions, 'Dimensions (L x W x H in cm)' %>
-      <%= form.text_field :dimensions, placeholder: 'e.g., 30x20x10', class: 'form-control' %>
-    </div>
-  </div>
-
   <div class="form-group">
-    <%= form.label :shipping_address, 'Where is this product being shipped from?' %>
-    <%= form.text_area :shipping_address, class: 'form-control', placeholder: 'Enter a specific shipping address for this product' %>
+    <%= form.label :shipping_address, 'Where is this product being delivered from?' %>
+    <%= form.text_area :shipping_address, class: 'form-control', placeholder: 'Enter a specific address for this product' %>
   </div>
 
     <%= form.submit 'List Item', class: 'btn btn-primary' %>
