@@ -5,6 +5,6 @@ class TradeRequestMailer < ApplicationMailer
     @sender = sender
     @trade = trade 
 
-    mail(to: @recipient.email, subject: "You Have a New Trade Request on Cart To Car")
+    mail(to: @recipient.email, subject: "You Have a New Trade Request on Parts Box")
   end
 end

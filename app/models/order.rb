@@ -8,5 +8,4 @@ class Order < ApplicationRecord
 
   validates :user_id, presence: true
   validates :shipping_address_id, presence: true
-  validates :order_items, presence: true
 end

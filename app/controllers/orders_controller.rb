@@ -39,47 +39,6 @@ class OrdersController < ApplicationController
     @product = @order.order_items.first.product
   end
 
-  def execute_paypal_payment
-    payment_id = params[:paymentId]
-    payer_id = params[:PayerID]
-
-    payment = PayPal::SDK::REST::Payment.find(payment_id)
-
-  begin
-    if payment.execute(payer_id: payer_id)
-      cart_items = current_user.carts.includes(:product)
-      platform_fee = calculate_platform_fee(cart_items)
-      shipping_fee = calculate_shipping_fee(cart_items)
-      total_price = cart_items.sum { |item| item.product.price * item.quantity } + platform_fee + shipping_fee
-
-      # Save orders and update stock
-      order = Order.create!(
-        user_id: current_user.id,
-        total_price: total_price,
-        platform_fee: platform_fee,
-        shipping_fee: shipping_fee,
-        status: 'pending', # Payment pending
-        paypal_payment_id: payment.id, # Store payment ID
-        )
-
-      cart_items.each do |item|
-        product = item.product
-        OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
-        product.update!(stock_quantity: product.stock_quantity - item.quantity)
-      end
-
-      current_user.carts.destroy_all
-
-      flash[:notice] = "Order confirmed. Your item is on its way!"
-
-      redirect_to orders_path
-    end
-
-    rescue PayPal::SDK::Core::Exceptions::ConnectionError => e
-      redirect_to carts_path, alert: "PayPal checkout failed: #{e.message}"
-    end
-  end
-
   def update_shipping_address
     if current_user.shipping_address.update(shipping_address_params)
     else
@@ -196,56 +155,7 @@ class OrdersController < ApplicationController
       redirect_to carts_path, alert: "Stripe checkout failed: #{e.message}"
     end
   end
-  
-  
-  
-  def create_paypal_order(cart_items, total_price, platform_fee, shipping_fee)
-    begin
-      payment = PayPal::SDK::REST::Payment.new({
-      intent: 'sale',
-      payer: {
-        payment_method: 'paypal'
-      },
-      redirect_urls: {
-        return_url: execute_paypal_payment_url, # URL to handle payment success
-        cancel_url: carts_url   # URL to handle payment cancellation
-      },
-      transactions: [{
-        amount: {
-        total: total_price.round(2).to_s,
-        currency: 'cad',
-        details: {
-          subtotal: (total_price - platform_fee - shipping_fee).round(2).to_s,
-          shipping: shipping_fee.round(2).to_s,
-          handling_fee: platform_fee.round(2).to_s
-        }
-        },
-        item_list: {
-        items: cart_items.map do |item|
-          {
-          name: item.product.name,
-          sku: "SKU-#{item.product.id}",
-          price: item.product.price.to_s,
-          currency: 'CAD',
-          quantity: item.quantity
-          }
-        end
-        },
-        description: "Purchase from Cart to Car"
-      }]
-      })
-      
-      if payment.create
-      # Redirect user to PayPal for approval
-      approval_url = payment.links.find { |link| link.rel == 'approval_url' }.href
-      redirect_to approval_url, allow_other_host: true
-      else
-      redirect_to carts_path, alert: "PayPal checkout failed. Please try again."
-      end
-    rescue PayPal::SDK::Core::Exceptions::ConnectionError => e
-      redirect_to carts_path, alert: "PayPal checkout failed: #{e.message}"
-    end
-  end
+
   
   def shipping_address_params
     params.require(:shipping_address).permit(:address_line1, :address_line2, :city, :state, :postal_code, :country)
@@ -263,17 +173,45 @@ class OrdersController < ApplicationController
     )
 
     cart_items.each do |item|
+      product = item.product
+      seller = product.user # Assuming 'user' is the seller of the product
       OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
+      product.update!(stock_quantity: product.stock_quantity - item.quantity)
+      SellerMailer.order_placed(order, seller, item).deliver_now
     end
 
     current_user.carts.destroy_all
 
     flash[:notice] = "Order confirmed. Your item is on its way!"
+    OrderMailer.order_confirmation(order).deliver_now
+    whatsapp_notification(order, total_price)
 
     redirect_to orders_path
 
   end
+
+
+
+
+  def whatsapp_notification(order, total_price)
+    seller_id = order.order_items.first.product.user_id
+    sellerInformation = SellerInformation.find_by(user_id: seller_id)
+    seller_phone_number = sellerInformation.phone_number
+    instance_id = ENV['ULTRAMSG_INSTANCE_ID']
+    token = ENV['ULTRAMSG_TOKEN']
+    service = UltraMsgService.new(instance_id, token)
+    total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
+    message = "Your order on Parts Box has been confirmed. Your order number is PB#{order.id}. Your order will arrive by the end of the day. Please kindly have the exact amount of #{total_price_dollars} ready for payment upon the arrival of the courier. Thank you for shopping with us!"
+    messagetwo = "An order has been placed for your item on Parts Box. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using Parts Box!"
+
+    response = service.send_message(current_user.phone_number, message)
+    responsetwo = service.send_message(seller_phone_number, messagetwo)
+    if response["sent"]
+      Rails.logger.info("Message sent to #{current_user.phone_number}")
+    else
+      Rails.logger.error("Failed to send message: #{response['error']}")
+    end
+  end
   
 end
-
 
