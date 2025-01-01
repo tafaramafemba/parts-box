@@ -1,0 +1,29 @@
+<h1>Order Cancellation Notice</h1>
+
+<p>Hi <%= @user.username %>,</p>
+
+<p>Your recent order on Parts Box has been cancelled.</p>
+
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <th style="padding: 10px; background-color: #eee; font-weight: bold;">Order Summary</th>
+  </tr>
+  <% @order.order_items.each do |item| %>
+    <% product = Product.find(item.product_id) %>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+        <%= item.quantity %> x <%= product.name %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td style="padding: 10px; font-weight: bold; text-align: right;">
+      <strong>Order Total:</strong> <%= number_to_currency(@order.total_price) %>
+    </td>
+  </tr>
+</table>
+
+<p>If you would like to place another order, please visit https://partsbox.co.zw</p>
+
+<p>Sincerely,</p>
+<p>The Parts Box Team</p>

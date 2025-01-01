@@ -18,6 +18,11 @@
     <li class="order-list-item">Platform Fee - <%= number_to_currency(@order.platform_fee) %> </li>
   </ul>
   <h3 class="Order-Total">Total: <%= number_to_currency(@order.total_price) %></h3>
+
+  <% if @order.status == 'pending' && @order.created_at > 30.minutes.ago %>
+    <%= button_to 'Cancel Order', cancel_order_path(@order), method: :post %>
+  <% end %>
+
 </div>
 
 <div class="order-container">

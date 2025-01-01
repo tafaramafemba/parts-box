@@ -35,7 +35,7 @@
 
   <div class="cart-summary">
     <h3>Total: <%= number_to_currency(@total_price) %></h3>
-    <%= link_to "Checkout", new_order_path, class: "btn btn-primary" %>
+    <%= link_to "Checkout", new_order_path, class: "btn btn-primary", data: { turbo: false } %>
   </div>
 <% else %>
   <p class="empty-cart-message">Your cart is empty.</p>

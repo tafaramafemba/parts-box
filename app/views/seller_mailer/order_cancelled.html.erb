@@ -1,0 +1,13 @@
+<h1>Cancellation Notice</h1>
+
+<p>Dear <%= @seller.username %>,</p>
+
+<p>We regret to inform you that the order with the following items has been cancelled:</p>
+
+<p>
+  Product Name: <%= @product.name %><br>
+  Quantity: <%= @order_item.quantity %>
+</p>
+
+<p>Please ensure that the above item is not shipped Parts Box.</p>
+<p>Thank you for using our platform!</p>

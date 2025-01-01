@@ -28,9 +28,32 @@
 
   <h4>Subtotal: <%= number_to_currency(@subtotal) %></h4>
   <h4>Platform Fee (3%): <%= number_to_currency(@platform_fee) %></h4>
-  <h4>Shipping Fee: <%= number_to_currency(@shipping_fee) %></h4>
-  <h3>Total: <%= number_to_currency(@total_price) %></h3>
+  <h4>Shipping Fee: <span id="shipping_fee"><%= number_to_currency(@shipping_fee) %></span></h4>
+  <h3>Total: <span id="total_price"><%= number_to_currency(@total_price) %></span></h3>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const pickupRadio = document.getElementById('payment_method_pickup');
+    const deliveryRadio = document.getElementById('payment_method_cod');
+    const shippingFeeElement = document.getElementById('shipping_fee');
+    const totalElement = document.getElementById('total_price');
+    const originalShippingFee = <%= @shipping_fee %>;
+
+    function updateShippingFee() {
+      if (pickupRadio.checked) {
+        totalElement.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(<%= @total_price %> - originalShippingFee);
+        shippingFeeElement.textContent = '$0.00';
+      } else {
+        totalElement.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(<%= @total_price %>);
+        shippingFeeElement.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(originalShippingFee);
+      }
+    }
+
+    pickupRadio.addEventListener('change', updateShippingFee);
+    deliveryRadio.addEventListener('change', updateShippingFee);
+  });
+</script>
 
 <div class="payment-section">
   <h3>Choose Payment Method</h3>

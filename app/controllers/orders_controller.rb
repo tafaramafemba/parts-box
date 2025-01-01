@@ -15,12 +15,13 @@ class OrdersController < ApplicationController
     platform_fee = calculate_platform_fee(cart_items)
     shipping_fee = calculate_shipping_fee(cart_items)
     total_price = cart_items.sum { |item| item.product.price * item.quantity } + platform_fee + shipping_fee
+    total_price_pickup = cart_items.sum { |item| item.product.price * item.quantity } + platform_fee
   
     payment_method = params[:payment_method]
   
     case payment_method
     when 'pickup'
-      create_pickup_session(cart_items, total_price, platform_fee, shipping_fee)
+      create_pickup_session(cart_items, total_price_pickup, platform_fee, shipping_fee = 0)
     when 'cod'
       create_cod_session(cart_items, total_price, platform_fee, shipping_fee)
     else
@@ -45,6 +46,22 @@ class OrdersController < ApplicationController
       flash[:alert] = "Failed to update shipping address."
     end
   end
+
+  def cancel
+    order = current_user.orders.find(params[:id])
+    order.update!(status: 'cancelled')
+    
+    order.order_items.each do |order_item|
+      product = order_item.product
+      product.update!(stock_quantity: product.stock_quantity + order_item.quantity)
+      SellerMailer.order_cancelled(order, product.user, order_item ).deliver_now
+    end
+    OrderMailer.order_cancellation(order).deliver_now
+    flash[:notice] = "Order cancelled successfully."
+    redirect_to orders_path
+  end
+
+
   
 
 
@@ -81,82 +98,6 @@ class OrdersController < ApplicationController
 
     highest_shipping_fee
   end
-  
-  def calculate_dynamic_shipping(product)
-    # Example: Placeholder logic, replace with integration to a shipping API
-    weight_fee = product.weight * 2 # $2 per kg
-    size_fee = product.dimensions.split('x').map(&:to_i).sum * 0.1 # $0.1 per cm of dimension sum
-    weight_fee + size_fee
-  end
-  
-  def create_stripe_session(cart_items, total_price, platform_fee, shipping_fee)
-    begin
-      # Calculate line items without transfer_data
-      line_items = cart_items.map do |item|
-        product_price_cents = (item.product.price * 100).to_i
-        shipping_cents = (item.product.flat_rate_shipping_fee * 100).to_i
-        total_cents = product_price_cents + shipping_cents
-  
-        {
-          price_data: {
-            currency: 'cad',
-            product_data: {
-              name: item.product.name + ' (Shipping Incl)'
-            },
-            unit_amount: total_cents,
-          },
-          quantity: item.quantity
-        }
-      end
-
-      line_items << {
-        price_data: {
-          currency: 'cad',
-          product_data: {
-            name: 'Platform Fee'
-          },
-          unit_amount: (platform_fee * 100).to_i,
-        },
-        quantity: 1
-      }
-  
-      # Save the order
-      order = Order.create!(
-        user_id: current_user.id,
-        total_price: total_price,
-        platform_fee: platform_fee,
-        shipping_fee: shipping_fee,
-        status: 'pending', # Payment pending
-        stripe_session_id: nil,
-        shipping_address_id: current_user.shipping_address.id
-      )
-  
-      cart_items.each do |item|
-        OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
-      end
-  
-      # Create Stripe Checkout Session
-      session = Stripe::Checkout::Session.create({
-        payment_method_types: ['card'],
-        line_items: line_items,
-        mode: 'payment',
-        success_url: root_url + "?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url: root_url,
-        payment_intent_data: {
-          transfer_group: "ORDER_#{order.id}"
-        }
-      })
-  
-      # Update order with Stripe session ID
-      order.update!(stripe_session_id: session.id)
-  
-      # Redirect to Stripe checkout
-      redirect_to session.url, allow_other_host: true
-  
-    rescue Stripe::InvalidRequestError => e
-      redirect_to carts_path, alert: "Stripe checkout failed: #{e.message}"
-    end
-  end
 
   
   def shipping_address_params
@@ -192,11 +133,11 @@ class OrdersController < ApplicationController
 
   end
 
-  def create_pickup_session(cart_items, total_price, platform_fee, shipping_fee)
+  def create_pickup_session(cart_items, total_price_pickup, platform_fee, shipping_fee = 0)
     # Save the order
     order = Order.create!(
       user_id: current_user.id,
-      total_price: total_price,
+      total_price: total_price_pickup,
       platform_fee: platform_fee,
       shipping_fee: shipping_fee,
       status: 'pending', # Payment pending
@@ -215,7 +156,7 @@ class OrdersController < ApplicationController
 
     flash[:notice] = "Order confirmed. Please pick up your items at the designated location within 24 hours."
     OrderMailer.order_confirmation(order).deliver_now
-    pickup_whatsapp_notification(order, total_price)
+    pickup_whatsapp_notification(order, total_price_pickup)
 
     redirect_to orders_path
   end

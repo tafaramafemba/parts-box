@@ -14,4 +14,11 @@ class OrderMailer < ApplicationMailer
 
     mail(to: @user.email, subject: "Your Parts Box Order Could Not Be Placed")
   end
+
+  def order_cancellation(order)
+    @order = order
+    @user = User.find(order.user_id)
+
+    mail(to: @user.email, subject: "Your Parts Box Order Has Been Cancelled")
+  end
 end

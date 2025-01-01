@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   resources :carts, only: [:index, :create, :destroy, :update]
   resources :orders, only: [:index, :new, :create, :show]
+  post 'orders/:id/cancel', to: 'orders#cancel', as: 'cancel_order'
   resource :shipping_address, only: [:create, :update, :destroy]
   resources :seller_applications, only: [:new, :create, :show]
   post 'send_verification_code', to: 'seller_applications#send_verification_code'
