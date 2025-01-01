@@ -19,8 +19,8 @@ class OrdersController < ApplicationController
     payment_method = params[:payment_method]
   
     case payment_method
-    when 'stripe'
-      create_stripe_session(cart_items, total_price, platform_fee, shipping_fee)
+    when 'pickup'
+      create_pickup_session(cart_items, total_price, platform_fee, shipping_fee)
     when 'cod'
       create_cod_session(cart_items, total_price, platform_fee, shipping_fee)
     else
@@ -190,6 +190,34 @@ class OrdersController < ApplicationController
 
   end
 
+  def create_pickup_session(cart_items, total_price, platform_fee, shipping_fee)
+    # Save the order
+    order = Order.create!(
+      user_id: current_user.id,
+      total_price: total_price,
+      platform_fee: platform_fee,
+      shipping_fee: shipping_fee,
+      status: 'pending', # Payment pending
+      shipping_address_id: current_user.shipping_address.id
+    )
+
+    cart_items.each do |item|
+      product = item.product
+      seller = product.user # Assuming 'user' is the seller of the product
+      OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
+      product.update!(stock_quantity: product.stock_quantity - item.quantity)
+      SellerMailer.order_placed(order, seller, item).deliver_now
+    end
+
+    current_user.carts.destroy_all
+
+    flash[:notice] = "Order confirmed. Please pick up your items at the designated location within 24 hours."
+    OrderMailer.order_confirmation(order).deliver_now
+    pickup_whatsapp_notification(order, total_price)
+
+    redirect_to orders_path
+  end
+
 
 
 
@@ -201,7 +229,27 @@ class OrdersController < ApplicationController
     token = ENV['ULTRAMSG_TOKEN']
     service = UltraMsgService.new(instance_id, token)
     total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
-    message = "Your order on Parts Box has been confirmed. Your order number is PB#{order.id}. Your order will arrive by the end of the day. Please kindly have the exact amount of #{total_price_dollars} ready for payment upon the arrival of the courier. Thank you for shopping with us!"
+    message = "Your order on Parts Box has been confirmed. Order number PB#{order.id}. Your order will arrive by the end of the day. Please have #{total_price_dollars} ready for payment upon arrival. You can cancel within an hour of ordering on our platform. Failure to do so will result in platform and delivery fees. Thank you for shopping with us!"
+    messagetwo = "An order has been placed for your item on Parts Box. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using Parts Box!"
+
+    response = service.send_message(current_user.phone_number, message)
+    responsetwo = service.send_message(seller_phone_number, messagetwo)
+    if response["sent"]
+      Rails.logger.info("Message sent to #{current_user.phone_number}")
+    else
+      Rails.logger.error("Failed to send message: #{response['error']}")
+    end
+  end
+
+  def pickup_whatsapp_notification(order, total_price)
+    seller_id = order.order_items.first.product.user_id
+    sellerInformation = SellerInformation.find_by(user_id: seller_id)
+    seller_phone_number = sellerInformation.phone_number
+    instance_id = ENV['ULTRAMSG_INSTANCE_ID']
+    token = ENV['ULTRAMSG_TOKEN']
+    service = UltraMsgService.new(instance_id, token)
+    total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
+    message = "Your order on Parts Box has been confirmed. Your order number is PB#{order.id}. Please pick up your order at our pickup location within 24 hours. Please note that your order will be cancelled if it is not collected by then. Please kindly have the exact amount of #{total_price_dollars} upon collection of the order. For more information, please contact us at 123-456-7890. Thank you for shopping with us!"
     messagetwo = "An order has been placed for your item on Parts Box. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using Parts Box!"
 
     response = service.send_message(current_user.phone_number, message)
