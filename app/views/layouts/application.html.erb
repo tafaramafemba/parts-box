@@ -86,7 +86,7 @@
     </div>
 </header>
 <% if user_signed_in? && current_user.shipping_address.nil? %>
-  <p class="alert shipping-message"><%= link_to 'Update Your Shipping Details', edit_account_settings_path %></p>
+  <p class="alert shipping-message"><%= link_to 'Update Your Delivery Details', edit_account_settings_path %></p>
 <% end %>
 
 

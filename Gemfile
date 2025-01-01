@@ -30,6 +30,8 @@ gem 'certifi'
 gem 'image_processing', "~> 1.2"
 gem 'intl-tel-input-rails'
 gem 'http', require: 'http'
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
 
 
 

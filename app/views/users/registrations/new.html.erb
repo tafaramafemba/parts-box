@@ -39,14 +39,32 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input' %>
     </div>
 
-    <div class="actions">
-      <%= f.submit "Sign up", class: 'form-submit' %>
+    <div class="field">
+      <label>
+      <input type="checkbox" id="policy_checkbox">
+      I accept the <a href="<%= privacy_policy_path %>">Privacy Policy</a> and <a href="<%= user_agreement_path %>">User Agreement</a>
+      </label>
     </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up", class: 'form-submit', id: 'submit_button', disabled: true %>
+    </div>
+
   <% end %>
     <div class="log-in-div">
       <span>Already have an account? <%= link_to "Log in", new_session_path(resource_name), class: 'form-link' %></span>
       <span><%= link_to "Didn't receive confirmation instructions?", new_user_confirmation_path(resource_name), class: 'form-link' %></span>
     </div>
-
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  var checkbox = document.getElementById("policy_checkbox");
+  var submitButton = document.getElementById("submit_button");
+
+  checkbox.addEventListener("change", function() {
+    submitButton.disabled = !this.checked;
+  });
+  });
+</script>
 

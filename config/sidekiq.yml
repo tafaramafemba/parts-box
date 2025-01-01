@@ -1,7 +1,11 @@
 :queues:
   - default
 
-:schedule:
-  publish_scheduled_posts:
-    cron: "0 0 * * *" # Runs every day at midnight
-    class: "PublishScheduledPostsJob"
+:scheduler:
+  :schedule:
+    publish_scheduled_posts:
+      cron: "0 0 * * *" # Runs every day at midnight
+      class: "PublishScheduledPostsJob"
+    cancel_orders:
+      cron: "0 0 * * *" # Runs every day at midnight
+      class: "CancelOrdersJob"
