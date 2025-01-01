@@ -173,4 +173,9 @@ text-align: center;
   .confirmable-links {
     flex-direction: row;
   }
+
+  .form-sign-details {
+    width: 100%;
+  }
+
 }

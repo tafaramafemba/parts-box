@@ -30,7 +30,7 @@
       </div>
     <% end %>
 
-      <span>Don't have an account? <%= link_to "Sign up", new_registration_path(resource_name), class: 'form-link' %></span>
+      <span>Don't have an account? <%= link_to "Sign up", new_registration_path(resource_name), class: 'form-link', data: { turbo: false } %></span>
 
   <% end %>
 
