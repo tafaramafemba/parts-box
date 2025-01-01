@@ -51,7 +51,9 @@ class OrdersController < ApplicationController
   private
 
   def calculate_platform_fee(cart_items)
-    cart_items.sum { |item| item.product.price * item.quantity } * 0.03
+    fee = cart_items.sum { |item| item.product.price * item.quantity } * 0.03
+    rounded_fee = (fee / 1).ceil * 1
+    [rounded_fee, 1].max
   end
 
   def calculate_shipping_fee(cart_items)
