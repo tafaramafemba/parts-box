@@ -1,0 +1,14 @@
+<!-- filepath: app/views/admin/delivery_slots/_form.html.erb -->
+<%= form_with model: [:admin, @delivery_slot], local: true do |form| %>
+  <div>
+    <%= form.label :time %>
+    <%= form.time_select :time, { ampm: true }, { default: { hour: 9, minute: 0 } } %>
+  </div>
+  <div>
+    <%= form.label :cutoff %>
+    <%= form.number_field :cutoff %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

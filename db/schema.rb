@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_31_192358) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_01_201017) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -130,6 +130,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_31_192358) do
     t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
   end
 
+  create_table "delivery_slots", force: :cascade do |t|
+    t.time "time"
+    t.integer "cutoff"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "blog_post_id", null: false
@@ -169,6 +176,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_31_192358) do
     t.string "stripe_session_id"
     t.string "paypal_payment_id"
     t.integer "shipping_address_id", null: false
+    t.datetime "delivery_slot"
     t.index ["shipping_address_id"], name: "index_orders_on_shipping_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

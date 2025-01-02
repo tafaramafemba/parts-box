@@ -50,6 +50,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :seller_applications, only: [:index, :show, :update]
     resources :seller_informations, only: [:index, :show, :update]
+    resources :orders, only: [:index, :show] do
+      member do
+        patch :update_status
+      end
+    end
+    resources :delivery_slots
   end
 
 

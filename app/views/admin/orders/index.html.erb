@@ -1,0 +1,25 @@
+<!-- filepath: app/views/admin/orders/index.html.erb -->
+<h1>Admin Orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User</th>
+      <th>Total Price</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.user.email %></td>
+        <td><%= number_to_currency(order.total_price) %></td>
+        <td><%= order.status %></td>
+        <td><%= link_to 'View', admin_order_path(order) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

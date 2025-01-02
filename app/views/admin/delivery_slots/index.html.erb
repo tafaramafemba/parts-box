@@ -1,0 +1,26 @@
+<!-- filepath: app/views/admin/delivery_slots/index.html.erb -->
+<h1>Delivery Slots</h1>
+
+<%= link_to 'New Delivery Slot', new_admin_delivery_slot_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Cutoff (hours)</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @delivery_slots.each do |slot| %>
+      <tr>
+        <td><%= slot.time.strftime("%H:%M") %></td>
+        <td><%= slot.cutoff %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_delivery_slot_path(slot) %> |
+          <%= button_to 'Delete', admin_delivery_slot_path(slot), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

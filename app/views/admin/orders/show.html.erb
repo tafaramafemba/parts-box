@@ -1,0 +1,24 @@
+<!-- filepath: app/views/admin/orders/show.html.erb -->
+<h1>Order Details</h1>
+
+<p>Order ID: <%= @order.id %></p>
+<p>User: <%= @order.user.email %></p>
+<p>Total Price: <%= number_to_currency(@order.total_price) %></p>
+<p>Status: <%= @order.status %></p>
+
+<h3>Items</h3>
+<ul>
+  <% @order.order_items.each do |item| %>
+    <li><%= item.product.name %> - <%= item.quantity %> x <%= number_to_currency(item.product.price) %></li>
+  <% end %>
+</ul>
+
+<%= form_with model: @order, url: update_status_admin_order_path(@order), method: :patch do |form| %>
+  <div>
+    <%= form.label :status %>
+    <%= form.select :status, Order.statuses.keys.map { |status| [status.humanize, status] } %>
+  </div>
+  <div>
+    <%= form.submit 'Update Status' %>
+  </div>
+<% end %>
