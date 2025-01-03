@@ -1,4 +1,4 @@
-class Admin::DeliverySlotsController < ApplicationController
+class Admin::DeliverySlotsController < Admin::BaseController
     before_action :authenticate_admin!
 
     def index

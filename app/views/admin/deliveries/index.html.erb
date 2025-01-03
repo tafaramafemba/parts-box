@@ -1,0 +1,92 @@
+<%= stylesheet_link_tag 'deliveries_index', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<!-- filepath: /c:/Users/Taffy/OneDrive/Desktop/Repositories/parts-box/app/views/admin/deliveries/index.html.erb -->
+<h1 class="page-title">Delivery Schedule for <%= @date.strftime("%B %d, %Y") %></h1>
+
+<div class="navigation-links">
+  <%= link_to 'Previous Day', admin_deliveries_path(date: @date - 1.day), class: 'nav-link' %> |
+  <%= link_to 'Next Day', admin_deliveries_path(date: @date + 1.day), class: 'nav-link' %>
+</div>
+
+<div class="filter-forms">
+  <%= form_with url: admin_deliveries_path, class: 'filer-forms-form', method: :get, local: true do %>
+    <div class="form-group">
+      <%= label_tag :status, "Filter by Status:" %>
+      <%= select_tag :status, options_for_select(Order.statuses.keys.map { |status| [status.humanize, status] }, params[:status]), include_blank: true, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :search, "Search:" %>
+      <%= text_field_tag :search, params[:search], class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :delivery_slot, "Filter by Delivery Slot:" %>
+      <%= select_tag :delivery_slot, options_for_select(@deliveries.map { |order| order.delivery_slot.strftime("%H:%M") }.uniq, params[:delivery_slot]), include_blank: true, class: 'form-control' %>
+    </div>
+    <%= hidden_field_tag :date, @date %>
+    <%= submit_tag "Apply Filters", class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+<div class="export-link">
+  <%= link_to 'Export All to CSV', admin_deliveries_path(format: :csv, date: @date), method: :get, class: 'btn btn-secondary' %>
+</div>
+
+<% filtered_deliveries = params[:delivery_slot].present? ? @deliveries.select { |order| order.delivery_slot.strftime("%H:%M") == params[:delivery_slot] } : @deliveries %>
+
+<% filtered_deliveries.group_by { |order| order.delivery_slot.strftime("%H:%M") }.each do |slot, orders| %>
+  <h2 class="slot-title">Delivery Slot: <%= slot %></h2>
+  <%= link_to 'Export Slot to CSV', export_slot_admin_deliveries_path(slot_time: slot, format: :csv), class: 'btn btn-secondary' %>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer Name</th>
+          <th>Phone Number</th>
+          <th>Delivery Address</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Seller</th>
+          <th>Seller Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.each do |order| %>
+          <% order.order_items.each do |item| %>
+            <% seller_id = item.product.user.id %>
+            <% seller_information = SellerInformation.find_by(user_id: seller_id) %>
+            <tr>
+              <td><%= order.id %></td>
+              <td><%= order.user.first_name %> <%= order.user.last_name %></td>
+              <td><%= order.user.phone_number %></td>
+              <td>
+                <%= order.shipping_address.address_line1 %>, <%= order.shipping_address.address_line2 %>, <%= order.shipping_address.city %>, <%= order.shipping_address.state %>, <%= order.shipping_address.postal_code %>
+              </td>
+              <td><%= item.product.name %> (<%= item.product.make %> <%= item.product.model %> <%= item.product.year %>)</td>
+              <td><%= item.quantity %></td>
+              <td><%= seller_information.business_name %></td>
+              <td><%= seller_information.address %></td>
+              <td>
+              <div class="actions">
+              <% if order.status == 'delivered' || order.status == 'delivery_failed' %>
+
+                  <% else %>
+                    <%= link_to mark_as_completed_admin_delivery_path(order, date: @date), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success btn-sm' do %>
+                      <i class="fas fa-check"></i>
+                    <% end %>
+                  <%= button_to mark_as_not_completed_admin_delivery_path(order, date: @date), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm btn-black-bg' do %>
+                    <i class="fas fa-times"></i>
+                  <% end %>
+                <% end %>
+
+                </td>
+              </div>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+

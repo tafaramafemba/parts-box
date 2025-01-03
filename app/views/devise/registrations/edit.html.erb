@@ -1,22 +1,106 @@
-<h1>Change Your Password</h1>
+<h1 class="page-title">Change Your Password</h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <div>
-    <%= f.label :current_password %><br />
-    <%= f.password_field :current_password, autocomplete: "current-password", required: true %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-container' }) do |f| %>
+  <div class="form-group">
+    <%= f.label :current_password, class: 'form-label' %>
+    <%= f.password_field :current_password, autocomplete: "current-password", required: true, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "new-password", required: true %>
+  <div class="form-group">
+    <%= f.label :password, class: 'form-label' %>
+    <%= f.password_field :password, autocomplete: "new-password", required: true, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true %>
+  <div class="form-group">
+    <%= f.label :password_confirmation, class: 'form-label' %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: 'form-control' %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= f.submit "Update Password", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 15px;
+    }
+
+    .form-control {
+      padding: 8px;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 10px;
+    }
+
+    .form-control {
+      padding: 6px;
+    }
+
+    .btn {
+      padding: 6px 10px;
+      font-size: 10px;
+    }
+  }
+</style>

@@ -56,6 +56,15 @@ Rails.application.routes.draw do
       end
     end
     resources :delivery_slots
+    resources :deliveries, only: [:index] do
+      member do
+        patch :mark_as_completed
+        patch :mark_as_not_completed
+      end
+      collection do
+        get :export_slot
+      end
+    end
   end
 
 

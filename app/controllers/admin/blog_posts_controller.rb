@@ -1,4 +1,4 @@
-class Admin::BlogPostsController < ApplicationController
+class Admin::BlogPostsController < Admin::BaseController
 
   layout 'admin'
 

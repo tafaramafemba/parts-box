@@ -1,14 +1,93 @@
 <!-- filepath: app/views/admin/delivery_slots/_form.html.erb -->
-<%= form_with model: [:admin, @delivery_slot], local: true do |form| %>
-  <div>
-    <%= form.label :time %>
-    <%= form.time_select :time, { ampm: true }, { default: { hour: 9, minute: 0 } } %>
+<%= form_with model: [:admin, @delivery_slot], local: true, html: { class: 'form-container' } do |form| %>
+  <div class="form-group">
+    <%= form.label :time, class: 'form-label' %>
+    <%= form.time_select :time, { ampm: true }, { default: { hour: 9, minute: 0 }, class: 'form-control' } %>
   </div>
-  <div>
-    <%= form.label :cutoff %>
-    <%= form.number_field :cutoff %>
+  <div class="form-group">
+    <%= form.label :cutoff, class: 'form-label' %>
+    <%= form.number_field :cutoff, class: 'form-control' %>
   </div>
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit 'Save', class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+<style>
+  .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 15px;
+    }
+
+    .form-control {
+      padding: 8px;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 10px;
+    }
+
+    .form-control {
+      padding: 6px;
+    }
+
+    .btn {
+      padding: 6px 10px;
+      font-size: 10px;
+    }
+  }
+</style>

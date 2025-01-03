@@ -5,6 +5,12 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag 'application', media: 'all' %>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" %>
+  <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js" %>
+
   <style>
     /* General Reset */
     body {
@@ -21,24 +27,49 @@
 
     .sidebar {
       width: 250px;
-      background: #333;
+      background: #000;
       color: #fff;
       padding: 20px;
       box-sizing: border-box;
+      transition: width 0.3s;
+    }
+
+    .sidebar.collapsed {
+      width: 50px;
+      padding: 0;
     }
 
     .sidebar h2 {
       margin-top: 0;
       font-size: 1.5em;
+      transition: opacity 0.3s;
+    }
+
+    .sidebar.collapsed h2 {
+      opacity: 0;
     }
 
     .sidebar a {
-      display: block;
-      color: #20C997;
+      display: flex;
+      align-items: center;
+      color: #fafafa;
       text-decoration: none;
       margin: 10px 0;
       padding: 10px;
       border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .sidebar a i {
+      margin-right: 10px;
+    }
+
+    .sidebar.collapsed a span {
+      display: none;
+    }
+
+    .sidebar.collapsed a i {
+      margin-right: 0;
     }
 
     .sidebar a:hover {
@@ -49,6 +80,25 @@
       flex: 1;
       padding: 20px;
       box-sizing: border-box;
+    }
+
+    .toggle-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      left: 250px;
+      transition: left 0.3s;
+    }
+
+    .sidebar.collapsed + .toggle-btn {
+      top: 0;
+      left: 50px;
+      transition: top 0.3s;
+      transition: left 0.3s;
     }
 
     /* Responsive Styles */
@@ -64,21 +114,39 @@
       .content {
         padding: 10px;
       }
+
+      .toggle-btn {
+        left: 100%;
+        top: 10px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="admin-layout">
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <h2>Admin Dashboard</h2>
-      <a href="<%= admin_blog_posts_path %>">Manage Blog Posts</a>
-      <a href="<%= edit_admin_registration_path %>">Change Password</a>
-      <a href="<%= admin_delivery_slots_path %>">Manage Delivery Slots</a>
-      <a href="<%= admin_orders_path %>">Manage Orders</a>
+      <a href="<%= admin_blog_posts_path %>"><i class="fas fa-blog"></i><span>Manage Blog Posts</span></a>
+      <a href="<%= edit_admin_registration_path %>"><i class="fas fa-key"></i><span>Change Password</span></a>
+      <a href="<%= admin_deliveries_path %>"><i class="fas fa-truck"></i><span>Manage Deliveries</span></a>
+      <a href="<%= admin_delivery_slots_path %>"><i class="fas fa-clock"></i><span>Manage Delivery Slots</span></a>
+      <a href="<%= admin_orders_path %>"><i class="fas fa-box"></i><span>Manage Orders</span></a>
     </div>
+    <button class="toggle-btn" id="toggle-btn">☰</button>
     <div class="content">
       <%= yield %>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var sidebar = document.getElementById('sidebar');
+      var toggleBtn = document.getElementById('toggle-btn');
+
+      toggleBtn.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+      });
+    });
+  </script>
 </body>
 </html>

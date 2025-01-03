@@ -1,4 +1,4 @@
-class Admin::SellerApplicationsController < ApplicationController
+class Admin::SellerApplicationsController < Admin::BaseController
   before_action :authenticate_admin!
 
   def index

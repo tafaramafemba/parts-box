@@ -1,25 +1,173 @@
 <!-- filepath: app/views/admin/orders/index.html.erb -->
-<h1>Admin Orders</h1>
+<h1 class="page-title">Admin Orders</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Order ID</th>
-      <th>User</th>
-      <th>Total Price</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each do |order| %>
+<div class="filter-forms">
+  <%= form_with url: admin_orders_path, method: :get, class: 'form-filter', local: true do %>
+    <div class="form-group">
+      <%= label_tag :start_date, "Start Date:" %>
+      <%= date_field_tag :start_date, params[:start_date], class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :end_date, "End Date:" %>
+      <%= date_field_tag :end_date, params[:end_date], class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :status, "Status:" %>
+      <%= select_tag :status, options_for_select(Order.statuses.keys.map { |status| [status.humanize, status] }, params[:status]), include_blank: true, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= submit_tag "Filter", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="table-container">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= order.id %></td>
-        <td><%= order.user.email %></td>
-        <td><%= number_to_currency(order.total_price) %></td>
-        <td><%= order.status %></td>
-        <td><%= link_to 'View', admin_order_path(order) %></td>
+        <th>Order ID</th>
+        <th>User</th>
+        <th>Total Price</th>
+        <th>Status</th>
+        <th>Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.user.first_name %> <%= order.user.last_name %></td>
+          <td><%= number_to_currency(order.total_price) %></td>
+          <td><%= order.status %></td>
+          <td><%= link_to 'View', admin_order_path(order), class: 'btn btn-primary btn-sm' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none; /* Remove border from the table */
+  }
+
+  .table th, .table td {
+    text-align: center;
+    padding: 10px;
+    border: none; /* Remove border from table cells */
+  }
+
+  .table th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+    .filter-forms {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .form-filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-group {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .form-control {
+    display: inline-block;
+    width: auto;
+    margin-right: 10px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .table th, .table td {
+      font-size: 12px;
+      padding: 8px;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+
+    .filter-forms {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-group {
+      width: 100%;
+      text-align: center;
+    }
+
+    .form-control {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .table th, .table td {
+      font-size: 10px;
+      padding: 6px;
+    }
+
+    .btn {
+      font-size: 10px;
+      padding: 5px 8px;
+    }
+  }
+</style>

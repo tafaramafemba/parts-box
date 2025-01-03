@@ -112,7 +112,8 @@ class OrdersController < ApplicationController
       platform_fee: platform_fee,
       shipping_fee: shipping_fee,
       status: 'pending', # Payment pending
-      shipping_address_id: current_user.shipping_address.id
+      shipping_address_id: current_user.shipping_address.id,
+      collection_method: 'delivery'
     )
 
     cart_items.each do |item|
@@ -141,7 +142,8 @@ class OrdersController < ApplicationController
       platform_fee: platform_fee,
       shipping_fee: shipping_fee,
       status: 'pending', # Payment pending
-      shipping_address_id: current_user.shipping_address.id
+      shipping_address_id: current_user.shipping_address.id,
+      collection_method: 'pickup'
     )
 
     cart_items.each do |item|
@@ -192,7 +194,7 @@ class OrdersController < ApplicationController
     token = ENV['ULTRAMSG_TOKEN']
     service = UltraMsgService.new(instance_id, token)
     total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
-    message = "Your order on Parts Box has been confirmed. Your order number is PB#{order.id}. Please pick up your order at our pickup location within 24 hours. Please note that your order will be cancelled if it is not collected by then. Please kindly have the exact amount of #{total_price_dollars} upon collection of the order. For more information, please contact us at 123-456-7890. Thank you for shopping with us!"
+    message = "Your order on Parts Box has been confirmed. Your order number is PB#{order.id}. Your order will be available for collection at #{order.collection_time} . Please pick up your order at our pickup location within 24 hours. Please note that your order will be cancelled if it is not collected by then. Please kindly have the exact amount of #{total_price_dollars} upon collection of the order. For more information, please contact us at 123-456-7890. Thank you for shopping with us!"
     messagetwo = "An order has been placed for your item on Parts Box. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using Parts Box!"
 
     response = service.send_message(current_user.phone_number, message)

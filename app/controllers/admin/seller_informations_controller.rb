@@ -1,4 +1,4 @@
-class Admin::SellerInformationsController < ApplicationController
+class Admin::SellerInformationsController < Admin::BaseController
   def index
     @seller_informations = SellerInformation.all
   end

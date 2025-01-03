@@ -21,7 +21,7 @@ module CarPartsPlatform
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
-    config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = 'Harare' # Harare is in the CAT time zone
 
     config.action_cable.mount_path = '/cable'
     config.action_cable.disable_request_forgery_protection = true
