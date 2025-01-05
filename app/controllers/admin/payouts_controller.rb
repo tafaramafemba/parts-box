@@ -38,6 +38,9 @@ class Admin::PayoutsController < Admin::BaseController
       @balance = seller.seller_balance.balance
   
       if @balance > 0
+
+        PayoutTransaction.create!(user: seller, amount: @balance)
+
         seller.seller_balance.update(balance: 0)
         flash[:notice] = "Payout of #{number_to_currency(@balance)} to #{@seller.email} completed."
       else

@@ -33,13 +33,23 @@ class Admin::OrdersController < Admin::BaseController
 
     def update_status
     @order = Order.find(params[:id])
-    if @order.update(order_params)
-        flash[:notice] = "Order status updated successfully."
-        mark_as_delivered if @order.status == 'delivered' || @order.status == 'completed'
-    else
-        flash[:alert] = "Failed to update order status."
-    end
-    redirect_to admin_order_path(@order)
+    new_status = params[:order][:status]
+
+    if @order.status == new_status
+        flash[:alert] = "Order status is already #{new_status}."
+        Rails.logger.info "Attempted to change order status to #{new_status} for order ##{params[:id]}."
+      elsif @order.status == 'delivered' || @order.status == 'completed'
+        flash[:alert] = "Order status cannot be changed once it is delivered or completed."
+        Rails.logger.info "already delivered."
+      else
+      if @order.update(order_params)
+          flash[:notice] = "Order status updated successfully."
+          mark_as_delivered if @order.status == 'delivered' || @order.status == 'completed'
+      else
+          flash[:alert] = "Failed to update order status."
+      end
+      redirect_to admin_order_path(@order)
+      end
     end
 
 

@@ -1,34 +1,69 @@
 <!-- filepath: /c:/Users/Taffy/OneDrive/Desktop/Repositories/parts-box/app/views/admin/reports/index.html.erb -->
-<h1 class="page-title">Business Performance Report</h1>
+<h1 class="page-title">Parts Box Performance Report</h1>
 
 <div class="report-container">
-  <div class="report-item">
-    <h3>Total Orders</h3>
-    <p><%= @total_orders %></p>
+  <div class="report-section">
+    <h2>1. Executive Summary</h2>
+    <p><strong>Overview of Marketplace Performance</strong></p>
+    <p><strong>Total Gross Merchandise Value (GMV):</strong> <%= number_to_currency(@total_revenue) %></p>
+    <p><strong>Total Orders:</strong> <%= @total_orders %></p>
+    <p><strong>Total Revenue (Commission + Fees):</strong> <%= number_to_currency(@total_commission_fees + @total_platform_fees) %></p>
+    <p><strong>Active Sellers:</strong> <%= @active_sellers %></p>
+    <p><strong>Active Buyers:</strong> <%= @total_customers %></p>
+    <p><strong>Top Performing Categories:</strong> <%= @top_performing_categories.join(', ') %></p>
   </div>
-  <div class="report-item">
-    <h3>Total Revenue</h3>
-    <p><%= number_to_currency(@total_revenue) %></p>
+
+  <div class="report-section">
+    <h2>2. Marketplace Metrics</h2>
+    <h3>Overall Performance</h3>
+    <p><strong>Total Sales Volume:</strong> <%= number_to_currency(@total_revenue) %></p>
+    <p><strong>New Sellers Onboarded:</strong> <%= @new_sellers_onboarded %></p>
+    <p><strong>New Buyers Registered:</strong> <%= @new_buyers_registered %></p>
+    <p><strong>Average Order Value (AOV):</strong> <%= number_to_currency(@average_order_value) %></p>
+
+    <h3>Sales Breakdown by Category</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Sales Volume</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sales_volume_by_category.each do |category, sales_volume| %>
+          <tr>
+            <td><%= category %></td>
+            <td><%= number_to_currency(sales_volume) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <div class="report-item">
-    <h3>Total Customers</h3>
-    <p><%= @total_customers %></p>
+
+  <div class="report-section">
+    <h2>3. Seller Performance</h2>
+    <h3>Payouts by Seller</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Seller Email</th>
+          <th>Total Payout</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @payouts_by_seller.each do |seller, amount| %>
+          <tr>
+            <td><%= seller %></td>
+            <td><%= number_to_currency(amount) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <div class="report-item">
-    <h3>Orders by Status</h3>
-    <ul>
-      <% @orders_by_status.each do |status, count| %>
-        <li><%= status.humanize %>: <%= count %></li>
-      <% end %>
-    </ul>
-  </div>
-  <div class="report-item">
-    <h3>Orders by Date</h3>
-    <ul>
-      <% @orders_by_date.each do |date, count| %>
-        <li><%= date %>: <%= count %></li>
-      <% end %>
-    </ul>
+
+  <div class="report-section">
+    <h2>4. Customer Insights</h2>
+    <p><strong>Total Active Buyers:</strong> <%= @total_customers %></p>
   </div>
 </div>
 
@@ -36,46 +71,47 @@
   .page-title {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
   }
 
   .report-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-
-  .report-item {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    margin: 10px;
-    flex: 1 1 30%;
-    max-width: 30%;
-    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
-  .report-item h3 {
+  .report-section {
+    margin-bottom: 40px;
+  }
+
+  .report-section h2 {
+    font-size: 20px;
     margin-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
   }
 
-  .report-item p, .report-item ul {
-    margin: 0;
+  .report-section p, .report-section ul, .report-section ol {
+    margin: 0 0 10px;
   }
 
-  .report-item ul {
-    list-style: none;
-    padding: 0;
+  .report-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
   }
 
-  .report-item ul li {
-    margin-bottom: 5px;
+  .report-section table th, .report-section table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
   }
 
-  @media (max-width: 768px) {
-    .report-item {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
+  .report-section table th {
+    background-color: #f2f2f2;
   }
 </style>

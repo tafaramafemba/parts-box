@@ -1,0 +1,61 @@
+<h1 class="page-title">Payout Transactions</h1>
+
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Seller</th>
+        <th>Amount</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @payout_transactions.each do |transaction| %>
+        <tr>
+          <td><%= transaction.user.email %></td>
+          <td><%= number_to_currency(transaction.amount) %></td>
+          <td><%= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+
+  .table th, .table td {
+    text-align: center;
+    padding: 10px;
+    border: none;
+  }
+
+  .table th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>

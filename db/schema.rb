@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_05_035349) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_05_175216) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -194,6 +194,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_05_035349) do
     t.time "collection_time"
     t.index ["shipping_address_id"], name: "index_orders_on_shipping_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payout_transactions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payout_transactions_on_user_id"
   end
 
   create_table "platform_fees", force: :cascade do |t|
@@ -382,6 +390,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_05_035349) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "shipping_addresses"
+  add_foreign_key "payout_transactions", "users"
   add_foreign_key "products", "users"
   add_foreign_key "replies", "blog_posts"
   add_foreign_key "replies", "comments"

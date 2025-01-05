@@ -48,6 +48,7 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
+    resources :payout_transactions, only: [:index]
     resources :payouts, only: [:index, :show] do
       member do
         post :send_otp
