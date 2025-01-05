@@ -137,6 +137,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    groupdate (6.5.1)
+      activesupport (>= 7)
     hashie (5.0.0)
     http (5.2.0)
       addressable (~> 2.8)
@@ -429,6 +431,7 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  groupdate
   http
   httparty
   image_processing (~> 1.2)

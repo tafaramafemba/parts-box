@@ -27,7 +27,7 @@
   </table>
 
   <h4>Subtotal: <%= number_to_currency(@subtotal) %></h4>
-  <h4>Platform Fee (3%): <%= number_to_currency(@platform_fee) %></h4>
+  <h4>Platform Fee: <%= number_to_currency(@platform_fee) %></h4>
   <h4>Shipping Fee: <span id="shipping_fee"><%= number_to_currency(@shipping_fee) %></span></h4>
   <h3>Total: <span id="total_price"><%= number_to_currency(@total_price) %></span></h3>
 </div>
@@ -59,11 +59,6 @@
   <h3>Choose Payment Method</h3>
   <%= form_with url: orders_path, method: :post, data: { turbo: false } do |f| %>
     <div class="payment-options">
-      <div>
-        <%= f.radio_button :payment_method, 'stripe', id: 'payment_method_stripe' %>
-        <%= f.label :payment_method_stripe do %>
-          <%= image_tag("stripe-payment-icon.png", alt: "Stripe", class: "payment-method-image", size: "200x75") %>
-        <% end %>
         <div>
             <%= f.radio_button :payment_method, 'cod', id: 'payment_method_cod' %>
             <%= f.label :payment_method_cod do %>
@@ -115,7 +110,7 @@
     </div>
 
     <div>
-      <%= f.submit "Place Order", class: "btn" %>
+      <%= f.submit "Place Order", class: "submit-btn" %>
     </div>
   <% end %>
 </div>

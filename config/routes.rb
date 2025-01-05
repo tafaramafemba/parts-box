@@ -48,6 +48,17 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
+    resources :payouts, only: [:index, :show] do
+      member do
+        post :send_otp
+        post :verify_otp
+        post :payout
+      end
+    end
+    resources :commission_fees, only: [:index, :edit, :update]
+    resources :platform_fees, only: [:index, :edit, :update]
+    resources :category_shipping_fees
+    resources :reports, only: [:index]
     resources :seller_applications, only: [:index, :show, :update]
     resources :seller_informations, only: [:index, :show, :update]
     resources :orders, only: [:index, :show] do

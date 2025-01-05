@@ -1,0 +1,2 @@
+module Admin::PlatformFeesHelper
+end

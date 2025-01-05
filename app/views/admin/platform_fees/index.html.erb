@@ -1,0 +1,118 @@
+<!-- filepath: /c:/Users/Taffy/OneDrive/Desktop/Repositories/parts-box/app/views/admin/platform_fees/index.html.erb -->
+<h1 class="page-title">Platform Fee Configuration</h1>
+
+<div class="actions">
+  <%= link_to 'Edit Platform Fee', edit_admin_platform_fee_path(@platform_fee), class: 'btn btn-primary' %>
+</div>
+
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Percentage</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= number_to_percentage(@platform_fee.percentage * 100, precision: 2) %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_platform_fee_path(@platform_fee), class: 'btn btn-secondary btn-sm' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .actions {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none; /* Remove border from the table */
+  }
+
+  .table th, .table td {
+    text-align: center;
+    padding: 10px;
+    border: none; /* Remove border from table cells */
+  }
+
+  .table th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  @media (max-width: 768px) {
+    .table th, .table td {
+      font-size: 12px;
+      padding: 8px;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .table th, .table td {
+      font-size: 10px;
+      padding: 6px;
+    }
+
+    .btn {
+      font-size: 10px;
+      padding: 5px 8px;
+    }
+  }
+</style>

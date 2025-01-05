@@ -32,6 +32,7 @@ gem 'intl-tel-input-rails'
 gem 'http', require: 'http'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
+gem 'groupdate'
 
 
 

@@ -5,7 +5,7 @@
   <%= form_with model: @product, data: { turbo: false }, local: true do |form| %>
     <div class="form-group">
       <%= form.label :category, 'Category' %>
-      <%= form.select :category, ['Engine Components', 'Transmission & Drivetrain', 'Suspension & Steering', 'Braking System', 'Electrical & Lighting', 'Exhaust System', 'Cooling System', 'Fuel System', 'Interior Parts', 'Exterior Parts', 'Body Parts', 'Wheels & Tires', 'Heating, Ventilation & Air Conditioning (HVAC)', 'Accessories', 'Performance Parts'], class: 'form-select' %>
+      <%= form.select :category, CategoryShippingFee.pluck(:category), {}, class: 'form-select' %>
     </div>
 
     <div class="form-group">

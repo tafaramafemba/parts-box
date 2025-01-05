@@ -1,9 +1,5 @@
-# Clear existing delivery slots
-DeliverySlot.destroy_all
+PlatformFee.delete_all
+CommissionFee.delete_all
 
-# Create delivery slots
-DeliverySlot.create!([
-  { time: '09:00', cutoff: 1 },
-  { time: '13:00', cutoff: 1 },
-  { time: '15:00', cutoff: 1 }
-])
+PlatformFee.find_or_create_by(percentage: 0.03)
+CommissionFee.find_or_create_by(percentage: 0.05)

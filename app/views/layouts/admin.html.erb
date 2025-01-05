@@ -10,6 +10,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" %>
   <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js" %>
+  <%= stylesheet_link_tag "flash", "data-turbo-track": "reload" %>
+
 
   <style>
     /* General Reset */
@@ -129,11 +131,27 @@
       <a href="<%= admin_blog_posts_path %>"><i class="fas fa-blog"></i><span>Manage Blog Posts</span></a>
       <a href="<%= edit_admin_registration_path %>"><i class="fas fa-key"></i><span>Change Password</span></a>
       <a href="<%= admin_deliveries_path %>"><i class="fas fa-truck"></i><span>Manage Deliveries</span></a>
+      <a href="<%= admin_category_shipping_fees_path %>"><i class="fas fa-shipping-fast"></i><span>Shipping Fees</span></a>
+      <a href="<%= admin_platform_fees_path %>"><i class="fas fa-percentage"></i><span>Platform Fee</span></a>
       <a href="<%= admin_delivery_slots_path %>"><i class="fas fa-clock"></i><span>Manage Delivery Slots</span></a>
+      <a href="<%= admin_commission_fees_path %>"><i class="fas fa-coins"></i><span> Commission Fee</span></a>
       <a href="<%= admin_orders_path %>"><i class="fas fa-box"></i><span>Manage Orders</span></a>
+      <a href="<%= admin_payouts_path %>"><i class="fas fa-money-check-alt"></i><span>Manage Payouts</span></a>
+      <a href="<%= admin_seller_informations_path %>"><i class="fas fa-store"></i><span>Seller Information</span></a>
+      <a href="<%= admin_seller_applications_path %>"><i class="fas fa-file"></i><span>Seller Applications</span></a>
+      <a href="<%= admin_reports_path %>"><i class="fas fa-chart-line"></i><span>View Reports</span></a>
+
+
     </div>
     <button class="toggle-btn" id="toggle-btn">☰</button>
     <div class="content">
+    <% if notice.present? %>
+      <p class="notice flash-notification"><%= notice %></p>
+      <% end %>
+
+      <% if alert.present? %>
+        <p class="alert flash-notification"><%= alert %></p>
+      <% end %>
       <%= yield %>
     </div>
   </div>

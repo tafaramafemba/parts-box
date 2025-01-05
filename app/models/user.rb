@@ -19,9 +19,12 @@ class User < ApplicationRecord
   has_one :shipping_address, dependent: :destroy
   accepts_nested_attributes_for :shipping_address
   has_one :seller_application, dependent: :destroy
+  
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
+  has_one :seller_balance, dependent: :destroy # Ensure this association is correct
+
 
   def average_rating
     reviews.average(:rating).to_f.round(1) || 0.0

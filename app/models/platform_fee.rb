@@ -1,0 +1,2 @@
+class PlatformFee < ApplicationRecord
+end

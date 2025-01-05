@@ -41,10 +41,20 @@
   <h3 class="order-h3">Order Summary</h3>
   <ul class="order-list">
     <li class="order-list-item"><strong>Order ID:</strong> <%= @order.id %></li>
-    <li class="order-list-item"><strong>Delivery Slot:</strong> <%= @order.delivery_slot.strftime("%B %d, %Y %H:%M") %></li>
     <li class="order-list-item"><strong>Status:</strong> <%= @order.status.humanize %></li>
     <li class="order-list-item"><strong>Total Price:</strong> <%= number_to_currency(@order.order_items.sum { |item| item.quantity * item.product.price }) %></li>
+
+    <h3> Fees</h3>
+
+    <li class="order-list-item"><strong>Commission Fee:</strong> <%= number_to_currency(@commission_fee) %></li>
+    <li class="order-list-item"><strong>Amount Due to Seller:</strong> <%= number_to_currency(@amount_due_to_seller) %></li>
+
+    <h3> Delivery Fees</h3>
+    <li class="order-list-item"><strong>Delivery Fee:</strong> <%= number_to_currency(@shipping_fee) %></li>
+
+
   </ul>
+</div>
 
   <%= form_with model: @order, url: update_status_admin_order_path(@order), method: :patch do |form| %>
     <div class="form-group">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_03_055511) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_05_035349) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -99,6 +99,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_055511) do
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
+  create_table "category_shipping_fees", force: :cascade do |t|
+    t.string "category"
+    t.decimal "fee"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "chats", force: :cascade do |t|
     t.integer "buyer_id", null: false
     t.integer "seller_id", null: false
@@ -128,6 +135,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_055511) do
     t.integer "parent_comment_id"
     t.index ["blog_post_id"], name: "index_comments_on_blog_post_id"
     t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
+  end
+
+  create_table "commission_fees", force: :cascade do |t|
+    t.decimal "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delivery_slots", force: :cascade do |t|
@@ -181,6 +194,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_055511) do
     t.time "collection_time"
     t.index ["shipping_address_id"], name: "index_orders_on_shipping_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "platform_fees", force: :cascade do |t|
+    t.decimal "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -245,6 +264,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_055511) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_seller_applications_on_user_id"
+  end
+
+  create_table "seller_balances", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "balance", default: "0.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_seller_balances_on_user_id"
   end
 
   create_table "seller_informations", force: :cascade do |t|
@@ -360,6 +387,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_055511) do
   add_foreign_key "replies", "comments"
   add_foreign_key "reviews", "users"
   add_foreign_key "seller_applications", "users"
+  add_foreign_key "seller_balances", "users"
   add_foreign_key "seller_informations", "users"
   add_foreign_key "shipping_addresses", "users"
   add_foreign_key "trade_requests", "products"

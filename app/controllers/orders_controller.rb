@@ -68,34 +68,19 @@ class OrdersController < ApplicationController
   private
 
   def calculate_platform_fee(cart_items)
-    fee = cart_items.sum { |item| item.product.price * item.quantity } * 0.03
+    platform_fee_percentage = PlatformFee.first&.percentage || 0.03
+    fee = cart_items.sum { |item| item.product.price * item.quantity } * platform_fee_percentage
     rounded_fee = (fee / 1).ceil * 1
-    [rounded_fee, 1].max
+    rounded_fee
   end
 
   def calculate_shipping_fee(cart_items)
-    category_shipping_fees = {
-      'Engine Components' => 10.0,
-      'Transmission & Drivetrain' => 12.0,
-      'Suspension & Steering' => 8.0,
-      'Braking System' => 7.0,
-      'Electrical & Lighting' => 5.0,
-      'Exhaust System' => 9.0,
-      'Cooling System' => 11.0,
-      'Fuel System' => 6.0,
-      'Interior Parts' => 4.0,
-      'Exterior Parts' => 6.0,
-      'Body Parts' => 15.0,
-      'Wheels & Tires' => 14.0,
-      'Heating, Ventilation & Air Conditioning (HVAC)' => 13.0,
-      'Accessories' => 3.0,
-      'Performance Parts' => 20.0
-    }
-
+    category_shipping_fees = CategoryShippingFee.all.index_by(&:category)
+    
     highest_shipping_fee = cart_items.map do |item|
-      category_shipping_fees[item.product.category] || 0
+      category_shipping_fees[item.product.category]&.fee || 0
     end.max
-
+  
     highest_shipping_fee
   end
 
