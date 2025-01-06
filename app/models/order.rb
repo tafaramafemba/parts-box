@@ -13,7 +13,7 @@ class Order < ApplicationRecord
 
   enum status: { pending: 'pending', collected: 'collected', not_collected: 'not_collected', dispatched: 'dispatched', delivered: 'delivered', cancelled: 'cancelled', delivery_failed: 'delivery_failed' }
 
-  before_create :assign_delivery_slot
+  # before_create :assign_delivery_slot
   before_create :assign_collection_time
 
   def self.to_csv

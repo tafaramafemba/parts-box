@@ -76,29 +76,9 @@
         </div>
 
         <div>
-        <%= sa_form.label :postal_code %>
-        <%= sa_form.text_field :postal_code, required: true, class: 'form-control' %>
-        </div>
-
-        <div>
-        <%= sa_form.label :country %>
-        <%= sa_form.text_field :country, required: true, class: 'form-control' %>
-        </div>
-
-        <div>
         <%= sa_form.submit "Save Address Changes", class: 'btn-primary' %>
         </div>
         <% end %>
         </div>
-
-        <% if current_user.seller_status == 'approved' %>
-            <div class="account-settings">
-                <h2>Payment Methods</h2>
-                <div class="payment-methods">
-                    <%= image_tag 'stripe_icon.png', alt: 'stripe logo', class: 'stripe-logo', style: 'width: 100px;' %>
-                    <%= link_to 'Connect Stripe Account', new_users_stripe_connect_path, class: 'btn-stripe' %>
-                </div>
-            </div>
-        <% end %>
 
 </div>

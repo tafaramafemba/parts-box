@@ -33,6 +33,8 @@ gem 'http', require: 'http'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'groupdate'
+gem 'fiddle'
+
 
 
 
