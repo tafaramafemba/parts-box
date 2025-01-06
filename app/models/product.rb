@@ -15,8 +15,8 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: 0 }
   validates :location, presence: true
   validates :description, presence: true, length: { minimum: 10 }
-  # validates :condition, inclusion: { in: %w(new used), message: "%{value} is not a valid condition" }, presence: true
   validate :acceptable_image
+
   private
 
   def acceptable_image

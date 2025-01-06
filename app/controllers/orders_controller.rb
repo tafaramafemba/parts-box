@@ -41,10 +41,13 @@ class OrdersController < ApplicationController
   end
 
   def update_shipping_address
-    if current_user.shipping_address.update(shipping_address_params)
+    if current_user.shipping_address.present?
+      current_user.shipping_address.update(shipping_address_params)
     else
-      flash[:alert] = "Failed to update shipping address."
+      current_user.create_shipping_address(shipping_address_params)
     end
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:alert] = "Failed to update shipping address: #{e.message}"
   end
 
   def cancel
@@ -86,7 +89,7 @@ class OrdersController < ApplicationController
 
   
   def shipping_address_params
-    params.require(:shipping_address).permit(:address_line1, :address_line2, :city, :state, :postal_code, :country)
+    params.require(:shipping_address).permit(:address_line1, :address_line2, :city, :state)
   end
 
   def create_cod_session(cart_items, total_price, platform_fee, shipping_fee)
@@ -159,7 +162,7 @@ class OrdersController < ApplicationController
     token = ENV['ULTRAMSG_TOKEN']
     service = UltraMsgService.new(instance_id, token)
     total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
-    message = "Your order on Parts Box has been confirmed. Order number PB#{order.id}. Your order will arrive by the end of the day. Please have #{total_price_dollars} ready for payment upon arrival. You can cancel within an hour of ordering on our platform. Failure to do so will result in platform and delivery fees. Thank you for shopping with us!"
+    message = "Your order on Parts Box has been confirmed. Order number PB#{order.id}. Your order will arrive soon. Please have #{total_price_dollars} ready for payment upon arrival. You can cancel within an hour of ordering on our platform. Failure to do so will result in mandatory delivery charges. Thank you for shopping with us!"
     messagetwo = "An order has been placed for your item on Parts Box. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using Parts Box!"
 
     response = service.send_message(current_user.phone_number, message)

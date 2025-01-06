@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_05_175216) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_06_181026) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -305,8 +305,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_05_175216) do
     t.string "address_line2"
     t.string "city"
     t.string "state"
-    t.string "postal_code"
-    t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_shipping_addresses_on_user_id"
