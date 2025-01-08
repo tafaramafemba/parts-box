@@ -53,8 +53,8 @@ config.action_mailer.smtp_settings = {
   openssl_verify_mode:  'none'
 }
 
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+config.action_mailer.default_url_options = { host: 'https://parts-to-go-8be429435dde.herokuapp.com/', protocol: 'https' }
+  Rails.application.routes.default_url_options[:host] = 'https://parts-to-go-8be429435dde.herokuapp.com/'
 
 
   # Print deprecation notices to the Rails logger.
