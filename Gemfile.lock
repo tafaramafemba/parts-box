@@ -241,6 +241,8 @@ GEM
     paypal-sdk-rest (1.7.6)
       multi_json (~> 1.0)
       xml-simple
+    pg (1.5.9)
+    pg (1.5.9-x64-mingw-ucrt)
     psych (5.2.0)
       stringio
     public_suffix (6.0.1)
@@ -442,6 +444,7 @@ DEPENDENCIES
   jbuilder
   omniauth-google-oauth2
   paypal-sdk-rest
+  pg
   puma (>= 5.0)
   rails (~> 7.2.2)
   redis (>= 4.0.1)
