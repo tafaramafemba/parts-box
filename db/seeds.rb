@@ -1,6 +1,7 @@
 PlatformFee.delete_all
 CommissionFee.delete_all
 CategoryShippingFee.delete_all
+Courier.delete_all
 
 PlatformFee.find_or_create_by(percentage: 0.00)
 CommissionFee.find_or_create_by(percentage: 0.12)
@@ -26,3 +27,5 @@ categories = {
 categories.each do |category, fee|
   CategoryShippingFee.find_or_create_by(category: category, fee: fee)
 end
+
+Courier.find_or_create_by(name: 'DHL', phone_number: '+263775033885', email: 'tafara.maf@gmail.com')

@@ -101,7 +101,9 @@ class OrdersController < ApplicationController
       shipping_fee: shipping_fee,
       status: 'pending', # Payment pending
       shipping_address_id: current_user.shipping_address.id,
-      collection_method: 'delivery'
+      collection_method: 'delivery',
+      courier_id: assign_courier.id # Assign a courier
+
     )
 
     cart_items.each do |item|
@@ -116,7 +118,10 @@ class OrdersController < ApplicationController
 
     flash[:notice] = "Order confirmed. Your item is on its way!"
     OrderMailer.order_confirmation(order).deliver_now
+    CourierMailer.order_assigned(order).deliver_now
     whatsapp_notification(order, total_price)
+    courier_whatsapp_notification(order)
+
 
     redirect_to orders_path
 
@@ -151,8 +156,10 @@ class OrdersController < ApplicationController
     redirect_to orders_path
   end
 
-
-
+  def assign_courier
+    # Logic to assign a courier, e.g., round-robin or based on availability
+    Courier.first
+  end
 
   def whatsapp_notification(order, total_price)
     seller_id = order.order_items.first.product.user_id
@@ -162,8 +169,8 @@ class OrdersController < ApplicationController
     token = ENV['ULTRAMSG_TOKEN']
     service = UltraMsgService.new(instance_id, token)
     total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
-    message = "Your order on Parts Box has been confirmed. Order number PB#{order.id}. Your order will arrive soon. Please have #{total_price_dollars} ready for payment upon arrival. You can cancel within an hour of ordering on our platform. Failure to do so will result in mandatory delivery charges. Thank you for shopping with us!"
-    messagetwo = "An order has been placed for your item on Parts Box. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using Parts Box!"
+    message = "Your order on PartsToGo has been confirmed. Order number PB#{order.id}. Your order will arrive soon. Please have #{total_price_dollars} ready for payment upon arrival. You can cancel within an hour of ordering on our platform. Failure to do so will result in mandatory delivery charges. Thank you for shopping with us!"
+    messagetwo = "An order has been placed for your item on PartsToGo. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using PartsToGo!"
 
     response = service.send_message(current_user.phone_number, message)
     responsetwo = service.send_message(seller_phone_number, messagetwo)
@@ -182,13 +189,45 @@ class OrdersController < ApplicationController
     token = ENV['ULTRAMSG_TOKEN']
     service = UltraMsgService.new(instance_id, token)
     total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
-    message = "Your order on Parts Box has been confirmed. Your order number is PB#{order.id}. Your order will be available for collection at #{order.collection_time} . Please pick up your order at our pickup location within 24 hours. Please note that your order will be cancelled if it is not collected by then. Please kindly have the exact amount of #{total_price_dollars} upon collection of the order. For more information, please contact us at 123-456-7890. Thank you for shopping with us!"
-    messagetwo = "An order has been placed for your item on Parts Box. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using Parts Box!"
+    message = "Your order on PartsToGo has been confirmed. Your order number is PB#{order.id}. Your order will be available for collection at #{order.collection_time} . Please pick up your order at our pickup location within 24 hours. Please note that your order will be cancelled if it is not collected by then. Please kindly have the exact amount of #{total_price_dollars} upon collection of the order. For more information, please contact us at 123-456-7890. Thank you for shopping with us!"
+    messagetwo = "An order has been placed for your item on PartsToGo. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using PartsToGo!"
 
     response = service.send_message(current_user.phone_number, message)
     responsetwo = service.send_message(seller_phone_number, messagetwo)
     if response["sent"]
       Rails.logger.info("Message sent to #{current_user.phone_number}")
+    else
+      Rails.logger.error("Failed to send message: #{response['error']}")
+    end
+  end
+
+  def courier_whatsapp_notification(order)
+    courier = order.courier
+    instance_id = ENV['ULTRAMSG_INSTANCE_ID']
+    token = ENV['ULTRAMSG_TOKEN']
+    service = UltraMsgService.new(instance_id, token)
+    message = "Dear #{courier.name},\n\n" \
+          "You have been assigned a new delivery. Please find the details below:\n\n" \
+          "Order Number: PB#{order.id}\n\n" \
+          "Pickup Details:\n" \
+          "#{order.order_items.map { |item| 
+          seller_information = SellerInformation.find_by(user_id: item.product.user.id)
+          "Seller: #{seller_information.business_name}\n" \
+          "Product: #{item.product.name}\n" \
+          "Quantity: #{item.quantity}\n" \
+          "Pickup Address: #{item.product.shipping_address}\n\n"
+          }.join("\n")}" \
+          "Delivery Address: #{order.user.shipping_address.address_line1} " \
+          "#{order.user.shipping_address.address_line2} " \
+          "#{order.user.shipping_address.city}\n\n" \
+          "Customer Contact: #{order.user.phone_number}\n\n" \
+          "Please ensure timely pickup and delivery of the items.\n\n" \
+          "Thank you for your service!\n" \
+          "PartsToGo Team"
+
+    response = service.send_message(courier.phone_number, message)
+    if response["sent"]
+      Rails.logger.info("Message sent to #{courier.phone_number}")
     else
       Rails.logger.error("Failed to send message: #{response['error']}")
     end

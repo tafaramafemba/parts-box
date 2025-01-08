@@ -1,84 +1,98 @@
 <%= stylesheet_link_tag 'products', media: 'all' %>
 <div class="marketplace-container">
 
-    <!-- Sidebar (Facebook Marketplace style) -->
-    <div class="sidebar">
-        <h2>Search Marketplace</h2>
-    <form method="get" action="<%= products_path %>">
-        <!-- Search by Name -->
-        <input type="text" name="query" placeholder="Search products..." value="<%= params[:query] %>">
+  <!-- Sidebar (Facebook Marketplace style) -->
+  <div class="sidebar">
+    <h2>Search Marketplace</h2>
+  <form method="get" action="<%= products_path %>">
+    <!-- Search by Name -->
+    <input type="text" name="query" placeholder="Search products..." value="<%= params[:query] %>">
 
-        <!-- Filter by Price Range -->
-        <input type="number" name="min_price" placeholder="Min Price" value="<%= params[:min_price] %>" step="0.01">
-        <input type="number" name="max_price" placeholder="Max Price" value="<%= params[:max_price] %>" step="0.01">
+    <!-- Filter by Price Range -->
+    <input type="number" name="min_price" placeholder="Min Price" value="<%= params[:min_price] %>" step="0.01">
+    <input type="number" name="max_price" placeholder="Max Price" value="<%= params[:max_price] %>" step="0.01">
 
-        <select name="location">
-          <option value="Harare">Harare</option>
-          <option value="Mutare">Mutare</option>
-          <option value="Bulawayo">Bulawayo</option>
-          <option value="Gweru">Gweru</option>
-          <option value="Masvingo">Masvingo</option>
-          <option value="Kwekwe">Kwekwe</option>
-          <option value="Chitungwiza">Chitungwiza</option>
-          <option value="Marondera">Marondera</option>
-          <option value="Norton">Norton</option>
-          <option value="Chegutu">Chegutu</option>
-          <option value="Bindura">Bindura</option>
-        </select>
+    <!-- Filter by Location -->
+    <select name="location">
+    <option value="Harare">Harare</option>
+    <option value="Mutare">Mutare</option>
+    <option value="Bulawayo">Bulawayo</option>
+    <option value="Gweru">Gweru</option>
+    <option value="Masvingo">Masvingo</option>
+    <option value="Kwekwe">Kwekwe</option>
+    <option value="Chitungwiza">Chitungwiza</option>
+    <option value="Marondera">Marondera</option>
+    <option value="Norton">Norton</option>
+    <option value="Chegutu">Chegutu</option>
+    <option value="Bindura">Bindura</option>
+    </select>
 
-        <!-- Submit Button -->
-        <button type="submit" class="search-button">Search</button>
-    </form>
+    <!-- Filter by Make -->
+    <input type="text" name="make" placeholder="Make" value="<%= params[:make] %>">
 
-<div class="sidebar">
-  <% if current_user.seller_status == 'approved' %>
+    <!-- Filter by Model -->
+    <input type="text" name="model" placeholder="Model" value="<%= params[:model] %>">
+
+    <!-- Filter by Year -->
+    <input type="number" name="year" placeholder="Year" value="<%= params[:year] %>">
+
+    <!-- Filter by Part Number -->
+    <input type="text" name="manufacturer_part_number" placeholder="Part Number" value="<%= params[:manufacturer_part_number] %>">
+
+    <!-- Submit Button -->
+    <button type="submit" class="search-button">Search</button>
+  </form>
+
+  <div class="sidebar">
+    <% if current_user && current_user.seller_status == 'approved' %>
     <%= link_to new_product_path, class: 'sidebar-link' do %>
       <i class="fas fa-plus-circle sidebar-icon"></i> Create a New Listing
     <% end %>
-  <% end %>
+    <% end %>
 
-  <%#= link_to chats_path, class: 'sidebar-link' do %>
+    <%#= link_to chats_path, class: 'sidebar-link' do %>
     <%# <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_chats %>
-  <%# end %>
+    <%# end %>
 
-  <%#= link_to inbox_index_path, class: 'sidebar-link' do %>
+    <%#= link_to inbox_index_path, class: 'sidebar-link' do %>
     <%# <i class="fa-solid fa-right-left sidebar-icon"></i></i> Trade Requests<span class="unread-counter"> <%= @unread_count %>
-  <%# end %>
+    <%# end %>
 
-  <% if current_user.seller_status == 'approved' %>
+    <% if current_user && current_user.seller_status == 'approved' %>
     <%= link_to my_listings_products_path, class: 'sidebar-link' do %>
       <i class="fa-solid fa-tag sidebar-icon"></i> My Listings
     <% end %>
-  <% end %>
+    <% end %>
 
-  <%= link_to orders_path, class: 'sidebar-link' do %>
-    <i class="fas fa-shopping-cart sidebar-icon"></i> My Orders<span class="unread-counter"> <%= @orders_count %></span>
-  <% end %>
-
-
-</div>
-
-
+    <% if current_user %>
+    <%= link_to orders_path, class: 'sidebar-link' do %>
+      <i class="fas fa-shopping-cart sidebar-icon"></i> My Orders<span class="unread-counter"> <%= @orders_count %></span>
+    <% end %>
+    <% end %>
+  </div>
   </div>
 
   <!-- Products Listing -->
   <div class="products">
+  <% if @products.any? %>
     <% @products.each do |product| %>
-      <div class="product-card" onclick="window.location='<%= product_path(product) %>'" size="200x200">
-        <% if product.image.attached? %>
-            <%= image_tag product.image, class: 'product-card-image', size: "200x200" %>
-        <% else %>
-          <%= image_tag "placeholder.jpg", class: "product-card-image", alt: "Placeholder" %>
-        <% end %>
-        <% if product.price %>
-            <p class="product-card-price"><%= number_to_currency(product.price) %></p>
-        <% else %>
-          <p class="product-card-price">Up for Trade</p>
-        <% end %>
-        <h2 class="product-card-title"><%= product.name %></h2>
-
-      </div>
+    <div class="product-card" onclick="window.location='<%= product_path(product) %>'" size="200x200">
+      <% if product.image.attached? %>
+        <%= image_tag product.image, class: 'product-card-image', size: "200x200" %>
+      <% else %>
+      <%= image_tag "placeholder.jpg", class: "product-card-image", alt: "Placeholder" %>
+      <% end %>
+      <% if product.price %>
+        <p class="product-card-price"><%= number_to_currency(product.price) %></p>
+      <% else %>
+      <p class="product-card-price">Up for Trade</p>
+      <% end %>
+      <h2 class="product-card-title"><%= product.name %></h2>
+    </div>
     <% end %>
+  <% else %>
+    <p>No results found</p>
+  <% end %>
   </div>
 
 </div>

@@ -49,8 +49,8 @@ config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com', # Change this to your SMTP server
   port:                 587,
-  user_name:            'tafara.maf@gmail.com',
-  password:             'tkmqzurqekcwartp',
+  user_name:            'partstogozw@gmail.com',
+  password:             'fjemwhesckvvskzq',
   authentication:       'plain',
   enable_starttls_auto: true,
   openssl_verify_mode:  'none'

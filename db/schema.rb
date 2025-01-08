@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_06_181026) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_07_232801) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -143,6 +143,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_181026) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "couriers", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "delivery_slots", force: :cascade do |t|
     t.time "time"
     t.integer "cutoff"
@@ -192,6 +200,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_181026) do
     t.datetime "delivery_slot"
     t.string "collection_method", default: "pickup", null: false
     t.time "collection_time"
+    t.integer "courier_id"
     t.index ["shipping_address_id"], name: "index_orders_on_shipping_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

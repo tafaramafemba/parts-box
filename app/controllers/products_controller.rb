@@ -1,12 +1,16 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy delist relist]
 
   def index
     @products = Product.where(listing_status: true)
     @products = @products.joins(:user).where.not(users: { seller_status: 'suspended' })
-    @orders = Order.where(user_id: current_user.id, status: 'pending')
-    @orders_count = @orders.count
+    if current_user
+      @orders = Order.where(user_id: current_user.id, status: 'pending')
+      @orders_count = @orders.count
+    else
+      @orders = []
+      @orders_count = 0
+    end
 
     # Filter by name
     if params[:query].present?
@@ -20,19 +24,39 @@ class ProductsController < ApplicationController
       @products = @products.where(price: min_price..max_price)
     end
 
+    # Filter by location
     if params[:location].present?
       @products = @products.where(location: params[:location])
     end
+
+    # Filter by make
+    if params[:make].present?
+      @products = @products.where(make: params[:make])
+    end
+
+    # Filter by model
+    if params[:model].present?
+      @products = @products.where(model: params[:model])
+    end
+
+    # Filter by year
+    if params[:year].present?
+      @products = @products.where(year: params[:year])
+    end
+
+    # Filter by manufacturer part number
+    if params[:manufacturer_part_number].present?
+      @products = @products.where(manufacturer_part_number: params[:manufacturer_part_number])
+    end
+
+    # Check if no results found
+    # if @products.empty?
+    #   flash.now[:alert] = "No results found"
+    # end
   end
 
   def show
-    @chat = Chat.find_by(product_id: @product.id, buyer_id: current_user.id) # Check if a chat exists
     
-    if @chat.nil?
-      @chat = Chat.create!(product: @product, buyer: current_user, seller: @product.user)
-    end
-    
-    @messages = @chat.messages
     @product = Product.find(params[:id])
     @seller = @product.user
   end

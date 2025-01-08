@@ -1,0 +1,62 @@
+<!-- filepath: /c:/Users/Taffy/OneDrive/Desktop/Repositories/parts-box/app/views/courier_mailer/order_assigned.html.erb -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      .email-container {
+        font-family: Arial, sans-serif;
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 600px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+      .email-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .email-content {
+        margin-bottom: 20px;
+      }
+      .email-footer {
+        text-align: center;
+        font-size: 12px;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="email-header">
+        <h1>New Delivery Assignment</h1>
+      </div>
+      <div class="email-content">
+        <p>Dear <%= @courier.name %>,</p>
+        <p>You have been assigned a new delivery. Please find the details below:</p>
+        <p><strong>Order Number:</strong> PB<%= @order.id %></p>
+        <p><strong>Pickup Details:</strong></p>
+        <ul>
+          <% @order.order_items.each do |item| %>
+            <% seller_information = SellerInformation.find_by(user_id: item.product.user.id) %>
+
+            <li>
+              <strong>Seller:</strong> <%= seller_information.business_name %><br>
+              <strong>Product:</strong> <%= item.product.name %><br>
+              <strong>Quantity:</strong> <%= item.quantity %><br>
+              <strong>Pickup Address:</strong> <%= item.product.shipping_address %>
+            </li>
+          <% end %>
+        </ul>
+        <p><strong>Delivery Address:</strong> <%= @order.user.shipping_address.address_line1%> <%= @order.user.shipping_address.address_line2%> <%= @order.user.shipping_address.city%></p>
+        <p><strong>Contact:</strong> <%= @order.user.phone_number %></p>
+        <p>Please ensure timely pickup and delivery of the items.</p>
+      </div>
+      <div class="email-footer">
+        <p>Thank you for your service!</p>
+        <p>PartsToGo Team</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -154,22 +154,3 @@
 </div>
 
 </div>
-
-
-
-
-<div id="chat-modal" class="chat-modal hidden">
-  <div class="chat-header">
-    <h2>Chat with <%= @chat.seller.username %></h2>
-    <button id="close-chat" class="close-chat-button">&times;</button>
-  </div>
-  
-  <div id="messages" data-chat-id="<%= @chat.id %>" class="chat-messages">
-    <%= render @messages %>
-  </div>
-  
-<%= form_with model: [@chat, Message.new], remote: true, html: { id: "message-form" } do |f| %>
-  <%= f.text_area :body, placeholder: "Type your message..." %>
-  <%= f.submit "Send", class: "btn btn-primary" %>
-<% end %>
-</div>
