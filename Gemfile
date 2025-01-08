@@ -36,6 +36,7 @@ gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'groupdate'
 gem 'fiddle'
+gem 'pg'
 
 
 
