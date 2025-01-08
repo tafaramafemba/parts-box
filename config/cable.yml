@@ -7,8 +7,9 @@ test:
   adapter: redis
   url: redis://localhost:6379/1
   channel_prefix: car_parts_platform_test
+# config/cable.yml
 production:
   adapter: redis
-  url: redis://localhost:6379/1
+  url: <%= ENV['REDISCLOUD_URL'] %>
   channel_prefix: car_parts_platform_production
   
