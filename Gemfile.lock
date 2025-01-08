@@ -440,14 +440,12 @@ DEPENDENCIES
   importmap-rails
   intl-tel-input-rails
   jbuilder
-  mini_magick
   omniauth-google-oauth2
   paypal-sdk-rest
   puma (>= 5.0)
   rails (~> 7.2.2)
   redis (>= 4.0.1)
   rubocop-rails-omakase
-  ruby-vips
   select2-rails
   selenium-webdriver
   sidekiq
