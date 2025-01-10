@@ -9,7 +9,7 @@ class SellerMailer < ApplicationMailer
     @order_item = order_item
     @product = order_item.product 
 
-    mail(to: @seller.email, subject: "New Order Notification - Order ##{@order.id}")
+    mail(to: @seller.email, subject: "New Order Notification - Order #PTG#{@order.id}")
   end
 
   def order_cancelled(order, seller, order_item)
@@ -18,6 +18,6 @@ class SellerMailer < ApplicationMailer
     @order_item = order_item
     @product = order_item.product 
 
-    mail(to: @seller.email, subject: "Order Cancellation Notification - Order ##{order.id}")
+    mail(to: @seller.email, subject: "Order Cancellation Notification - Order #PTG#{order.id}")
   end
 end

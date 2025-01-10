@@ -18,13 +18,24 @@ class CartsController < ApplicationController
 
   def update
     cart_item = current_user.carts.find(params[:id])
-    cart_item.update(quantity: params[:quantity].to_i)
-    redirect_to carts_path, notice: "Cart updated."
+    Rails.logger.debug "Params: #{params.inspect}"
+    if cart_item.update(cart_params)
+      redirect_to carts_path, notice: "Cart updated."
+    else
+      redirect_to carts_path, alert: "Could not update cart."
+      Rails.logger.error(cart_item.errors.full_messages)
+    end
   end
 
   def destroy
     cart_item = current_user.carts.find(params[:id])
     cart_item.destroy
     redirect_to carts_path, notice: "Item removed from cart."
+  end
+
+  private
+
+  def cart_params
+    params.require(:cart).permit(:quantity)
   end
 end

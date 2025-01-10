@@ -4,7 +4,7 @@
 <div class="order-container">
   <h1 class="order-h1">Order Details</h1>
 
-  <h3 class="order-h3">Order ID: <%= @order.id %></h3>
+  <h3 class="order-h3">Order ID: PTG<%= @order.id %></h3>
   <h3 class="order-h3">Status: <%= @order.status.humanize %></h3>
 
   <h3 class="order-h3">Customer Information</h3>
@@ -39,7 +39,7 @@
 
   <h3 class="order-h3">Order Summary</h3>
   <ul class="order-list">
-    <li class="order-list-item"><strong>Order ID:</strong> <%= @order.id %></li>
+    <li class="order-list-item"><strong>Order ID: PTG</strong> <%= @order.id %></li>
     <li class="order-list-item"><strong>Status:</strong> <%= @order.status.humanize %></li>
     <li class="order-list-item"><strong>Total Price:</strong> <%= number_to_currency(@order.order_items.sum { |item| item.quantity * item.product.price }) %></li>
 

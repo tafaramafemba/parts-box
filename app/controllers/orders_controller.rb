@@ -169,8 +169,8 @@ class OrdersController < ApplicationController
     token = ENV['ULTRAMSG_TOKEN']
     service = UltraMsgService.new(instance_id, token)
     total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
-    message = "Your order on PartsToGo has been confirmed. Order number PB#{order.id}. Your order will arrive soon. Please have #{total_price_dollars} ready for payment upon arrival. You can cancel within an hour of ordering on our platform. Failure to do so will result in mandatory delivery charges. Thank you for shopping with us!"
-    messagetwo = "An order has been placed for your item on PartsToGo. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using PartsToGo!"
+    message = "Your order on PartsToGo has been confirmed. Order number PTG#{order.id}. Your order will arrive soon. Please have #{total_price_dollars} ready for payment upon arrival. You can cancel within an hour of ordering on our platform. Failure to do so will result in mandatory delivery charges. Thank you for shopping with us!"
+    messagetwo = "An order has been placed for your item on PartsToGo. Order number PTG#{order.id}. Please prepare the item(s) for shipment. Thank you for using PartsToGo!"
 
     response = service.send_message(current_user.phone_number, message)
     responsetwo = service.send_message(seller_phone_number, messagetwo)
@@ -189,8 +189,8 @@ class OrdersController < ApplicationController
     token = ENV['ULTRAMSG_TOKEN']
     service = UltraMsgService.new(instance_id, token)
     total_price_dollars = ActionController::Base.helpers.number_to_currency(total_price)
-    message = "Your order on PartsToGo has been confirmed. Your order number is PB#{order.id}. Your order will be available for collection at #{order.collection_time} . Please pick up your order at our pickup location within 24 hours. Please note that your order will be cancelled if it is not collected by then. Please kindly have the exact amount of #{total_price_dollars} upon collection of the order. For more information, please contact us at 123-456-7890. Thank you for shopping with us!"
-    messagetwo = "An order has been placed for your item on PartsToGo. Order number PB#{order.id}. Please prepare the item(s) for shipment. Thank you for using PartsToGo!"
+    message = "Your order on PartsToGo has been confirmed. Your order number is PTG#{order.id}. Your order will be available for collection at #{order.collection_time} . Please pick up your order at our pickup location within 24 hours. Please note that your order will be cancelled if it is not collected by then. Please kindly have the exact amount of #{total_price_dollars} upon collection of the order. For more information, please contact us at 123-456-7890. Thank you for shopping with us!"
+    messagetwo = "An order has been placed for your item on PartsToGo. Order number PTG#{order.id}. Please prepare the item(s) for shipment. Thank you for using PartsToGo!"
 
     response = service.send_message(current_user.phone_number, message)
     responsetwo = service.send_message(seller_phone_number, messagetwo)
@@ -208,7 +208,7 @@ class OrdersController < ApplicationController
     service = UltraMsgService.new(instance_id, token)
     message = "Dear #{courier.name},\n\n" \
           "You have been assigned a new delivery. Please find the details below:\n\n" \
-          "Order Number: PB#{order.id}\n\n" \
+          "Order Number: PTG#{order.id}\n\n" \
           "Pickup Details:\n" \
           "#{order.order_items.map { |item| 
           seller_information = SellerInformation.find_by(user_id: item.product.user.id)

@@ -7,6 +7,6 @@ class CourierMailer < ApplicationMailer
       @courier = order.courier
       @shipping_address = ShippingAddress.find(order.shipping_address_id)
   
-      mail(to: @courier.email, subject: "New Delivery Assignment - Order ##{@order.id}")
+      mail(to: @courier.email, subject: "New Delivery Assignment - Order #PTG#{@order.id}")
     end
   end

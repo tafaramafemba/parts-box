@@ -353,6 +353,10 @@ header {
     gap: 20px;
   }
 
+  .logo-container {
+    margin-top: 20px;
+  }
+
 @media (min-width: 1024px) {
 /* Cart Container */
 .cart-container {
@@ -401,6 +405,8 @@ header {
 
     .logo-container {
         flex: 1; /* Let logo container take up available space */
+        margin-bottom: 20px
+
     }
     /* Make the nav menu visible on larger screens */
     .nav_menu {

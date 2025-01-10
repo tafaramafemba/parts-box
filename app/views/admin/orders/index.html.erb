@@ -35,7 +35,7 @@
     <tbody>
       <% @orders.each do |order| %>
         <tr>
-          <td><%= order.id %></td>
+          <td>PTG<%= order.id %></td>
           <td><%= order.user.first_name %> <%= order.user.last_name %></td>
           <td><%= number_to_currency(order.total_price) %></td>
           <td><%= order.status %></td>
