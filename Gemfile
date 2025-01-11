@@ -37,8 +37,8 @@ gem 'sidekiq-scheduler'
 gem 'groupdate'
 gem 'fiddle'
 gem 'pg'
-# Gemfile
 gem 'aws-sdk-s3', require: false
+gem 'kaminari'
 
 
 

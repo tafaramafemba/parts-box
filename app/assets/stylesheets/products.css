@@ -83,6 +83,12 @@
     font-size: 1.2rem;
     color: #f8760b;
   }
+
+  .products-pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   
 
   

@@ -72,7 +72,7 @@
   </div>
   </div>
 
-  <!-- Products Listing -->
+<div class="products-pagination" >
   <div class="products">
   <% if @products.any? %>
     <% @products.each do |product| %>
@@ -89,10 +89,18 @@
       <% end %>
       <h2 class="product-card-title"><%= product.name %></h2>
     </div>
+
+      <% end %>
+    <% else %>
+      <p>No results found</p>
     <% end %>
-  <% else %>
-    <p>No results found</p>
-  <% end %>
+    </div>
+        <div class="pagination">
+      <%= paginate @products %>
+    </div>
   </div>
+
+
+
 
 </div>

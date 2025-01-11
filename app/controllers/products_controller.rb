@@ -49,10 +49,7 @@ class ProductsController < ApplicationController
       @products = @products.where(manufacturer_part_number: params[:manufacturer_part_number])
     end
 
-    # Check if no results found
-    # if @products.empty?
-    #   flash.now[:alert] = "No results found"
-    # end
+    @products = @products.page(params[:page]).per(1)
   end
 
   def show
