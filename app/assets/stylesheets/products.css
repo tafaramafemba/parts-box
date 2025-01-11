@@ -169,7 +169,7 @@
     }
 
     .product-card {
-      flex: 1 1 calc(50% - 20px);
+      flex: 1 1 calc(40% - 20px);
       padding: 5px;
       width: 200px;
     }
