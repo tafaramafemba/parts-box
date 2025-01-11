@@ -159,8 +159,9 @@
     }
   
     .products {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        padding: 0;
     }
   
     .product-card-image {
@@ -168,7 +169,8 @@
     }
 
     .product-card {
-      padding: 20px;
+      padding: 5px;
+      width: 200px;
     }
   
     .sidebar h2 {
