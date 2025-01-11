@@ -49,7 +49,7 @@ class ProductsController < ApplicationController
       @products = @products.where(manufacturer_part_number: params[:manufacturer_part_number])
     end
 
-    @products = @products.page(params[:page]).per(1)
+    @products = @products.page(params[:page]).per(20)
   end
 
   def show
