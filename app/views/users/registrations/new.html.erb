@@ -29,23 +29,29 @@
       
     </div>
 
-
-    <div class="field">
-      <%= f.label :email, class: 'form-label' %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-input' %>
-    </div>
-
-    <div class="field">
+        <div class="field">
       <%= f.label :password, class: 'form-label' %>
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
-      <%= f.password_field :password, autocomplete: "new-password", class: 'form-input' %>
+      <div class="password-container">
+      <%= f.password_field :password, autocomplete: "new-password", class: 'form-input', id: 'password' %>
+      <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+      </div>
     </div>
 
     <div class="field">
       <%= f.label :password_confirmation, class: 'form-label' %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input' %>
+      <div class="password-container">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input', id: 'password_confirmation' %>
+      <i class="fa fa-eye" id="togglePasswordConfirmation" style="cursor: pointer;"></i>
+      </div>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :email, class: 'form-label' %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-input' %>
     </div>
 
     <div class="field">
@@ -55,6 +61,27 @@
       </label>
     </div>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var togglePassword = document.getElementById("togglePassword");
+    var password = document.getElementById("password");
+
+    togglePassword.addEventListener("click", function() {
+      var type = password.getAttribute("type") === "password" ? "text" : "password";
+      password.setAttribute("type", type);
+      this.classList.toggle("fa-eye-slash");
+    });
+
+    var togglePasswordConfirmation = document.getElementById("togglePasswordConfirmation");
+    var passwordConfirmation = document.getElementById("password_confirmation");
+
+    togglePasswordConfirmation.addEventListener("click", function() {
+      var type = passwordConfirmation.getAttribute("type") === "password" ? "text" : "password";
+      passwordConfirmation.setAttribute("type", type);
+      this.classList.toggle("fa-eye-slash");
+    });
+    });
+  </script>
     <div class="actions">
       <%= f.submit "Sign up", class: 'form-submit', id: 'submit_button', disabled: true %>
     </div>
