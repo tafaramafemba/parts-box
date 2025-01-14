@@ -29,7 +29,7 @@
 
     <div class="form-group">
       <%= f.label :phone_number, "Phone Number" %><br>
-      <%= f.text_field :phone_number, autocomplete: "phone_number", class: 'form-control', id: "phone_number" %>
+      <%= f.text_field :phone_number, required: true, autocomplete: "phone_number", class: 'form-control', id: "phone_number" %>
     </div>
 
     <div class="form-group">
@@ -67,7 +67,7 @@
 
     <!-- Submit Button -->
     <div class="form-actions">
-      <%= f.submit "Submit Application", class: 'btn btn-primary', id: 'submit_button', disabled: true, onclick: 'checkSubmitButtonState(event)' %>
+      <%= f.submit "Submit Application", class: 'btn btn-primary', id: 'submit_button' %>
     </div>
   <% end %>
 </div>
@@ -138,7 +138,6 @@ document.addEventListener("turbo:load", function () {
           emailVerificationStatus.textContent = "Email Verified!";
           emailVerificationStatus.style.color = "green";
           isEmailVerified = true;
-          updateSubmitButtonState();
         } else {
           emailVerificationStatus.textContent = "Invalid Code!";
           emailVerificationStatus.style.color = "red";
@@ -150,13 +149,15 @@ document.addEventListener("turbo:load", function () {
       });
   });
 
-  // Enable Submit Button
-  sellerPolicyCheckbox.addEventListener("change", updateSubmitButtonState);
-
-  function updateSubmitButtonState() {
-    submitButton.disabled = !(isEmailVerified && sellerPolicyCheckbox.checked);
-  }
+  // Form submission validation
+  submitButton.addEventListener("click", function (event) {
+    if (!isEmailVerified) {
+      event.preventDefault();
+      alert("Please verify your email before submitting.");
+    } else if (!sellerPolicyCheckbox.checked) {
+      event.preventDefault();
+      alert("Please accept the Seller Policy before submitting.");
+    } 
+  });
 });
-
 </script>
-
