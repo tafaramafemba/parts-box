@@ -128,7 +128,7 @@
         <% @product.user.reviews.each do |review| %>
           <li>
             <p><strong><%= review.user.username %></strong></p>
-            <%= render 'shared/star_rating', rating: review.rating %>
+            <p><%= render 'shared/star_rating', rating: review.rating %></p>
             <p><%= review.comment %></p>
           </li>
         <% end %>
