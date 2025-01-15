@@ -37,6 +37,7 @@
       <div class="password-container">
       <%= f.password_field :password, autocomplete: "new-password", class: 'form-input', id: 'password' %>
       <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+
       </div>
     </div>
 
@@ -69,8 +70,8 @@
     togglePassword.addEventListener("click", function() {
       var type = password.getAttribute("type") === "password" ? "text" : "password";
       password.setAttribute("type", type);
-      this.classList.toggle("fa-eye-slash");
-    });
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');    });
 
     var togglePasswordConfirmation = document.getElementById("togglePasswordConfirmation");
     var passwordConfirmation = document.getElementById("password_confirmation");
@@ -78,8 +79,8 @@
     togglePasswordConfirmation.addEventListener("click", function() {
       var type = passwordConfirmation.getAttribute("type") === "password" ? "text" : "password";
       passwordConfirmation.setAttribute("type", type);
-      this.classList.toggle("fa-eye-slash");
-    });
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');     });
     });
   </script>
     <div class="actions">

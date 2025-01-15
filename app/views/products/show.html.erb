@@ -138,12 +138,61 @@
 
   <!-- Add a review -->
   <div class="add-review">
-    <h2>Leave a Review</h2>
     <%= form_with(model: [@product.user, Review.new], local: true) do |f| %>
-      <div class="form-group">
-        <%= f.label :rating, "Rating (1 to 5 stars)", class: 'form-label' %>
-        <%= f.number_field :rating, min: 1, max: 5, step: 1, class: 'form-select', required: true %>
+    <h2>Leave a Review</h2>
+    <div class="form-group">
+      <%= f.label :rating, "Rating", class: 'form-label' %>
+      <div class="star-rating">
+        <%= f.radio_button :rating, 5, class: 'star-input', id: 'star-5' %>
+        <label for="star-5" class="star-label">&#9733;</label>
+        <%= f.radio_button :rating, 4, class: 'star-input', id: 'star-4' %>
+        <label for="star-4" class="star-label">&#9733;</label>
+        <%= f.radio_button :rating, 3, class: 'star-input', id: 'star-3' %>
+        <label for="star-3" class="star-label">&#9733;</label>
+        <%= f.radio_button :rating, 2, class: 'star-input', id: 'star-2' %>
+        <label for="star-2" class="star-label">&#9733;</label>
+        <%= f.radio_button :rating, 1, class: 'star-input', id: 'star-1' %>
+        <label for="star-1" class="star-label">&#9733;</label>
       </div>
+    </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const stars = document.querySelectorAll('.star-label');
+          stars.forEach(star => {
+            star.addEventListener('click', function() {
+              stars.forEach(s => s.classList.remove('selected'));
+              this.classList.add('selected');
+            });
+          });
+        });
+      </script>
+
+      <style>
+        .star-rating {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: center;
+        }
+
+        .star-input {
+          display: none;
+        }
+
+        .star-label {
+          font-size: 2rem;
+          color: lightgray;
+          cursor: pointer;
+        }
+
+        .star-input:checked ~ .star-label {
+          color: darkgoldenrod;
+        }
+
+        .star-input:hover ~ .star-label {
+          color: darkgoldenrod;
+        }
+      </style>
       <div class="form-group">
         <%= f.label :comment, "Comment", class: 'form-label' %>
         <%= f.text_area :comment, rows: 3, class: 'form-input' %>
