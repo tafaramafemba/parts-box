@@ -83,7 +83,7 @@ class ProductsController < ApplicationController
     @product = current_user.products.new(product_params)
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to my_listings_products_path, notice: 'Product was successfully created.'
     else
       render :new
     end
