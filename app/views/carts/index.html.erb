@@ -3,6 +3,9 @@
 <h1>Your Cart</h1>
 
 <% if @cart_items.any? %>
+  <div class="add-more-products" style="text-align: center;">
+  <%= link_to "Add More Products", products_path, class: "btn btn-primary", style: "margin-bottom: 20px;" %>
+  </div>
   <table class="cart-table">
     <thead>
       <tr>
@@ -32,10 +35,6 @@
       <% end %>
     </tbody>
   </table>
-
-  <div class="add-more-products">
-  <%= link_to "Add More Products", products_path, class: "btn btn-primary", style: "margin-top: 5px;" %>
-  </div>
 
   <div class="cart-summary">
     <h3>Total: <%= number_to_currency(@total_price) %></h3>
