@@ -78,7 +78,7 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     benchmark (0.4.0)
-    bigdecimal (3.1.8)
+    bigdecimal (3.1.9)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
@@ -121,7 +121,7 @@ GEM
     erubi (1.13.0)
     et-orbi (1.2.11)
       tzinfo
-    faraday (2.12.1)
+    faraday (2.12.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -173,14 +173,14 @@ GEM
     jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.8.2)
-    jwt (2.9.3)
+    json (2.9.1)
+    jwt (2.10.1)
       base64
     language_server-protocol (3.17.0.3)
     llhttp-ffi (0.5.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
-    logger (1.6.1)
+    logger (1.6.5)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -225,8 +225,8 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
-    omniauth-google-oauth2 (1.2.0)
-      jwt (>= 2.9)
+    omniauth-google-oauth2 (1.2.1)
+      jwt (>= 2.9.2)
       oauth2 (~> 2.0)
       omniauth (~> 2.0)
       omniauth-oauth2 (~> 1.8)
@@ -440,14 +440,12 @@ DEPENDENCIES
   importmap-rails
   intl-tel-input-rails
   jbuilder
-  mini_magick
   omniauth-google-oauth2
   paypal-sdk-rest
   puma (>= 5.0)
   rails (~> 7.2.2)
   redis (>= 4.0.1)
   rubocop-rails-omakase
-  ruby-vips
   select2-rails
   selenium-webdriver
   sidekiq
