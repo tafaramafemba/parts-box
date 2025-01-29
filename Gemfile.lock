@@ -385,7 +385,7 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.2)
-    stripe (13.2.0)
+    stripe (13.4.1)
     thor (1.3.2)
     tilt (2.5.0)
     timeout (0.4.2)
@@ -440,14 +440,12 @@ DEPENDENCIES
   importmap-rails
   intl-tel-input-rails
   jbuilder
-  mini_magick
   omniauth-google-oauth2
   paypal-sdk-rest
   puma (>= 5.0)
   rails (~> 7.2.2)
   redis (>= 4.0.1)
   rubocop-rails-omakase
-  ruby-vips
   select2-rails
   selenium-webdriver
   sidekiq
