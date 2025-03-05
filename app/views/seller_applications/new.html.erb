@@ -5,6 +5,17 @@
   <h2>Apply to Become a Seller</h2>
 
   <%= form_for @seller_application, data: { turbo: false }, method: :post, local: true do |f| %>
+    <% if @seller_application.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@seller_application.errors.count, "error") %> prohibited this seller application from being saved:</h2>
+        <ul>
+          <% @seller_application.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="form-group">
       <%= f.label :first_name, "First Name" %>
       <%= f.text_field :first_name, required: true, class: 'form-control' %>
@@ -151,13 +162,28 @@ document.addEventListener("turbo:load", function () {
 
   // Form submission validation
   submitButton.addEventListener("click", function (event) {
-    if (!isEmailVerified) {
+    const requiredFields = document.querySelectorAll(".form-control[required]");
+    let allFieldsFilled = true;
+
+    requiredFields.forEach(function (field) {
+      if (!field.value) {
+        allFieldsFilled = false;
+        field.classList.add("is-invalid");
+      } else {
+        field.classList.remove("is-invalid");
+      }
+    });
+
+    if (!allFieldsFilled) {
+      event.preventDefault();
+      alert("Please fill in all required fields.");
+    } else if (!isEmailVerified) {
       event.preventDefault();
       alert("Please verify your email before submitting.");
     } else if (!sellerPolicyCheckbox.checked) {
       event.preventDefault();
       alert("Please accept the Seller Policy before submitting.");
-    } 
+    }
   });
 });
 </script>
