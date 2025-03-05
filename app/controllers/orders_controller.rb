@@ -106,12 +106,14 @@ class OrdersController < ApplicationController
 
     )
 
-    cart_items.each do |item|
-      product = item.product
-      seller = product.user # Assuming 'user' is the seller of the product
-      OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
-      product.update!(stock_quantity: product.stock_quantity - item.quantity)
-      SellerMailer.order_placed(order, seller, item).deliver_now
+    items_by_seller = cart_items.group_by { |item| item.product.user }
+    items_by_seller.each do |seller, items|
+      items.each do |item|
+        product = item.product
+        OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
+        product.update!(stock_quantity: product.stock_quantity - item.quantity)
+      end
+      SellerMailer.order_placed(order, seller, items).deliver_now
     end
 
     current_user.carts.destroy_all

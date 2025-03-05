@@ -1,14 +1,107 @@
-<h1>New Order Notification</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .content {
+      padding: 20px;
+    }
+    .content p {
+      font-size: 16px;
+      color: #333333;
+    }
 
-<p>Dear <%= @seller.username %>,</p>
+    .order-summary {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .order-summary th, .order-summary td {
+      padding: 10px;
+      border-bottom: 1px solid #dddddd;
+    }
+    .order-summary th {
+      background-color: #eeeeee;
+      font-weight: bold;
+      text-align: left;
+    }
+    .order-summary td {
+      text-align: right;
+    }
 
-<p>You have received a new order for the following item:</p>
-
-<p>
-  Product Name: <%= @product.name %><br>
-  Quantity: <%= @order_item.quantity %>
-</p>
-
-<p>Please ensure that the above item is ready when the courier arrives to pick it up.</p>
-
-<p>Thank you for using our platform!</p>
+    .footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #777777;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+      .header, .content, .footer {
+        padding: 10px;
+      }
+      .header h1 {
+        font-size: 20px;
+      }
+      .content p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>New Order Notification</h1>
+    </div>
+    <div class="content">
+      <p>Dear <%= @seller.username %>,</p>
+      <p>You have received a new order for the following item:</p>
+      <table class="order-summary">
+        <tr>
+          <th colspan="2">Order Summary</th>
+        </tr>
+          <% @order_item.each do |order_item| %>
+            <tr>
+              <td><%= order_item.product.name %></td>
+              <td><%= order_item.quantity %></td>
+            </tr>
+          <% end %>
+      </table>
+      <p>Please ensure that the above item is ready when the courier arrives to pick it up.</p>
+      <p>Thank you for using our platform!</p>
+    </div>
+    <div class="footer">
+      <p>&copy; <%= Time.now.year %> PartsToGo. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

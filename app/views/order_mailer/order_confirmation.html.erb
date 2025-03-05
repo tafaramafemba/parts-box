@@ -1,29 +1,124 @@
-<h1>Your PartsToGo Order is Confirmed!</h1>
-
-<p>Hi <%= @user.username %>,</p>
-
-<p>Your recent order on PartsToGo has been successfully placed.</p>
-
-<table style="width: 100%; border-collapse: collapse;">
-  <tr>
-    <th style="padding: 10px; background-color: #eee; font-weight: bold;">Order Summary</th>
-  </tr>
-  <% @order.order_items.each do |item| %>
-    <% product = Product.find(item.product_id) %>
-    <tr>
-      <td style="padding: 10px; border-bottom: 1px solid #ddd;">
-        <%= item.quantity %> x <%= product.name %>
-      </td>
-    </tr>
-  <% end %>
-  <tr>
-    <td style="padding: 10px; font-weight: bold; text-align: right;">
-      <strong>Order Total:</strong> <%= number_to_currency(@order.total_price) %>
-    </td>
-  </tr>
-</table>
-
-<p>Thank you for your order! We appreciate your business.</p>
-
-<p>Sincerely,</p>
-<p>The PartsToGo Team</p>
+<!-- filepath: /c:/Users/Taffy/OneDrive/Desktop/Repositories/parts-box/app/views/order_mailer/order_confirmation.html.erb -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .content {
+      padding: 20px;
+    }
+    .content p {
+      font-size: 16px;
+      color: #333333;
+    }
+    .order-summary {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .order-summary th, .order-summary td {
+      padding: 10px;
+      border-bottom: 1px solid #dddddd;
+    }
+    .order-summary th {
+      background-color: #eeeeee;
+      font-weight: bold;
+      text-align: left;
+    }
+    .order-summary td {
+      text-align: right;
+    }
+    .order-total {
+      font-weight: bold;
+      text-align: right;
+      padding: 10px;
+    }
+    .footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #777777;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+      .header, .content, .footer {
+        padding: 10px;
+      }
+      .header h1 {
+        font-size: 20px;
+      }
+      .content p {
+        font-size: 14px;
+      }
+      .order-summary th, .order-summary td {
+        padding: 8px;
+      }
+      .order-total {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Your PartsToGo Order is Confirmed!</h1>
+    </div>
+    <div class="content">
+      <p>Hi <%= @user.username %>,</p>
+      <p>Your recent order on PartsToGo has been successfully placed.</p>
+      <table class="order-summary">
+        <tr>
+          <th colspan="2">Order Summary</th>
+        </tr>
+        <% @order.order_items.each do |item| %>
+          <% product = Product.find(item.product_id) %>
+          <tr>
+            <td><%= item.quantity %> x <%= product.name %></td>
+            <td><%= number_to_currency(product.price * item.quantity) %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td class="order-total" colspan="2">
+            <strong>Order Total:</strong> <%= number_to_currency(@order.total_price) %>
+          </td>
+        </tr>
+      </table>
+      <p>Thank you for your order! We appreciate your business.</p>
+      <p>Sincerely,</p>
+      <p>The PartsToGo Team</p>
+    </div>
+    <div class="footer">
+      <p>&copy; <%= Time.now.year %> PartsToGo. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
