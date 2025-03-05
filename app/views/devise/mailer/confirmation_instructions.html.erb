@@ -1,5 +1,91 @@
-<p>Welcome <%= @email %>!</p>
+<!-- filepath: /c:/Users/Taffy/OneDrive/Desktop/Repositories/parts-box/app/views/devise/mailer/confirmation_instructions.html.erb -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .content {
+      padding: 20px;
+    }
+    .content p {
+      font-size: 16px;
+      color: #333333;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 20px 0;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #000000;
+      text-decoration: none;
+      border-radius: 5px;
+    }
 
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+    .footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #777777;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+      .header, .content, .footer {
+        padding: 10px;
+      }
+      .header h1 {
+        font-size: 20px;
+      }
+      .content p {
+        font-size: 14px;
+      }
+      .button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Welcome to PartsToGo!</h1>
+    </div>
+    <div class="content">
+      <p>Welcome <%= @email %>!</p>
+      <p>You can confirm your account email through the link below:</p>
+    <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token), class: 'button', style: 'color: #ffffff;' %></p>
+    </div>
+    <div class="footer">
+      <p>&copy; <%= Time.now.year %> PartsToGo. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
