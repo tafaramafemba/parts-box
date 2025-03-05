@@ -16,6 +16,11 @@ class ProductsController < ApplicationController
     if params[:query].present?
       @products = @products.search_by_name(params[:query])
     end
+
+    # Filter by category
+    if params[:category].present?
+      @products = @products.where(category: params[:category])
+    end
   
     # Filter by price (budget)
     if params[:min_price].present? && params[:max_price].present?
@@ -42,6 +47,10 @@ class ProductsController < ApplicationController
     # Filter by year
     if params[:year].present?
       @products = @products.where(year: params[:year])
+    end
+
+    if params[:part_type].present?
+      @products = @products.where(part_type: params[:part_type])
     end
 
     # Filter by manufacturer part number
@@ -115,6 +124,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :barter_terms, :image, :location, :category, :make, :model, :year, :stock_quantity, :manufacturer_part_number, :condition, :shipping_fee_type, :flat_rate_shipping_fee, :weight, :dimensions, :shipping_address, additional_images: [])
+    params.require(:product).permit(:name, :description, :price, :barter_terms, :image, :location, :category, :make, :model, :year, :stock_quantity, :manufacturer_part_number, :condition, :part_type, :shipping_fee_type, :flat_rate_shipping_fee, :weight, :dimensions, :shipping_address, additional_images: [])
   end
 end

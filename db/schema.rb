@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_05_201806) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_05_215405) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -243,6 +243,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_05_201806) do
     t.text "shipping_address"
     t.boolean "listing_status", default: true
     t.string "category", default: "Uncategorized", null: false
+    t.string "part_type", default: "aftermarket"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 

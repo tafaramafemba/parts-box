@@ -23,6 +23,11 @@
       <%= form.select :condition, ['New', 'Used'], class: 'form-control' %>
     </div>
 
+    <div class="field">
+      <%= form.label :part_type %>
+      <%= form.select :part_type, ['OEM', 'Aftermarket'], class: 'form-control' %>
+    </div>
+
     <div class="form-group">
       <%= form.label :make, 'Make' %>
       <%= form.text_field :make, class: 'form-control' %>
