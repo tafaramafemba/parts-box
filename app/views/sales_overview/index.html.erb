@@ -1,0 +1,19 @@
+<%= stylesheet_link_tag "sales_overview", "data-turbo-track": "reload" %>
+
+<h1 class="page-title">Sales Overview</h1>
+
+<div class="sales-stats">
+  <p><strong>Total Sales:</strong> <%= number_to_currency(@total_sales) %></p>
+  <p><strong>Total Orders:</strong> <%= @total_orders %></p>
+  <p><strong>Total Revenue:</strong> <%= number_to_currency(@total_revenue) %></p>
+  <p><strong>Average Order Value:</strong> <%= number_to_currency(@average_order_value) %></p>
+</div>
+
+<h2 class="section-title">Top Selling Products</h2>
+<ul class="top-selling-products">
+  <% @top_selling_products.each do |product| %>
+    <li class="product-item">
+      <%= product.name %> - <%= product.order_items.sum(:quantity) %> sold
+    </li>
+  <% end %>
+</ul>

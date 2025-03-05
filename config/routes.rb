@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'account/settings', to: 'users#edit', as: :edit_account_settings
   end
   
+  get 'sales_overview', to: 'sales_overview#index'
   get 'fault_codes/search', to: 'fault_codes#search', as: 'search_fault_codes'
   get 'car_parts/search', to: 'car_parts#search', as: 'search_car_parts'
   match 'orders/execute_paypal_payment', to: 'orders#execute_paypal_payment', via: [:get, :post], as: 'execute_paypal_payment'

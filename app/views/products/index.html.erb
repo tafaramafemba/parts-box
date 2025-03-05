@@ -69,6 +69,12 @@
       <i class="fas fa-shopping-cart sidebar-icon"></i> My Orders<span class="unread-counter"> <%= @orders_count %></span>
     <% end %>
     <% end %>
+
+    <% if current_user && current_user.seller_status == 'approved' %>
+    <%= link_to sales_overview_path, class: 'sidebar-link' do %>
+      <i class="fas fa-chart-line sidebar-icon"></i> Sales Overview
+    <% end %>
+    <% end %>
   </div>
   </div>
 

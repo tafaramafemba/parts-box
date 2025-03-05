@@ -1,0 +1,66 @@
+.page-title {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8760b;
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .sales-stats {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sales-stats p {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 10px 0;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+    margin: 20px 0;
+  }
+  
+  .top-selling-products {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .product-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 1.5rem;
+    }
+  
+    .sales-stats p {
+      font-size: 1rem;
+    }
+  
+    .section-title {
+      font-size: 1.2rem;
+    }
+  
+    .product-item {
+      font-size: 1rem;
+    }
+  }
