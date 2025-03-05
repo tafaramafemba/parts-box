@@ -1,4 +1,16 @@
 class Product < ApplicationRecord
+  if Rails.env.production?
+    include PgSearch::Model
+    pg_search_scope :search_by_name, 
+                    against: :name, 
+                    using: {
+                      tsearch: { prefix: true }, # Partial matches
+                      trigram: { threshold: 0.3 } # Fuzzy matches
+                    }
+  else
+    scope :search_by_name, ->(query) { where("name LIKE ?", "%#{query}%".downcase) }
+  end
+
   belongs_to :user
   belongs_to :seller, class_name: 'User', foreign_key: :user_id
   belongs_to :buyer, class_name: "User", foreign_key: "buyer_id", optional: true

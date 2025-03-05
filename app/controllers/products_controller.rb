@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
 
     # Filter by name
     if params[:query].present?
-      @products = @products.where("name LIKE ?", "%#{params[:query]}%")
+      @products = @products.search_by_name(params[:query])
     end
   
     # Filter by price (budget)

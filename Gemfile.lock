@@ -272,6 +272,9 @@ GEM
       xml-simple
     pg (1.5.9)
     pg (1.5.9-x64-mingw-ucrt)
+    pg_search (2.3.7)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     psych (5.2.0)
       stringio
     public_suffix (6.0.1)
@@ -476,6 +479,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   paypal-sdk-rest
   pg
+  pg_search
   puma (>= 5.0)
   rails (~> 7.2.2)
   redis (>= 4.0.1)
