@@ -4,11 +4,25 @@ class Product < ApplicationRecord
     pg_search_scope :search_by_name, 
                     against: :name, 
                     using: {
-                      tsearch: { prefix: true }, # Partial matches
-                      trigram: { threshold: 0.3 } # Fuzzy matches
+                      tsearch: { prefix: true }, # Full-text search with partial matches
+                      trigram: { threshold: 0.2 } # Fuzzy search with trigram similarity
+                    }
+    pg_search_scope :search_by_make, 
+                    against: :make, 
+                    using: {
+                      tsearch: { prefix: true },
+                      trigram: { threshold: 0.2 }
+                    }
+    pg_search_scope :search_by_model, 
+                    against: :model, 
+                    using: {
+                      tsearch: { prefix: true },
+                      trigram: { threshold: 0.2 }
                     }
   else
-    scope :search_by_name, ->(query) { where("name LIKE ?", "%#{query}%".downcase) }
+    scope :search_by_name, ->(query) { where("name LIKE ?", "%#{query}%") }
+    scope :search_by_make, ->(query) { where("make LIKE ?", "%#{query}%") }
+    scope :search_by_model, ->(query) { where("model LIKE ?", "%#{query}%") }
   end
 
   belongs_to :user

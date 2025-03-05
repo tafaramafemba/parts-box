@@ -31,12 +31,12 @@ class ProductsController < ApplicationController
 
     # Filter by make
     if params[:make].present?
-      @products = @products.where(make: params[:make])
+      @products = @products.search_by_make(params[:make])
     end
 
     # Filter by model
     if params[:model].present?
-      @products = @products.where(model: params[:model])
+      @products = @products.search_by_model(params[:model])
     end
 
     # Filter by year
