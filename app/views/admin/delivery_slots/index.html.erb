@@ -1,31 +1,27 @@
-<!-- filepath: /c:/Users/Taffy/OneDrive/Desktop/Repositories/parts-box/app/views/admin/couriers/index.html.erb -->
-<h1 class="page-title">Couriers</h1>
+<!-- filepath: app/views/admin/delivery_slots/index.html.erb -->
+<h1 class="page-title">Delivery Slots</h1>
 
 <div class="actions">
-  <%= link_to 'New Courier', new_admin_courier_path, class: 'btn btn-primary' %>
+  <%= link_to 'New Delivery Slot', new_admin_delivery_slot_path, class: 'btn btn-primary' %>
 </div>
 
 <div class="table-container">
   <table class="table">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone Number</th>
+        <th>Time</th>
+        <th>Cutoff (hours)</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <% @couriers.each do |courier| %>
+      <% @delivery_slots.each do |slot| %>
         <tr>
-          <td><%= courier.name %></td>
-          <td><%= courier.email %></td>
-          <td><%= courier.phone_number %></td>
+          <td><%= slot.time.strftime("%I:%M %p") %></td>
+          <td><%= slot.cutoff %></td>
           <td>
-            <div class="buttons-actions">
-              <%= link_to 'Edit', edit_admin_courier_path(courier), class: 'btn btn-secondary btn-sm' %>
-              <%= button_to 'Delete', admin_courier_path(courier), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
-            </div>
+            <%= link_to 'Edit', edit_admin_delivery_slot_path(slot), class: 'btn btn-secondary btn-sm' %>
+            <%= link_to 'Delete', admin_delivery_slot_path(slot), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
           </td>
         </tr>
       <% end %>
@@ -37,13 +33,6 @@
   .page-title {
     text-align: center;
     margin-bottom: 20px;
-  }
-
-  .buttons-actions {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: center;
   }
 
   .actions {
@@ -91,8 +80,6 @@
 
   .table-container {
     overflow-x: auto;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
 
   .table {
@@ -117,5 +104,29 @@
 
   .table tr:nth-child(even) {
     background-color: #f2f2f2;
+  }
+
+  @media (max-width: 768px) {
+    .table th, .table td {
+      font-size: 12px;
+      padding: 8px;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .table th, .table td {
+      font-size: 10px;
+      padding: 6px;
+    }
+
+    .btn {
+      font-size: 10px;
+      padding: 5px 8px;
+    }
   }
 </style>

@@ -72,7 +72,7 @@
               <% if order.status == 'delivered' || order.status == 'delivery_failed' %>
 
                   <% else %>
-                    <%= link_to mark_as_completed_admin_delivery_path(order, date: @date), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success btn-sm' do %>
+                    <%= button_to mark_as_completed_admin_delivery_path(order, date: @date), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success btn-sm' do %>
                       <i class="fas fa-check"></i>
                     <% end %>
                   <%= button_to mark_as_not_completed_admin_delivery_path(order, date: @date), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm btn-black-bg' do %>
