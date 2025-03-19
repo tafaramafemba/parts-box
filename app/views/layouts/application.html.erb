@@ -14,7 +14,7 @@
 
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="<%= asset_path 'ptg.png' %>" type="image/png">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="apple-touch-icon" href="<%= asset_path 'ptg.png' %>">
     <%= stylesheet_link_tag "styles", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "footer", "data-turbo-track": "reload" %>
@@ -35,7 +35,9 @@
 <header id="home">
   <div class="header-container">
     <div class="logo-container">
-      <%= image_tag 'c2c.svg', alt: 'c2c logo', class: 'logo' %>
+      <%= link_to root_path do %>
+        <%= image_tag 'c2c.svg', alt: 'c2c logo', class: 'logo' %>
+      <% end %>
     </div>
     <label for="menu_collapse_icon" class="menu_collapse_icon_label" id="menu-icon-label">
       <div class="menu_bar">
