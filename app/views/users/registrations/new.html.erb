@@ -34,23 +34,22 @@
       
     </div>
 
-        <div class="field">
+    <div class="field">
       <%= f.label :password, class: 'form-label' %>
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
-      <div class="password-container">
-      <%= f.password_field :password, autocomplete: "new-password", class: 'form-input', id: 'password' %>
-      <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
-
+      <div class="password-container" style="display: flex; align-items: center; position: relative;">
+      <%= f.password_field :password, autocomplete: "new-password", class: 'form-input', id: 'password', style: "flex: 1; padding-right: 30px;" %>
+      <i class="fa fa-eye" id="togglePassword" style="position: absolute; right: 10px; cursor: pointer;"></i>
       </div>
-    </div>
+        </div>
 
     <div class="field">
       <%= f.label :password_confirmation, class: 'form-label' %><br />
-      <div class="password-container">
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input', id: 'password_confirmation' %>
-      <i class="fa fa-eye" id="togglePasswordConfirmation" style="cursor: pointer;"></i>
+      <div class="password-container" style="position: relative; display: flex; align-items: center;">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input', id: 'password_confirmation', style: "flex: 1; padding-right: 30px;" %>
+      <i class="fa fa-eye" id="togglePasswordConfirmation" style="position: absolute; right: 10px; cursor: pointer;"></i>
       </div>
     </div>
 
@@ -83,7 +82,7 @@
     });
   </script>
 
-  <div class="field">
+  <div class="field" style="margin: 10px;">
     <%= recaptcha_tags %>
   </div>
 
