@@ -6,7 +6,7 @@
 <div class="form-sign-details">
   <h2>Log in</h2>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
     <div class="field">
       <%= f.label :email, class: 'form-label' %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-input' %>
@@ -15,6 +15,10 @@
     <div class="field">
       <%= f.label :password, class: 'form-label' %><br />
       <%= f.password_field :password, autocomplete: "current-password", class: 'form-input' %>
+    </div>
+
+    <div class="field">
+      <%= recaptcha_tags %>
     </div>
 
     <div class="sign-container">

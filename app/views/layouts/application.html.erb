@@ -68,8 +68,8 @@
             <%= link_to 'Account Settings', edit_account_settings_path, class: 'dropdown-item' %>
             <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item btn' %>
           </div>
-          <% else %>
-            <%= link_to 'Sign In', new_user_session_path, class: 'dropdown-item' %>
+            <% else %>
+            <%= link_to 'Sign In', new_user_session_path, class: 'dropdown-item', data: { turbo: false } %>
           <% end %>
         </div>
       </li>

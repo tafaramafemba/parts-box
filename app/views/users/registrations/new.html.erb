@@ -24,6 +24,11 @@
     </div>
 
     <div class="field">
+      <%= f.label :email, class: 'form-label' %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-input' %>
+    </div>
+
+    <div class="field">
       <%= f.label :phone_number, class: 'form-label' %><br />
       <%= f.text_field :phone_number, autocomplete: "phone_number", class: 'form-tel', id: "phone_number" %>
       
@@ -47,12 +52,6 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input', id: 'password_confirmation' %>
       <i class="fa fa-eye" id="togglePasswordConfirmation" style="cursor: pointer;"></i>
       </div>
-    </div>
-
-
-    <div class="field">
-      <%= f.label :email, class: 'form-label' %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-input' %>
     </div>
 
     <div class="field">
@@ -83,6 +82,11 @@
       this.classList.toggle('fa-eye-slash');     });
     });
   </script>
+
+  <div class="field">
+    <%= recaptcha_tags %>
+  </div>
+
     <div class="actions">
       <%= f.submit "Sign up", class: 'form-submit', id: 'submit_button', disabled: true %>
     </div>
