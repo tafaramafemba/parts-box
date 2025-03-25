@@ -10,27 +10,29 @@
 
     <!-- Filter by Category -->
     <select name="category">
-      <option value="Engine Components">Engine Components</option>
-      <option value="Transmission & Drivetrain">Transmission & Drivetrain</option>
-      <option value="Suspension & Steering">Suspension & Steering</option>
-      <option value="Braking System">Braking System</option>
-      <option value="Electrical & Lighting">Electrical & Lighting</option>
-      <option value="Exhaust System">Exhaust System</option>
-      <option value="Cooling System">Cooling System</option>
-      <option value="Fuel System">Fuel System</option>
-      <option value="Interior Parts">Interior Parts</option>
-      <option value="Exterior Parts">Exterior Parts</option>
-      <option value="Body Parts">Body Parts</option>
-      <option value="Wheels & Tires">Wheels & Tires</option>
-      <option value="Heating, Ventilation & Air Conditioning (HVAC)">Heating, Ventilation & Air Conditioning (HVAC)</option>
-      <option value="Accessories">Accessories</option>
-      <option value="Performance Parts">Performance Parts</option>
+      <option value="" <%= params[:category].blank? ? 'selected' : '' %>>Select Category</option>
+      <option value="Engine Components" <%= params[:category] == 'Engine Components' ? 'selected' : '' %>>Engine Components</option>
+      <option value="Transmission & Drivetrain" <%= params[:category] == 'Transmission & Drivetrain' ? 'selected' : '' %>>Transmission & Drivetrain</option>
+      <option value="Suspension & Steering" <%= params[:category] == 'Suspension & Steering' ? 'selected' : '' %>>Suspension & Steering</option>
+      <option value="Braking System" <%= params[:category] == 'Braking System' ? 'selected' : '' %>>Braking System</option>
+      <option value="Electrical & Lighting" <%= params[:category] == 'Electrical & Lighting' ? 'selected' : '' %>>Electrical & Lighting</option>
+      <option value="Exhaust System" <%= params[:category] == 'Exhaust System' ? 'selected' : '' %>>Exhaust System</option>
+      <option value="Cooling System" <%= params[:category] == 'Cooling System' ? 'selected' : '' %>>Cooling System</option>
+      <option value="Fuel System" <%= params[:category] == 'Fuel System' ? 'selected' : '' %>>Fuel System</option>
+      <option value="Interior Parts" <%= params[:category] == 'Interior Parts' ? 'selected' : '' %>>Interior Parts</option>
+      <option value="Exterior Parts" <%= params[:category] == 'Exterior Parts' ? 'selected' : '' %>>Exterior Parts</option>
+      <option value="Body Parts" <%= params[:category] == 'Body Parts' ? 'selected' : '' %>>Body Parts</option>
+      <option value="Wheels & Tires" <%= params[:category] == 'Wheels & Tires' ? 'selected' : '' %>>Wheels & Tires</option>
+      <option value="Heating, Ventilation & Air Conditioning (HVAC)" <%= params[:category] == 'Heating, Ventilation & Air Conditioning (HVAC)' ? 'selected' : '' %>>Heating, Ventilation & Air Conditioning (HVAC)</option>
+      <option value="Accessories" <%= params[:category] == 'Accessories' ? 'selected' : '' %>>Accessories</option>
+      <option value="Performance Parts" <%= params[:category] == 'Performance Parts' ? 'selected' : '' %>>Performance Parts</option>
     </select>
 
     <!-- Filter by Part Type -->
     <select name="part_type">
-    <option value="OEM">OEM</option>
-    <option value="aftermarket">Aftermarket</option>
+    <option value="" <%= params[:part_type].blank? ? 'selected' : '' %>>Select Part Type</option>
+    <option value="OEM" <%= params[:part_type] == 'OEM' ? 'selected' : '' %>>OEM</option>
+    <option value="aftermarket" <%= params[:part_type] == 'aftermarket' ? 'selected' : '' %>>Aftermarket</option>
     </select>
 
     <!-- Filter by Price Range -->
