@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_05_215405) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_16_171834) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -201,6 +201,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_05_215405) do
     t.string "collection_method", default: "pickup", null: false
     t.time "collection_time"
     t.integer "courier_id"
+    t.string "payment_method", default: "cod"
+    t.string "reference"
+    t.string "paynow_poll_url"
     t.index ["shipping_address_id"], name: "index_orders_on_shipping_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

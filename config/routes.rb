@@ -96,6 +96,9 @@ Rails.application.routes.draw do
 
   post '/stripe/webhook', to: 'stripe_webhook#handle_event'
 
+  post '/paynow/webhook', to: 'paynow_webhook#handle_notification'
+  get '/paynow/return', to: 'paynow_return#handle_return'
+
   namespace :users do
     resources :stripe_connects, only: [:new] do
       collection do

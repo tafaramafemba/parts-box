@@ -41,6 +41,7 @@ gem 'aws-sdk-s3', require: false
 gem 'kaminari'
 gem 'pg_search'
 gem 'recaptcha', require: 'recaptcha/rails'
+gem 'paynow_sdk'
 
 
 

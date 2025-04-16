@@ -267,6 +267,7 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
+    paynow_sdk (1.1.2)
     paypal-sdk-rest (1.7.6)
       multi_json (~> 1.0)
       xml-simple
@@ -478,6 +479,7 @@ DEPENDENCIES
   jbuilder
   kaminari
   omniauth-google-oauth2
+  paynow_sdk
   paypal-sdk-rest
   pg
   pg_search

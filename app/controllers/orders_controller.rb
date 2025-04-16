@@ -24,6 +24,8 @@ class OrdersController < ApplicationController
       create_pickup_session(cart_items, total_price_pickup, platform_fee, shipping_fee = 0)
     when 'cod'
       create_cod_session(cart_items, total_price, platform_fee, shipping_fee)
+    when 'paynow'
+      create_paynow_session(cart_items, total_price, platform_fee, shipping_fee)
     else
       redirect_to carts_path, alert: "Invalid payment method selected."
     end
@@ -99,6 +101,7 @@ class OrdersController < ApplicationController
       total_price: total_price,
       platform_fee: platform_fee,
       shipping_fee: shipping_fee,
+      payment_method: 'cod',
       status: 'pending', # Payment pending
       shipping_address_id: current_user.shipping_address.id,
       collection_method: 'delivery',
@@ -127,6 +130,56 @@ class OrdersController < ApplicationController
 
     redirect_to orders_path
 
+  end
+
+  def create_paynow_session(cart_items, total_price, platform_fee, shipping_fee)
+    # Generate a unique reference for the order
+    unique_reference = SecureRandom.uuid
+  
+    # Create a Paynow payment
+    payment = PaynowClient.create_payment(unique_reference, current_user.email)
+  
+    # Add items to the Paynow payment
+    cart_items.each do |item|
+      payment.add(item.product.name, item.product.price * item.quantity)
+    end
+  
+    # Add platform and shipping fees
+    payment.add("Platform Fee", platform_fee)
+    payment.add("Shipping Fee", shipping_fee)
+  
+    # Initiate the payment
+    response = PaynowClient.send(payment)
+  
+    if response.success?
+          # Save the order in the database
+      order = Order.create!(
+        user_id: current_user.id,
+        total_price: total_price,
+        platform_fee: platform_fee,
+        shipping_fee: shipping_fee,
+        payment_method: 'paynow',
+        status: 'pending', # Payment pending
+        shipping_address_id: current_user.shipping_address.id,
+        collection_method: 'delivery',
+        paynow_poll_url: nil, # Will be updated after initiating payment
+        reference: unique_reference # Save the unique reference
+      )
+    
+      # Save order items
+      cart_items.each do |item|
+        OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
+      end
+      # Store the Paynow poll URL in the order for future reference
+      order.update!(paynow_poll_url: response.poll_url)
+  
+      # Redirect the user to Paynow for payment
+      redirect_to response.redirect_url
+    else
+      # If payment initiation fails, delete the order and show an error
+      order.destroy
+      redirect_to carts_path, alert: "Failed to initiate Paynow payment. Please try again."
+    end
   end
 
   def create_pickup_session(cart_items, total_price_pickup, platform_fee, shipping_fee = 0)
