@@ -55,13 +55,31 @@
     </select>
 
     <!-- Filter by Make -->
-    <input type="text" name="make" placeholder="Make" value="<%= params[:make] %>">
+    <select name="make">
+      <option value="" <%= params[:make].blank? ? 'selected' : '' %>>Select Make</option>
+      <option value="Toyota" <%= params[:make] == 'Toyota' ? 'selected' : '' %>>Toyota</option>
+      <option value="Nissan" <%= params[:make] == 'Nissan' ? 'selected' : '' %>>Nissan</option>
+      <option value="Mazda" <%= params[:make] == 'Mazda' ? 'selected' : '' %>>Mazda</option>
+      <option value="Ford" <%= params[:make] == 'Ford' ? 'selected' : '' %>>Ford</option>
+      <option value="Honda" <%= params[:make] == 'Honda' ? 'selected' : '' %>>Honda</option>
+      <option value="Isuzu" <%= params[:make] == 'Isuzu' ? 'selected' : '' %>>Isuzu</option>
+      <option value="Volkswagen" <%= params[:make] == 'Volkswagen' ? 'selected' : '' %>>Volkswagen</option>
+      <option value="BMW" <%= params[:make] == 'BMW' ? 'selected' : '' %>>BMW</option>
+      <option value="Mercedes-Benz" <%= params[:make] == 'Mercedes-Benz' ? 'selected' : '' %>>Mercedes-Benz</option>
+      <option value="Hyundai" <%= params[:make] == 'Hyundai' ? 'selected' : '' %>>Hyundai</option>
+      <option value="Audi" <%= params[:make] == 'Audi' ? 'selected' : '' %>>Audi</option>
+    </select>
 
     <!-- Filter by Model -->
     <input type="text" name="model" placeholder="Model" value="<%= params[:model] %>">
 
     <!-- Filter by Year -->
-    <input type="number" name="year" placeholder="Year" value="<%= params[:year] %>">
+    <select name="year">
+      <option value="" <%= params[:year].blank? ? 'selected' : '' %>>Select Year</option>
+      <% (1998..Date.current.year).to_a.reverse.each do |year| %>
+      <option value="<%= year %>" <%= params[:year].to_i == year ? 'selected' : '' %>><%= year %></option>
+      <% end %>
+    </select>
 
     <!-- Filter by Part Number -->
     <input type="text" name="manufacturer_part_number" placeholder="Part Number" value="<%= params[:manufacturer_part_number] %>">

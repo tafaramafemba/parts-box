@@ -30,7 +30,7 @@
 
     <div class="form-group">
       <%= form.label :make, 'Make' %>
-      <%= form.text_field :make, class: 'form-control' %>
+      <%= form.select :make, ['Toyota', 'Nissan', 'Mazda', 'Ford', 'Honda', 'Isuzu', 'Volkswagen', 'BMW', 'Mercedes-Benz', 'Hyundai', 'Audi'], class: 'form-control' %>
     </div>
 
     <div class="form-group">
@@ -40,7 +40,7 @@
 
     <div class="form-group">
       <%= form.label :year, 'Year' %>
-      <%= form.text_field :year, class: 'form-control' %>
+      <%= form.select :year, (1998..Date.today.year).to_a.reverse, {}, class: 'form-control' %>
     </div>
 
     <div class="form-group">
