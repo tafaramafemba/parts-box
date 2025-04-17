@@ -16,17 +16,27 @@ document.addEventListener('DOMContentLoaded', function () {
   
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+  if (!scrollTopBtn) {
+    console.error("scrollTopBtn not found in the DOM");
+    return;
+  }
+
+  // Show or hide the button based on scroll position
   document.addEventListener("scroll", () => {
-    const scrollTopBtn = document.getElementById("scrollTopBtn");
     if (window.scrollY > 200) {
       scrollTopBtn.classList.add("show");
     } else {
       scrollTopBtn.classList.remove("show");
     }
   });
-  
-  document.getElementById("scrollTopBtn").addEventListener("click", () => {
+
+  // Scroll to the top when the button is clicked
+  scrollTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
+});
   
   
