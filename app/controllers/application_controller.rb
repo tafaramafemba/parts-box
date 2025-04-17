@@ -37,6 +37,19 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    products_path
+    if resource.is_a?(Admin)
+      admin_blog_posts_path # Redirect admins to blog_posts#index
+    else
+      products_path # Redirect users to products#index
+    end
+  end
+
+  # Override after_sign_out_path_for
+  def after_sign_out_path_for(resource_or_scope)
+    if resource_or_scope == :admin
+      new_admin_session_path # Redirect to the admin login page
+    else
+      root_path # Default behavior for other users
+    end
   end
 end

@@ -78,6 +78,46 @@
       background: #444;
     }
 
+    .sidebar.collapsed .logout-button span {
+      display: none; /* Hide the text */
+    }
+
+    .sidebar.collapsed .logout-button i {
+      margin-right: 0; /* Remove spacing for the icon */
+    }
+
+    /* Style the logout button */
+    .logout-button {
+      display: flex;
+      align-items: center;
+      color: #dc3545; /* Red color for logout */
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px 15px;
+      text-align: left;
+      font-size: 16px;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .logout-button:hover {
+      background: #f8d7da; /* Light red background on hover */
+      color: #721c24; /* Dark red text on hover */
+      border-radius: 5px;
+    }
+
+    .logout-button i {
+      margin-right: 10px; /* Add spacing between the icon and text */
+    }
+
+    /* Optional: Style the form to remove default margins */
+    .logout-form {
+      margin: 0;
+      padding: 0;
+    }
+
     .content {
       flex: 1;
       padding: 20px;
@@ -142,8 +182,13 @@
       <a href="<%= admin_seller_applications_path %>"><i class="fas fa-file"></i><span>Seller Applications</span></a>
       <a href="<%= admin_couriers_path %>"><i class="fas fa-shipping-fast"></i><span>Manage Couriers</span></a>
       <a href="<%= admin_reports_path %>"><i class="fas fa-chart-line"></i><span>View Reports</span></a>
-
-
+      <% if admin_signed_in? %>
+        <form action="<%= destroy_admin_session_path %>" method="post" class="logout-form">
+          <%= button_to destroy_admin_session_path, method: :delete, class: "logout-button" do %>
+            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+          <% end %>
+        </form>
+      <% end %>
     </div>
     <button class="toggle-btn" id="toggle-btn">☰</button>
     <div class="content">

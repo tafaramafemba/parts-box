@@ -31,7 +31,6 @@
     <div class="field">
       <%= f.label :phone_number, class: 'form-label' %><br />
       <%= f.text_field :phone_number, autocomplete: "phone_number", class: 'form-tel', id: "phone_number" %>
-      
     </div>
 
     <div class="field">
@@ -54,10 +53,12 @@
     </div>
 
     <div class="field">
-      <label>
-      <input type="checkbox" id="policy_checkbox">
-      I accept the <a href="<%= privacy_policy_path %>">Privacy Policy</a> and <a href="<%= user_agreement_path %>">User Agreement</a>
-      </label>
+      <div class="policy-container">
+        <label class="policy-label">
+          <input type="checkbox" id="policy_checkbox" class="policy-checkbox">
+          I accept the <a href="<%= privacy_policy_path %>" class="policy-link">Privacy Policy</a> and <a href="<%= user_agreement_path %>" class="policy-link">User Agreement</a>
+        </label>
+      </div>
     </div>
 
   <script>
@@ -82,7 +83,7 @@
     });
   </script>
 
-  <div class="field" style="margin: 10px;">
+  <div class="recaptcha-container">
     <%= recaptcha_tags %>
   </div>
 
