@@ -12,7 +12,7 @@ class Order < ApplicationRecord
   validates :user_id, presence: true
   validates :shipping_address_id, presence: true
 
-  enum status: { pending: 'pending', collected: 'collected', not_collected: 'not_collected', dispatched: 'dispatched', delivered: 'delivered', cancelled: 'cancelled', delivery_failed: 'delivery_failed' }
+  enum status: { pending: 'pending', confirmed: 'confirmed', collected: 'collected', not_collected: 'not_collected', dispatched: 'dispatched', delivered: 'delivered', cancelled: 'cancelled', delivery_failed: 'delivery_failed' }
 
   before_create :assign_delivery_slot
   before_create :assign_collection_time

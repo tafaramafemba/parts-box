@@ -133,54 +133,50 @@ class OrdersController < ApplicationController
   end
 
   def create_paynow_session(cart_items, total_price, platform_fee, shipping_fee)
-    # Generate a unique reference for the order
-    unique_reference = SecureRandom.uuid
+    unique_reference = "PTG#{SecureRandom.hex(4).upcase}"
+
+
   
-    # Create a Paynow payment
-    payment = PaynowClient.create_payment(unique_reference, current_user.email)
+    # Calculate the full description for Paynow (optional)
+    additional_info = "Payment for order #{unique_reference}"
+
+
   
-    # Add items to the Paynow payment
-    cart_items.each do |item|
-      payment.add(item.product.name, item.product.price * item.quantity)
-    end
+    paynow_service = PaynowService.new(
+      return_url: "https://915f-2001-569-fd83-2f00-2132-6ebb-6f1f-72fb.ngrok-free.app/paynow/return",
+      result_url: "https://915f-2001-569-fd83-2f00-2132-6ebb-6f1f-72fb.ngrok-free.app/paynow/webhook"
+    )
   
-    # Add platform and shipping fees
-    payment.add("Platform Fee", platform_fee)
-    payment.add("Shipping Fee", shipping_fee)
+    response = paynow_service.create_payment(
+      reference: unique_reference,
+      amount: '%.2f' % total_price.to_f,
+      email: current_user.email
+    )
   
-    # Initiate the payment
-    response = PaynowClient.send(payment)
-  
-    if response.success?
-          # Save the order in the database
+    if response[:success]
       order = Order.create!(
         user_id: current_user.id,
         total_price: total_price,
         platform_fee: platform_fee,
         shipping_fee: shipping_fee,
         payment_method: 'paynow',
-        status: 'pending', # Payment pending
+        status: 'pending',
         shipping_address_id: current_user.shipping_address.id,
         collection_method: 'delivery',
-        paynow_poll_url: nil, # Will be updated after initiating payment
-        reference: unique_reference # Save the unique reference
+        paynow_poll_url: response[:poll_url],
+        reference: unique_reference
       )
     
-      # Save order items
       cart_items.each do |item|
         OrderItem.create!(order_id: order.id, product_id: item.product.id, quantity: item.quantity)
       end
-      # Store the Paynow poll URL in the order for future reference
-      order.update!(paynow_poll_url: response.poll_url)
-  
-      # Redirect the user to Paynow for payment
-      redirect_to response.redirect_url
+      redirect_to response[:browser_url], allow_other_host: true
     else
-      # If payment initiation fails, delete the order and show an error
-      order.destroy
+      Rails.logger.error("Paynow Error: #{response[:error]}")
       redirect_to carts_path, alert: "Failed to initiate Paynow payment. Please try again."
     end
   end
+  
 
   def create_pickup_session(cart_items, total_price_pickup, platform_fee, shipping_fee = 0)
     # Save the order
