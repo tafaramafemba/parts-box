@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
       platform_fee: platform_fee,
       shipping_fee: shipping_fee,
       payment_method: 'cod',
-      status: 'pending', # Payment pending
+      status: 'confirmed', # Order Confirmed
       shipping_address_id: current_user.shipping_address.id,
       collection_method: 'delivery',
       courier_id: assign_courier.id # Assign a courier
