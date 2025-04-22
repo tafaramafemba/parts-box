@@ -117,32 +117,30 @@
   }
 
   /* Styling for Paynow payment option */
-.payment-option {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.paynow-label {
-  display: flex;
+  .payment-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
   
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.payment-icons {
-  display: flex;
-  gap: 8px;
-}
-
-.payment-icon {
-  height: 2px;
-  color: #007bff; /* Blue color for icons */
-}
-.payment-icon:hover {
-  color: #0056b3; /* Darker blue on hover */
-}
+  .paynow-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .payment-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .payment-icon {
+    max-width: 150px; /* Set a maximum width for the image */
+    height: auto; /* Maintain the aspect ratio */
+    display: inline-block;
+  }
   
   /* Media Queries */
   @media (max-width: 768px) {

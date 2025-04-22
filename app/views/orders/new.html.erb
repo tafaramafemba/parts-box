@@ -59,7 +59,7 @@
   <h3>Choose Payment Method</h3>
   <%= form_with url: orders_path, method: :post, data: { turbo: false } do |f| %>
   <div class="payment-options">
-    <div>
+    <div class="payment-option cod-option">
       <%= f.radio_button :payment_method, 'cod', id: 'payment_method_cod' %>
       <%= f.label :payment_method_cod do %>
         Cash On Delivery
@@ -70,7 +70,7 @@
       <%= f.label :payment_method_paynow, class: 'paynow-label' do %>
         <span>Paynow</span>
         <div class="payment-icons">
-            <%= image_tag "payments.PNG", alt: "Ecocash", class: "payment-icon", size: "150x25" %>
+            <%= image_tag "payments.PNG", alt: "Ecocash", class: "payment-icon"%>
         </div>
       <% end %>
     </div>
@@ -112,19 +112,20 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
       const codRadio = document.getElementById('payment_method_cod');
-      const pickupRadio = document.getElementById('payment_method_pickup');
+      const paynowRadio = document.getElementById('payment_method_paynow');
       const shippingContainer = document.getElementById('shipping_container');
 
       function toggleShippingContainer() {
-        if (codRadio.checked) {
-        shippingContainer.style.display = 'block';
+        if (codRadio.checked || paynowRadio.checked) {
+          shippingContainer.style.display = 'block';
         } else {
-        shippingContainer.style.display = 'none';
+          shippingContainer.style.display = 'none';
         }
       }
 
       codRadio.addEventListener('change', toggleShippingContainer);
-      pickupRadio.addEventListener('change', toggleShippingContainer);
+      paynowRadio.addEventListener('change', toggleShippingContainer);
+
 
       // Initial check
       toggleShippingContainer();
