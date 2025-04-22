@@ -142,9 +142,9 @@ class OrdersController < ApplicationController
 
 
   
-    paynow_service = PaynowService.new(
-      return_url: "https://915f-2001-569-fd83-2f00-2132-6ebb-6f1f-72fb.ngrok-free.app/paynow/return",
-      result_url: "https://915f-2001-569-fd83-2f00-2132-6ebb-6f1f-72fb.ngrok-free.app/paynow/webhook"
+    PaynowService.new(
+      return_url: ENV['PAYNOW_RETURN_URL'],
+      result_url: ENV['PAYNOW_RESULT_URL']
     )
   
     response = paynow_service.create_payment(
