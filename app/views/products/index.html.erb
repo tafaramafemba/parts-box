@@ -4,154 +4,171 @@
   <!-- Sidebar (Facebook Marketplace style) -->
   <div class="sidebar">
     <h2>Search Marketplace</h2>
-  <form method="get" action="<%= products_path %>">
-    <!-- Search by Name -->
-    <input type="text" name="query" placeholder="Search products..." value="<%= params[:query] %>">
+    <form method="get" action="<%= products_path %>">
+      <!-- Search by Name -->
+      <input type="text" name="query" placeholder="Search products..." value="<%= params[:query] %>">
 
-    <!-- Filter by Category -->
-    <select name="category">
-      <option value="" <%= params[:category].blank? ? 'selected' : '' %>>Select Category</option>
-      <option value="Engine Components" <%= params[:category] == 'Engine Components' ? 'selected' : '' %>>Engine Components</option>
-      <option value="Transmission & Drivetrain" <%= params[:category] == 'Transmission & Drivetrain' ? 'selected' : '' %>>Transmission & Drivetrain</option>
-      <option value="Suspension & Steering" <%= params[:category] == 'Suspension & Steering' ? 'selected' : '' %>>Suspension & Steering</option>
-      <option value="Braking System" <%= params[:category] == 'Braking System' ? 'selected' : '' %>>Braking System</option>
-      <option value="Electrical & Lighting" <%= params[:category] == 'Electrical & Lighting' ? 'selected' : '' %>>Electrical & Lighting</option>
-      <option value="Exhaust System" <%= params[:category] == 'Exhaust System' ? 'selected' : '' %>>Exhaust System</option>
-      <option value="Cooling System" <%= params[:category] == 'Cooling System' ? 'selected' : '' %>>Cooling System</option>
-      <option value="Fuel System" <%= params[:category] == 'Fuel System' ? 'selected' : '' %>>Fuel System</option>
-      <option value="Interior Parts" <%= params[:category] == 'Interior Parts' ? 'selected' : '' %>>Interior Parts</option>
-      <option value="Exterior Parts" <%= params[:category] == 'Exterior Parts' ? 'selected' : '' %>>Exterior Parts</option>
-      <option value="Body Parts" <%= params[:category] == 'Body Parts' ? 'selected' : '' %>>Body Parts</option>
-      <option value="Wheels & Tires" <%= params[:category] == 'Wheels & Tires' ? 'selected' : '' %>>Wheels & Tires</option>
-      <option value="Heating, Ventilation & Air Conditioning (HVAC)" <%= params[:category] == 'Heating, Ventilation & Air Conditioning (HVAC)' ? 'selected' : '' %>>Heating, Ventilation & Air Conditioning (HVAC)</option>
-      <option value="Accessories" <%= params[:category] == 'Accessories' ? 'selected' : '' %>>Accessories</option>
-      <option value="Performance Parts" <%= params[:category] == 'Performance Parts' ? 'selected' : '' %>>Performance Parts</option>
-    </select>
+      <!-- Filter by Category -->
+      <select name="category">
+        <option value="" <%= params[:category].blank? ? 'selected' : '' %>>Select Category</option>
+        <option value="Engine Components" <%= params[:category] == 'Engine Components' ? 'selected' : '' %>>Engine Components</option>
+        <option value="Transmission & Drivetrain" <%= params[:category] == 'Transmission & Drivetrain' ? 'selected' : '' %>>Transmission & Drivetrain</option>
+        <option value="Suspension & Steering" <%= params[:category] == 'Suspension & Steering' ? 'selected' : '' %>>Suspension & Steering</option>
+        <option value="Braking System" <%= params[:category] == 'Braking System' ? 'selected' : '' %>>Braking System</option>
+        <option value="Electrical & Lighting" <%= params[:category] == 'Electrical & Lighting' ? 'selected' : '' %>>Electrical & Lighting</option>
+        <option value="Exhaust System" <%= params[:category] == 'Exhaust System' ? 'selected' : '' %>>Exhaust System</option>
+        <option value="Cooling System" <%= params[:category] == 'Cooling System' ? 'selected' : '' %>>Cooling System</option>
+        <option value="Fuel System" <%= params[:category] == 'Fuel System' ? 'selected' : '' %>>Fuel System</option>
+        <option value="Interior Parts" <%= params[:category] == 'Interior Parts' ? 'selected' : '' %>>Interior Parts</option>
+        <option value="Exterior Parts" <%= params[:category] == 'Exterior Parts' ? 'selected' : '' %>>Exterior Parts</option>
+        <option value="Body Parts" <%= params[:category] == 'Body Parts' ? 'selected' : '' %>>Body Parts</option>
+        <option value="Wheels & Tires" <%= params[:category] == 'Wheels & Tires' ? 'selected' : '' %>>Wheels & Tires</option>
+        <option value="Heating, Ventilation & Air Conditioning (HVAC)" <%= params[:category] == 'Heating, Ventilation & Air Conditioning (HVAC)' ? 'selected' : '' %>>Heating, Ventilation & Air Conditioning (HVAC)</option>
+        <option value="Accessories" <%= params[:category] == 'Accessories' ? 'selected' : '' %>>Accessories</option>
+        <option value="Performance Parts" <%= params[:category] == 'Performance Parts' ? 'selected' : '' %>>Performance Parts</option>
+      </select>
 
-    <!-- Filter by Part Type -->
-    <select name="part_type">
-    <option value="" <%= params[:part_type].blank? ? 'selected' : '' %>>Select Part Type</option>
-    <option value="OEM" <%= params[:part_type] == 'OEM' ? 'selected' : '' %>>OEM</option>
-    <option value="aftermarket" <%= params[:part_type] == 'aftermarket' ? 'selected' : '' %>>Aftermarket</option>
-    </select>
+      <!-- Filter by Part Type -->
+      <select name="part_type">
+      <option value="" <%= params[:part_type].blank? ? 'selected' : '' %>>Select Part Type</option>
+      <option value="OEM" <%= params[:part_type] == 'OEM' ? 'selected' : '' %>>OEM</option>
+      <option value="aftermarket" <%= params[:part_type] == 'aftermarket' ? 'selected' : '' %>>Aftermarket</option>
+      </select>
 
-    <!-- Filter by Price Range -->
-    <input type="number" name="min_price" placeholder="Min Price" value="<%= params[:min_price] %>" step="0.01">
-    <input type="number" name="max_price" placeholder="Max Price" value="<%= params[:max_price] %>" step="0.01">
+      <!-- Filter by Price Range -->
+      <input type="number" name="min_price" placeholder="Min Price" value="<%= params[:min_price] %>" step="0.01">
+      <input type="number" name="max_price" placeholder="Max Price" value="<%= params[:max_price] %>" step="0.01">
 
-    <!-- Filter by Location -->
-    <select name="location">
-    <option value="Harare">Harare</option>
-    <option value="Mutare">Mutare</option>
-    <option value="Bulawayo">Bulawayo</option>
-    <option value="Gweru">Gweru</option>
-    <option value="Masvingo">Masvingo</option>
-    <option value="Kwekwe">Kwekwe</option>
-    <option value="Chitungwiza">Chitungwiza</option>
-    <option value="Marondera">Marondera</option>
-    <option value="Norton">Norton</option>
-    <option value="Chegutu">Chegutu</option>
-    <option value="Bindura">Bindura</option>
-    </select>
+      <!-- Filter by Location -->
+      <select name="location">
+      <option value="Harare">Harare</option>
+      <option value="Mutare">Mutare</option>
+      <option value="Bulawayo">Bulawayo</option>
+      <option value="Gweru">Gweru</option>
+      <option value="Masvingo">Masvingo</option>
+      <option value="Kwekwe">Kwekwe</option>
+      <option value="Chitungwiza">Chitungwiza</option>
+      <option value="Marondera">Marondera</option>
+      <option value="Norton">Norton</option>
+      <option value="Chegutu">Chegutu</option>
+      <option value="Bindura">Bindura</option>
+      </select>
 
-    <!-- Filter by Make -->
-    <select name="make">
-      <option value="" <%= params[:make].blank? ? 'selected' : '' %>>Select Make</option>
-      <option value="Toyota" <%= params[:make] == 'Toyota' ? 'selected' : '' %>>Toyota</option>
-      <option value="Nissan" <%= params[:make] == 'Nissan' ? 'selected' : '' %>>Nissan</option>
-      <option value="Mazda" <%= params[:make] == 'Mazda' ? 'selected' : '' %>>Mazda</option>
-      <option value="Ford" <%= params[:make] == 'Ford' ? 'selected' : '' %>>Ford</option>
-      <option value="Honda" <%= params[:make] == 'Honda' ? 'selected' : '' %>>Honda</option>
-      <option value="Isuzu" <%= params[:make] == 'Isuzu' ? 'selected' : '' %>>Isuzu</option>
-      <option value="Volkswagen" <%= params[:make] == 'Volkswagen' ? 'selected' : '' %>>Volkswagen</option>
-      <option value="BMW" <%= params[:make] == 'BMW' ? 'selected' : '' %>>BMW</option>
-      <option value="Mercedes-Benz" <%= params[:make] == 'Mercedes-Benz' ? 'selected' : '' %>>Mercedes-Benz</option>
-      <option value="Hyundai" <%= params[:make] == 'Hyundai' ? 'selected' : '' %>>Hyundai</option>
-      <option value="Audi" <%= params[:make] == 'Audi' ? 'selected' : '' %>>Audi</option>
-    </select>
+      <!-- Filter by Make -->
+      <select name="make">
+        <option value="" <%= params[:make].blank? ? 'selected' : '' %>>Select Make</option>
+        <option value="Toyota" <%= params[:make] == 'Toyota' ? 'selected' : '' %>>Toyota</option>
+        <option value="Nissan" <%= params[:make] == 'Nissan' ? 'selected' : '' %>>Nissan</option>
+        <option value="Mazda" <%= params[:make] == 'Mazda' ? 'selected' : '' %>>Mazda</option>
+        <option value="Ford" <%= params[:make] == 'Ford' ? 'selected' : '' %>>Ford</option>
+        <option value="Honda" <%= params[:make] == 'Honda' ? 'selected' : '' %>>Honda</option>
+        <option value="Isuzu" <%= params[:make] == 'Isuzu' ? 'selected' : '' %>>Isuzu</option>
+        <option value="Volkswagen" <%= params[:make] == 'Volkswagen' ? 'selected' : '' %>>Volkswagen</option>
+        <option value="BMW" <%= params[:make] == 'BMW' ? 'selected' : '' %>>BMW</option>
+        <option value="Mercedes-Benz" <%= params[:make] == 'Mercedes-Benz' ? 'selected' : '' %>>Mercedes-Benz</option>
+        <option value="Hyundai" <%= params[:make] == 'Hyundai' ? 'selected' : '' %>>Hyundai</option>
+        <option value="Audi" <%= params[:make] == 'Audi' ? 'selected' : '' %>>Audi</option>
+      </select>
 
-    <!-- Filter by Model -->
-    <input type="text" name="model" placeholder="Model" value="<%= params[:model] %>">
+      <!-- Filter by Model -->
+      <input type="text" name="model" placeholder="Model" value="<%= params[:model] %>">
 
-    <!-- Filter by Year -->
-    <select name="year">
-      <option value="" <%= params[:year].blank? ? 'selected' : '' %>>Select Year</option>
-      <% (1998..Date.current.year).to_a.reverse.each do |year| %>
-      <option value="<%= year %>" <%= params[:year].to_i == year ? 'selected' : '' %>><%= year %></option>
+      <!-- Filter by Year -->
+      <select name="year">
+        <option value="" <%= params[:year].blank? ? 'selected' : '' %>>Select Year</option>
+        <% (1998..Date.current.year).to_a.reverse.each do |year| %>
+        <option value="<%= year %>" <%= params[:year].to_i == year ? 'selected' : '' %>><%= year %></option>
+        <% end %>
+      </select>
+
+      <!-- Filter by Part Number -->
+      <input type="text" name="manufacturer_part_number" placeholder="Part Number" value="<%= params[:manufacturer_part_number] %>">
+
+      <!-- Submit Button -->
+      <button type="submit" class="search-button">Search</button>
+    </form>
+
+    <div class="sidebar">
+      <% if current_user && current_user.seller_status == 'approved' %>
+      <%= link_to new_product_path, class: 'sidebar-link' do %>
+        <i class="fas fa-plus-circle sidebar-icon"></i> Create a New Listing
       <% end %>
-    </select>
-
-    <!-- Filter by Part Number -->
-    <input type="text" name="manufacturer_part_number" placeholder="Part Number" value="<%= params[:manufacturer_part_number] %>">
-
-    <!-- Submit Button -->
-    <button type="submit" class="search-button">Search</button>
-  </form>
-
-  <div class="sidebar">
-    <% if current_user && current_user.seller_status == 'approved' %>
-    <%= link_to new_product_path, class: 'sidebar-link' do %>
-      <i class="fas fa-plus-circle sidebar-icon"></i> Create a New Listing
-    <% end %>
-    <% end %>
-
-    <%#= link_to chats_path, class: 'sidebar-link' do %>
-    <%# <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_chats %>
-    <%# end %>
-
-    <%#= link_to inbox_index_path, class: 'sidebar-link' do %>
-    <%# <i class="fa-solid fa-right-left sidebar-icon"></i></i> Trade Requests<span class="unread-counter"> <%= @unread_count %>
-    <%# end %>
-
-    <% if current_user && current_user.seller_status == 'approved' %>
-    <%= link_to my_listings_products_path, class: 'sidebar-link' do %>
-      <i class="fa-solid fa-tag sidebar-icon"></i> My Listings
-    <% end %>
-    <% end %>
-
-    <% if current_user %>
-    <%= link_to orders_path, class: 'sidebar-link' do %>
-      <i class="fas fa-shopping-cart sidebar-icon"></i> My Orders<span class="unread-counter"> <%= @orders_count %></span>
-    <% end %>
-    <% end %>
-
-    <% if current_user && current_user.seller_status == 'approved' %>
-    <%= link_to sales_overview_path, class: 'sidebar-link' do %>
-      <i class="fas fa-chart-line sidebar-icon"></i> Sales Overview
-    <% end %>
-    <% end %>
-  </div>
-  </div>
-
-<div class="products-pagination" >
-  <div class="products">
-  <% if @products.any? %>
-    <% @products.each do |product| %>
-    <div class="product-card" onclick="window.location='<%= product_path(product) %>'" size="200x200">
-      <% if product.image.attached? %>
-        <%= image_tag product.image, class: 'product-card-image', size: "200x200" %>
-      <% else %>
-      <%= image_tag "placeholder.jpg", class: "product-card-image", alt: "Placeholder" %>
       <% end %>
-      <% if product.price %>
-        <p class="product-card-price"><%= number_to_currency(product.price) %></p>
-      <% else %>
-      <p class="product-card-price">Up for Trade</p>
+
+      <%#= link_to chats_path, class: 'sidebar-link' do %>
+      <%# <i class="fas fa-inbox sidebar-icon"></i> Inbox<span class="unread-counter"> <%= @unread_chats %>
+      <%# end %>
+
+      <%#= link_to inbox_index_path, class: 'sidebar-link' do %>
+      <%# <i class="fa-solid fa-right-left sidebar-icon"></i></i> Trade Requests<span class="unread-counter"> <%= @unread_count %>
+      <%# end %>
+
+      <% if current_user && current_user.seller_status == 'approved' %>
+      <%= link_to my_listings_products_path, class: 'sidebar-link' do %>
+        <i class="fa-solid fa-tag sidebar-icon"></i> My Listings
       <% end %>
-      <h2 class="product-card-title"><%= product.name %></h2>
+      <% end %>
+
+      <% if current_user %>
+      <%= link_to orders_path, class: 'sidebar-link' do %>
+        <i class="fas fa-shopping-cart sidebar-icon"></i> My Orders<span class="unread-counter"> <%= @orders_count %></span>
+      <% end %>
+      <% end %>
+
+      <% if current_user && current_user.seller_status == 'approved' %>
+      <%= link_to sales_overview_path, class: 'sidebar-link' do %>
+        <i class="fas fa-chart-line sidebar-icon"></i> Sales Overview
+      <% end %>
+      <% end %>
     </div>
+  </div>
 
-      <% end %>
-    <% else %>
-      <p>No results found</p>
-    <% end %>
-    </div>
+  <!-- Products Section -->
+  <div class="products-section">
+    <% if params[:query].present? || params[:category].present? || params[:min_price].present? || params[:max_price].present? %>
+      <!-- Show search results -->
+      <div class="products-pagination">
+        <div class="products">
+          <% if @products.any? %>
+            <% @products.each do |product| %>
+                <div class="product-card" data-turbo="false" onclick="window.location='<%= product_path(product) %>'">
+                <% if product.image.attached? %>
+                  <%= image_tag product.image, class: 'product-card-image' %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", class: "product-card-image", alt: "Placeholder" %>
+                <% end %>
+                <p class="product-card-price"><%= product.price.present? ? number_to_currency(product.price) : "Up for Trade" %></p>
+                <h2 class="product-card-title"><%= product.name %></h2>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No results found</p>
+          <% end %>
+        </div>
         <div class="pagination">
-      <%= paginate @products %>
-    </div>
+          <%= paginate @products %>
+        </div>
+      </div>
+    <% else %>
+      <!-- Group products by category -->
+      <% Product.distinct.pluck(:category).each do |category| %>
+        <div class="category-row">
+          <h3 class="category-title"><%= category %></h3>
+          <div class="category-slider">
+            <% @products.where(category: category).each do |product| %>
+              <div class="product-card" onclick="window.location='<%= product_path(product) %>'">
+                <% if product.image.attached? %>
+                  <%= image_tag product.image, class: 'product-card-image' %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", class: "product-card-image", alt: "Placeholder" %>
+                <% end %>
+                <p class="product-card-price"><%= product.price.present? ? number_to_currency(product.price) : "Up for Trade" %></p>
+                <h2 class="product-card-title"><%= product.name %></h2>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
-
-
-
-
 </div>
