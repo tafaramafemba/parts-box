@@ -142,7 +142,7 @@ class OrdersController < ApplicationController
 
 
   
-    PaynowService.new(
+    paynow_service = PaynowService.new(
       return_url: ENV['PAYNOW_RETURN_URL'],
       result_url: ENV['PAYNOW_RESULT_URL']
     )
