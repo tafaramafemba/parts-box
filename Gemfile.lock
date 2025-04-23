@@ -103,7 +103,7 @@ GEM
       unicode (>= 0.4.4.5)
     csv (3.3.0)
     date (3.4.0)
-    debug (1.9.2)
+    debug (1.10.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
     devise (4.9.4)
@@ -166,8 +166,8 @@ GEM
     intl-tel-input-rails (12.3.0)
       railties (>= 3.1)
       sass-rails
-    io-console (0.7.2)
-    irb (1.14.1)
+    io-console (0.8.0)
+    irb (1.14.3)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jbuilder (2.13.0)
@@ -241,7 +241,8 @@ GEM
     paypal-sdk-rest (1.7.6)
       multi_json (~> 1.0)
       xml-simple
-    psych (5.2.0)
+    psych (5.2.2)
+      date
       stringio
     public_suffix (6.0.1)
     puma (6.5.0)
@@ -290,14 +291,14 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
-    rdoc (6.8.1)
+    rdoc (6.10.0)
       psych (>= 4.0.0)
     redis (5.3.0)
       redis-client (>= 0.22.0)
     redis-client (0.22.2)
       connection_pool
     regexp_parser (2.9.2)
-    reline (0.5.12)
+    reline (0.6.0)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
@@ -440,14 +441,12 @@ DEPENDENCIES
   importmap-rails
   intl-tel-input-rails
   jbuilder
-  mini_magick
   omniauth-google-oauth2
   paypal-sdk-rest
   puma (>= 5.0)
   rails (~> 7.2.2)
   redis (>= 4.0.1)
   rubocop-rails-omakase
-  ruby-vips
   select2-rails
   selenium-webdriver
   sidekiq
