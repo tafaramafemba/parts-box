@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
       platform_fee: platform_fee,
       shipping_fee: shipping_fee,
       payment_method: 'cod',
-      status: 'confirmed', # Payment confirmed
+      status: 'confirmed', # Order Confirmed
       shipping_address_id: current_user.shipping_address.id,
       collection_method: 'delivery',
       courier_id: assign_courier.id # Assign a courier
@@ -143,8 +143,8 @@ class OrdersController < ApplicationController
 
   
     paynow_service = PaynowService.new(
-      return_url: "https://915f-2001-569-fd83-2f00-2132-6ebb-6f1f-72fb.ngrok-free.app/paynow/return",
-      result_url: "https://915f-2001-569-fd83-2f00-2132-6ebb-6f1f-72fb.ngrok-free.app/paynow/webhook"
+      return_url: ENV['PAYNOW_RETURN_URL'],
+      result_url: ENV['PAYNOW_RESULT_URL']
     )
   
     response = paynow_service.create_payment(

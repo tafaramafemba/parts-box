@@ -10,6 +10,14 @@ class PaynowWebhookController < ApplicationController
         if order && order.status == 'pending'
           # Update the order status to 'confirmed'
           order.update!(status: 'confirmed')
+          OrderMailer.order_confirmation(order).deliver_now
+
+          # Notify sellers about the order
+          items_by_seller = order.order_items.group_by { |item| item.product.user }
+          items_by_seller.each do |seller, items|
+            SellerMailer.order_placed(order, seller, items).deliver_now
+          end
+
   
           # Update stock for each order item
           order.order_items.each do |order_item|
