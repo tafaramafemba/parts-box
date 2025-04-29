@@ -41,7 +41,6 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: 0 }
   validates :location, presence: true
   validates :description, presence: true, length: { minimum: 10 }
-  validate :acceptable_image
 
   private
 

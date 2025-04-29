@@ -95,6 +95,7 @@ class ProductsController < ApplicationController
       redirect_to my_listings_products_path, notice: 'Product was successfully created.'
     else
       render :new
+      Rails.logger.debug(@product.errors.full_messages)
     end
   end
 
